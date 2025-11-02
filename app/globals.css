@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply antialiased;
+    background:
+      radial-gradient(circle at top, rgba(0, 191, 255, 0.12), rgba(3, 7, 18, 0.9)),
+      linear-gradient(135deg, rgba(244, 208, 63, 0.05), rgba(0, 0, 0, 0.9));
+  }
+
+  ::selection {
+    background-color: rgba(244, 208, 63, 0.4);
+    color: #050505;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+}
+
+@layer components {
+  .card-surface {
+    @apply rounded-3xl border border-white/10 bg-black/60 shadow-panel backdrop-blur-md;
+  }
+
+  .pill {
+    @apply rounded-full bg-brand-cyan/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-brand-cyan;
+  }
+}

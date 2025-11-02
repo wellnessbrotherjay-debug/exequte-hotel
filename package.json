@@ -1,0 +1,39 @@
+{
+  "name": "exequte-hotel-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "next dev -p 3001 -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wellnessbrotherjay-debug/exequte-hotel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wellnessbrotherjay-debug/exequte-hotel/issues"
+  },
+  "homepage": "https://github.com/wellnessbrotherjay-debug/exequte-hotel#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.78.0",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "@types/react": "^19.2.2",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.9.3"
+  }
+}
