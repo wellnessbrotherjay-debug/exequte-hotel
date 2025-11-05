@@ -11,19 +11,19 @@ export const EXERCISE_MEDIA: ExerciseMedia[] = [
     video: "" // No video available
   },
   {
-    name: "Bosu Side Plank Hip Drops",
+    name: "Bosu Roller Russian Twists",
     equipment: "bosu",
-    video: "/videos/bosu side plank hip drops.mp4"
+    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Bosu%20roller%20russian%20twists%20.MP4"
   },
   {
-    name: "DB Squat Woodchops",
-    equipment: "dumbbells",
-    video: "/videos/db-squat-woodchops.mp4"
+    name: "Band Lunges",
+    equipment: "band",
+    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Band%20lunges%20.MP4"
   },
   {
     name: "Barbell Shoulder Press",
     equipment: "barbell",
-    video: "/videos/barbell shoulder press.mp4"
+    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Barbell%20shoulder%20press%20.MP4"
   },
   {
     name: "Slow Wide Arm Push Up",
