@@ -96,6 +96,16 @@ export const storage = {
     if (typeof window === "undefined") return;
     window.localStorage.removeItem(STORAGE_KEYS.session);
   },
+  startSession(setup: WorkoutSetup) {
+    const initialState: SessionState = {
+      stationId: 1,
+      round: 1,
+      phase: "prep",
+      remaining: 10, // 10 seconds prep time
+      updatedAt: Date.now(),
+    };
+    this.saveSession(initialState);
+  },
   subscribe(key: string, callback: (value: any) => void) {
     if (typeof window === "undefined") return;
     const handler = (event: StorageEvent) => {

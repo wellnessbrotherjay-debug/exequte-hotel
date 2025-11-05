@@ -1,13 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { supabase } from "@/lib/supabase";
 
 interface FitnessTestData {
   age: number;
@@ -23,6 +18,21 @@ interface FitnessTestData {
 }
 
 export default function FitnessTest() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-12 h-12 border-2 border-blue-400 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <div className="text-xl font-bold">Loading Fitness Test...</div>
+        </div>
+      </div>
+    }>
+      <FitnessTestContent />
+    </Suspense>
+  );
+}
+
+function FitnessTestContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');

@@ -59,7 +59,7 @@ export async function fetchWorkoutById(
   workoutId: string
 ): Promise<{ workout: NormalizedWorkout | null; error?: string }> {
   const { data, error } = await supabase
-    .from<WorkoutRecord>("workouts")
+    .from("workouts")
     .select("*")
     .eq("id", workoutId)
     .maybeSingle();
