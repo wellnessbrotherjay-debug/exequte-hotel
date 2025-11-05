@@ -2,6 +2,8 @@ export type ExerciseMedia = {
   name: string;
   equipment: string;
   video: string;
+  muscles?: string[];
+  cues?: string[];
 };
 
 export const EXERCISE_MEDIA: ExerciseMedia[] = [
@@ -13,22 +15,30 @@ export const EXERCISE_MEDIA: ExerciseMedia[] = [
   {
     name: "Bosu Roller Russian Twists",
     equipment: "bosu",
-    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Bosu%20roller%20russian%20twists%20.MP4"
+    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Bosu%20roller%20russian%20twists%20.MP4",
+    muscles: ["core", "obliques"],
+    cues: ["Engage your core", "Control the rotation"]
   },
   {
     name: "Band Lunges",
     equipment: "band",
-    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Band%20lunges%20.MP4"
+    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Band%20lunges%20.MP4",
+    muscles: ["glutes", "hamstrings", "quads"],
+    cues: ["Keep front knee tracking toes", "Drive through the heel"]
   },
   {
     name: "Barbell Shoulder Press",
     equipment: "barbell",
-    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Barbell%20shoulder%20press%20.MP4"
+    video: "https://iwkhqmonkmvyeemlihlz.supabase.co/storage/v1/object/public/Videos/Barbell%20shoulder%20press%20.MP4",
+    muscles: ["shoulders", "triceps"],
+    cues: ["Brace your core", "Press straight overhead"]
   },
   {
     name: "Slow Wide Arm Push Up",
     equipment: "bodyweight",
-    video: "/videos/slow wide arm push up.mp4"
+    video: "/videos/slow wide arm push up.mp4",
+    muscles: ["chest", "shoulders", "triceps"],
+    cues: ["Lower with control", "Keep elbows slightly bent at top"]
   },
 ];
 
