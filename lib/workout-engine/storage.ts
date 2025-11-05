@@ -1,5 +1,6 @@
 import type { EquipmentOption } from "./constants";
 import { EXERCISE_MEDIA as EXERCISE_LIBRARY, type ExerciseMedia } from "@/lib/lib/exercise-library";
+import type { FontSettings } from "./branding";
 
 export interface BrandPalette {
   primary: string;
@@ -22,6 +23,7 @@ export interface WorkoutSetup {
   facilityName?: string;
   colors?: BrandPalette;
   quote?: string;
+  fonts?: FontSettings;
 }
 
 export interface StationExercise {
