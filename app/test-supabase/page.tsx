@@ -20,7 +20,7 @@ export default function TestSupabasePage() {
         const { data, error } = await supabase
           .from("equipment")
           .select("id, display_name, slug")
-          .order("display_name")
+          .order("display_name", { ascending: true })
         
         if (error) throw error
         setEquipment(data || [])

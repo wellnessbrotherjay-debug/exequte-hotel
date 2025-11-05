@@ -1,11 +1,12 @@
-// This is a mock Supabase client.
-// You should replace this with your actual Supabase client initialization.
-export const supabase = {
-  from: <T>(table: string) => ({
-    select: (columns: string) => ({
-      eq: (column: string, value: any) => ({
-        maybeSingle: () => Promise.resolve({ data: null, error: null as { message: string } | null }),
-      }),
-    }),
-  }),
-};
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Missing Supabase environment variables");
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export type SupabaseClient = typeof supabase;
