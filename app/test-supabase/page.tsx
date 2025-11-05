@@ -14,8 +14,20 @@ export default function TestSupabasePage() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
+  // Check if Supabase is configured
+  const isSupabaseConfigured = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && 
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
+
   useEffect(() => {
     const fetchEquipment = async () => {
+      if (!isSupabaseConfigured) {
+        setError("Supabase is not configured. Please check your environment variables.");
+        setLoading(false);
+        return;
+      }
+
       try {
         const { data, error } = await supabase
           .from("equipment")
@@ -32,7 +44,7 @@ export default function TestSupabasePage() {
     }
 
     fetchEquipment()
-  }, [])
+  }, [isSupabaseConfigured])
 
   if (error) {
     return (
