@@ -141,3 +141,4 @@ vite.config.ts.timestamp-*
 # Large video files - exclude from git
 /public/videos/*.mp4
 .DS_Store
+.vercel
