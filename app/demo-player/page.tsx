@@ -62,13 +62,15 @@ export default function DemoPlayer() {
         {/* Centered Top Section */}
         <div className="absolute top-16 left-1/2 -translate-x-1/2 text-center">
           {/* Logo - Should be dynamic from builder */}
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl font-black tracking-[0.4em] text-[#00AFFF] mb-2"
-          >
-            RACEFIT
-          </motion.h1>
+          <div className="text-4xl font-black tracking-[0.4em] text-[#00AFFF] mb-2">
+            <motion.span
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ display: 'inline-block' }}
+            >
+              RACEFIT
+            </motion.span>
+          </div>
           <div className="text-xl tracking-[0.3em] text-[#E0E0E0]/70 mb-4">
             MGM HOTEL GYM
           </div>
