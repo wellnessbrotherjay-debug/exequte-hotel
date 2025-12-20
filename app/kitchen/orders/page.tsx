@@ -1,4 +1,5 @@
 import Link from "next/link";
+export const dynamic = 'force-dynamic';
 import { createAdminClient } from "@/lib/supabase/server";
 import KitchenOrdersClient from "./KitchenOrdersClient";
 import type { MealOrder } from "@/lib/types/meal";

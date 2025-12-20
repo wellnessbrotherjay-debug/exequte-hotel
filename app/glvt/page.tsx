@@ -63,7 +63,7 @@ export default function GlvtLandingPage() {
                 {/* CTA */}
                 <div className="mt-8">
                     <Link
-                        href="/glvt/home"
+                        href="/glvt/launch"
                         className="text-xs uppercase tracking-[0.3em] text-white border-b border-white pb-1 hover:text-[#C8A871] hover:border-[#C8A871] transition-colors"
                     >
                         Enter The Club
