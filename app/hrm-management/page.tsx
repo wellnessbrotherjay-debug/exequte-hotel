@@ -1,27 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { storage, type WorkoutSetup } from "@/lib/workout-engine/storage";
+import {
+  storage,
+  type WorkoutSetup,
+  type BrandPalette,
+} from "@/lib/workout-engine/storage";
 import { hrmStorage } from "@/lib/workout-engine/hrm-storage";
 import { HR_ZONES } from "@/lib/workout-engine/hrm-types";
-import type { 
-  HRM, 
-  HRMAssignment, 
+import type {
+  HRM,
+  HRMAssignment,
   HRMMetrics,
-  WorkoutSession 
+  WorkoutSession
 } from "@/lib/workout-engine/hrm-types";
+import { resolveBrandColors } from "@/lib/workout-engine/brand-colors";
+import { useVenueContext } from "@/lib/venue-context";
 
-function HRMDeviceCard({ 
-  hrm, 
-  onToggleStatus 
-}: { 
-  hrm: HRM; 
+function HRMDeviceCard({
+  hrm,
+  onToggleStatus,
+  brandColors,
+}: {
+  hrm: HRM;
   onToggleStatus: (id: string) => void;
+  brandColors: BrandPalette;
 }) {
-  const statusColor = hrm.connectionStatus === 'connected' ? 'green' : 
-                     hrm.connectionStatus === 'connecting' ? 'yellow' : 'red';
-  
+  const { primary: primaryBrand, secondary: secondaryBrand } = brandColors;
+  const statusColor = hrm.connectionStatus === 'connected' ? 'green' :
+    hrm.connectionStatus === 'connecting' ? 'yellow' : 'red';
+
   return (
     <div className="bg-gray-900 rounded-xl p-6 border border-gray-700">
       <div className="flex items-center justify-between mb-4">
@@ -29,12 +38,11 @@ function HRMDeviceCard({
           <h3 className="text-lg font-bold text-white">{hrm.displayName}</h3>
           <p className="text-sm text-gray-400">{hrm.name} • Hub: {hrm.hub}</p>
         </div>
-        <div 
-          className={`w-4 h-4 rounded-full ${
-            statusColor === 'green' ? 'bg-green-400' :
-            statusColor === 'yellow' ? 'bg-yellow-400 animate-pulse' :
-            'bg-red-400'
-          }`}
+        <div
+          className={`w-4 h-4 rounded-full ${statusColor === 'green' ? 'bg-green-400' :
+              statusColor === 'yellow' ? 'bg-yellow-400 animate-pulse' :
+                'bg-red-400'
+            }`}
         />
       </div>
 
@@ -43,10 +51,9 @@ function HRMDeviceCard({
           <div className="text-xs text-gray-400">Battery</div>
           <div className="flex items-center gap-2">
             <div className="flex-1 bg-gray-800 rounded-full h-2">
-              <div 
-                className={`h-2 rounded-full ${
-                  (hrm.batteryLevel || 0) > 30 ? 'bg-green-400' : 'bg-red-400'
-                }`}
+              <div
+                className={`h-2 rounded-full ${(hrm.batteryLevel || 0) > 30 ? 'bg-green-400' : 'bg-red-400'
+                  }`}
                 style={{ width: `${hrm.batteryLevel || 0}%` }}
               />
             </div>
@@ -55,9 +62,10 @@ function HRMDeviceCard({
         </div>
         <div>
           <div className="text-xs text-gray-400">Status</div>
-          <div className={`text-sm font-bold ${
-            hrm.isUsed ? 'text-blue-400' : 'text-green-400'
-          }`}>
+          <div
+            className="text-sm font-bold"
+            style={{ color: hrm.isUsed ? primaryBrand : "#34D399" }}
+          >
             {hrm.isUsed ? 'In Use' : 'Available'}
           </div>
         </div>
@@ -65,11 +73,12 @@ function HRMDeviceCard({
 
       <button
         onClick={() => onToggleStatus(hrm.id)}
-        className={`w-full py-2 px-4 rounded-lg font-bold transition-colors ${
-          hrm.connectionStatus === 'connected'
-            ? 'bg-red-600 hover:bg-red-700 text-white'
-            : 'bg-green-600 hover:bg-green-700 text-white'
-        }`}
+        className="w-full py-2 px-4 rounded-lg font-bold transition-colors hover:opacity-90"
+        style={{
+          backgroundColor:
+            hrm.connectionStatus === "connected" ? "#dc2626" : secondaryBrand,
+          color: hrm.connectionStatus === "connected" ? "#fff" : "#050b12",
+        }}
       >
         {hrm.connectionStatus === 'connected' ? 'Disconnect' : 'Connect'}
       </button>
@@ -77,15 +86,18 @@ function HRMDeviceCard({
   );
 }
 
-function ParticipantAssignment({ 
-  assignment, 
+function ParticipantAssignment({
+  assignment,
   metric,
-  onUnassign 
-}: { 
+  onUnassign,
+  brandColors,
+}: {
   assignment: HRMAssignment;
   metric?: HRMMetrics;
   onUnassign: (id: string) => void;
+  brandColors: BrandPalette;
 }) {
+  const { primary: primaryBrand, accent: accentBrand } = brandColors;
   const zone = metric ? HR_ZONES[metric.zone as keyof typeof HR_ZONES] : null;
 
   return (
@@ -112,20 +124,24 @@ function ParticipantAssignment({
             </div>
             <div>
               <div className="text-xs text-gray-400">Calories</div>
-              <div className="text-xl font-bold text-orange-400">{metric.calories}</div>
+              <div className="text-xl font-bold" style={{ color: accentBrand }}>
+                {metric.calories}
+              </div>
             </div>
             <div>
               <div className="text-xs text-gray-400">Rank</div>
-              <div className="text-xl font-bold text-blue-400">#{metric.rank}</div>
+              <div className="text-xl font-bold" style={{ color: primaryBrand }}>
+                #{metric.rank}
+              </div>
             </div>
           </div>
 
           {zone && (
             <div className="text-center">
-              <div 
+              <div
                 className="inline-block px-3 py-1 rounded-full text-xs font-bold"
-                style={{ 
-                  backgroundColor: zone.color + '40', 
+                style={{
+                  backgroundColor: zone.color + '40',
                   color: zone.color,
                   border: `1px solid ${zone.color}`
                 }}
@@ -136,9 +152,9 @@ function ParticipantAssignment({
           )}
 
           <div className="w-full bg-gray-800 rounded-full h-2">
-            <div 
+            <div
               className="h-2 rounded-full transition-all duration-1000"
-              style={{ 
+              style={{
                 width: `${metric.intensity}%`,
                 backgroundColor: zone?.color || '#6B7280'
               }}
@@ -161,6 +177,14 @@ export default function HRMManagementPage() {
   const [metrics, setMetrics] = useState<HRMMetrics[]>([]);
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
+  const [isLive, setIsLive] = useState(false);
+  const { activeVenue } = useVenueContext();
+
+  const brandColors = useMemo(
+    () => resolveBrandColors({ activeVenue, setup }),
+    [activeVenue, setup]
+  );
+  const { primary: primaryBrand, secondary: secondaryBrand, accent: accentBrand } = brandColors;
 
   useEffect(() => {
     setSetup(storage.getSetup());
@@ -202,12 +226,25 @@ export default function HRMManagementPage() {
     hrmStorage.generateMockData();
     const stopSimulation = hrmStorage.startSimulation();
     setIsSimulating(true);
-    
+    setIsLive(false);
+
     // Auto-stop after demo
     setTimeout(() => {
       stopSimulation();
       setIsSimulating(false);
     }, 300000); // 5 minutes
+  };
+
+  const handleStartLiveSession = () => {
+    const stopSync = hrmStorage.startLiveSync();
+    setIsLive(true);
+    setIsSimulating(false);
+    // Live session runs until stopped manually or page closed
+  };
+
+  const handleSyncDevices = async () => {
+    await hrmStorage.fetchAvailableDevices();
+    loadData();
   };
 
   const handleCreateNewSession = () => {
@@ -221,7 +258,7 @@ export default function HRMManagementPage() {
       currentPhase: 'prep',
       remaining: 300
     };
-    
+
     hrmStorage.setCurrentSession(newSession);
     loadData();
   };
@@ -255,7 +292,7 @@ export default function HRMManagementPage() {
             />
           )}
           <div>
-            <h1 className="text-3xl font-bold text-blue-400">
+            <h1 className="text-3xl font-bold" style={{ color: primaryBrand }}>
               HRM Management
             </h1>
             <p className="text-gray-400">Heart Rate Monitor Control Center</p>
@@ -272,13 +309,24 @@ export default function HRMManagementPage() {
           <button
             onClick={handleStartSimulation}
             disabled={isSimulating}
-            className={`font-bold py-3 px-6 rounded-xl transition-colors ${
-              isSimulating 
-                ? 'bg-gray-600 cursor-not-allowed text-gray-400'
-                : 'bg-blue-600 hover:bg-blue-700 text-white'
-            }`}
+            className={`font-bold py-3 px-6 rounded-xl transition-colors ${isSimulating ? 'bg-gray-600 cursor-not-allowed text-gray-400' : 'hover:opacity-90'
+              }`}
+            style={
+              isSimulating
+                ? undefined
+                : { backgroundColor: primaryBrand, color: '#050b12' }
+            }
           >
             {isSimulating ? '🔄 Simulating...' : '🎮 Start Demo'}
+          </button>
+
+          <button
+            onClick={handleStartLiveSession}
+            disabled={isLive || isSimulating}
+            className={`font-bold py-3 px-6 rounded-xl transition-colors ${(isLive || isSimulating) ? 'bg-gray-600 cursor-not-allowed text-gray-400' : 'bg-red-600 hover:bg-red-700 text-white'
+              }`}
+          >
+            {isLive ? '🔴 LIVE' : '📡 Start Live Session'}
           </button>
         </div>
       </header>
@@ -293,11 +341,10 @@ export default function HRMManagementPage() {
                 <p className="text-gray-400">{session.location} • {session.currentBlock}</p>
               </div>
               <div className="text-right">
-                <div className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${
-                  session.status === 'active' ? 'bg-green-600' :
-                  session.status === 'preparing' ? 'bg-yellow-600' :
-                  'bg-gray-600'
-                }`}>
+                <div className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${session.status === 'active' ? 'bg-green-600' :
+                    session.status === 'preparing' ? 'bg-yellow-600' :
+                      'bg-gray-600'
+                  }`}>
                   {session.status.toUpperCase()}
                 </div>
                 <div className="text-sm text-gray-400 mt-1">
@@ -305,10 +352,12 @@ export default function HRMManagementPage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-400">{activeAssignments.length}</div>
+                <div className="text-2xl font-bold" style={{ color: primaryBrand }}>
+                  {activeAssignments.length}
+                </div>
                 <div className="text-xs text-gray-400">Participants</div>
               </div>
               <div className="text-center">
@@ -316,7 +365,7 @@ export default function HRMManagementPage() {
                 <div className="text-xs text-gray-400">Connected HRMs</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-orange-400">
+                <div className="text-2xl font-bold" style={{ color: accentBrand }}>
                   {metrics.reduce((sum, m) => sum + m.calories, 0)}
                 </div>
                 <div className="text-xs text-gray-400">Total Calories</div>
@@ -335,7 +384,15 @@ export default function HRMManagementPage() {
       <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* HRM Devices */}
         <div>
-          <h2 className="text-2xl font-bold mb-6 text-blue-400">Heart Rate Monitors</h2>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: primaryBrand }}>
+            Heart Rate Monitors
+          </h2>
+          <button
+            onClick={handleSyncDevices}
+            className="text-xs uppercase tracking-widest text-blue-400 hover:text-blue-300 mb-4"
+          >
+            ↻ Sync Devices from API
+          </button>
           {hrms.length > 0 ? (
             <div className="space-y-4">
               {hrms.map(hrm => (
@@ -343,6 +400,7 @@ export default function HRMManagementPage() {
                   key={hrm.id}
                   hrm={hrm}
                   onToggleStatus={handleToggleHRMStatus}
+                  brandColors={brandColors}
                 />
               ))}
             </div>
@@ -353,7 +411,8 @@ export default function HRMManagementPage() {
               <div className="text-gray-400 mb-4">Start the demo to see sample heart rate monitors</div>
               <button
                 onClick={handleStartSimulation}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                className="font-bold py-2 px-6 rounded-lg transition-colors hover:opacity-90"
+                style={{ backgroundColor: accentBrand, color: '#050b12' }}
               >
                 Generate Demo Data
               </button>
@@ -363,7 +422,9 @@ export default function HRMManagementPage() {
 
         {/* Active Participants */}
         <div>
-          <h2 className="text-2xl font-bold mb-6 text-green-400">Active Participants</h2>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: secondaryBrand }}>
+            Active Participants
+          </h2>
           {activeAssignments.length > 0 ? (
             <div className="space-y-4">
               {activeAssignments.map(assignment => {
@@ -374,6 +435,7 @@ export default function HRMManagementPage() {
                     assignment={assignment}
                     metric={metric}
                     onUnassign={handleUnassignHRM}
+                    brandColors={brandColors}
                   />
                 );
               })}
@@ -395,7 +457,8 @@ export default function HRMManagementPage() {
             href="/hrm-tv"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition-colors"
+            className="font-bold py-3 px-6 rounded-xl transition-colors hover:opacity-90"
+            style={{ backgroundColor: primaryBrand, color: '#050b12' }}
           >
             📺 Open HRM TV Display
           </a>
@@ -403,7 +466,8 @@ export default function HRMManagementPage() {
             href="/display-timer"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-xl transition-colors"
+            className="font-bold py-3 px-6 rounded-xl transition-colors hover:opacity-90"
+            style={{ backgroundColor: secondaryBrand, color: '#050b12' }}
           >
             ⏱️ Timer Display
           </a>
@@ -411,7 +475,8 @@ export default function HRMManagementPage() {
             href="/qr-codes"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-xl transition-colors"
+            className="font-bold py-3 px-6 rounded-xl transition-colors hover:opacity-90"
+            style={{ backgroundColor: accentBrand, color: '#050b12' }}
           >
             📱 QR Codes
           </a>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -15,6 +15,12 @@ export function useRoomSession({ roomId }: UseRoomSessionOptions) {
   const [error, setError] = useState<string | null>(null);
   const [session, setSession] = useState<any>(null);
   const [events, setEvents] = useState<any[]>([]);
+  const sessionIdRef = useRef<string | null>(null);
+
+  const setSessionState = useCallback((nextSession: any) => {
+    setSession(nextSession);
+    sessionIdRef.current = nextSession?.id ?? null;
+  }, []);
 
   useEffect(() => {
     const loadSession = async () => {
@@ -34,7 +40,7 @@ export function useRoomSession({ roomId }: UseRoomSessionOptions) {
         }
 
         if (sessionData) {
-          setSession(sessionData);
+          setSessionState(sessionData);
           
           // Get session events
           const { data: eventsData } = await supabase
@@ -62,13 +68,13 @@ export function useRoomSession({ roomId }: UseRoomSessionOptions) {
         { event: '*', schema: 'public', table: 'workout_sessions', filter: `room_id=eq.${roomId}` },
         payload => {
           if (payload.new) {
-            setSession(payload.new);
+            setSessionState(payload.new);
           }
         })
       .on('postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'session_events' },
         payload => {
-          if (payload.new && payload.new.session_id === session?.id) {
+          if (payload.new && payload.new.session_id === sessionIdRef.current) {
             setEvents(prev => [...prev, payload.new]);
           }
         })
@@ -77,7 +83,7 @@ export function useRoomSession({ roomId }: UseRoomSessionOptions) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [roomId]);
+  }, [roomId, setSessionState]);
 
   const updateSessionDifficulty = async (direction: 'easier' | 'harder') => {
     if (!session) return;
@@ -141,7 +147,7 @@ export function useRoomSession({ roomId }: UseRoomSessionOptions) {
 
       if (roomError) throw roomError;
 
-      setSession(null);
+      setSessionState(null);
       setEvents([]);
 
     } catch (err) {

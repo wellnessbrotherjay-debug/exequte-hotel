@@ -8,13 +8,15 @@ import { useRouter } from "next/navigation";
 import {
   storage,
   STORAGE_KEYS,
-  getDefaultBrandColors,
   type SessionPhase,
   type SessionState,
   type WorkoutPlan,
   type WorkoutSetup,
 } from "@/lib/workout-engine/storage";
-import { getMediaForExercise } from "@/lib/workout-engine/media";
+import { resolveExerciseMedia } from "@/lib/workout-engine/media";
+import { useVenueContext } from "@/lib/venue-context";
+import { resolveBrandColors } from "@/lib/workout-engine/brand-colors";
+import { useExerciseMediaLibrary } from "@/lib/workout-engine/library-hooks";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -38,7 +40,7 @@ const PHASE_LABEL: Record<SessionPhase, string> = {
 
 const PHASE_COLOR: Record<SessionPhase, string> = {
   prep: "#00BFFF",
-  work: "#FF4D4D", 
+  work: "#FF4D4D",
   rest: "#32CD32",
   complete: "#FFD100",
 };
@@ -70,11 +72,12 @@ export default function DisplayTvPage() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [workoutCountdown, setWorkoutCountdown] = useState(60 * 36);
 
-  // Get brand colors using default values since branding might not exist in setup
+  const { activeVenue } = useVenueContext();
+  const { library: exerciseLibrary } = useExerciseMediaLibrary();
+
   const brandColors = useMemo(() => {
-    const defaults = { primary: "#00BFFF", secondary: "#14B8A6", accent: "#F59E0B" };
-    return defaults;
-  }, []);
+    return resolveBrandColors({ activeVenue, setup });
+  }, [activeVenue, setup]);
 
   const { primary: primaryBrand, secondary: secondaryBrand, accent: accentBrand } = brandColors;
 
@@ -187,7 +190,7 @@ export default function DisplayTvPage() {
     return stations.find((station) => station.stationId === currentStationId) ?? null;
   }, [stations, currentStationId]);
 
-  const currentMedia = currentExercise ? getMediaForExercise(currentExercise.name) : null;
+  const currentMedia = resolveExerciseMedia(currentExercise, { library: exerciseLibrary });
   const currentPhase: SessionPhase = session?.phase ?? "prep";
   const remainingTime = session?.remaining ?? setup?.workTime ?? 0;
   const currentRound = session?.round ?? 1;
@@ -240,16 +243,16 @@ export default function DisplayTvPage() {
 
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-10 lg:px-12 lg:py-12 flex flex-col gap-12">
-        
+
         {/* Header Section */}
         <header className="flex flex-col items-center gap-3 text-center">
-          <p className="text-xs uppercase tracking-[0.55em]" style={{ color: hexToRgba(secondaryBrand, 0.9) }}>
+          <p className="text-xs uppercase tracking-[0.55em] text-brand-secondary/90">
             {facilityName}
           </p>
-          <h1 className="text-4xl font-extrabold uppercase md:text-5xl" style={{ color: primaryBrand }}>
+          <h1 className="text-4xl font-extrabold uppercase md:text-5xl text-brand-primary">
             WARRIOR STATIONS
           </h1>
-          <div className="flex flex-wrap items-center justify-center gap-3 text-xs uppercase tracking-[0.35em]" style={{ color: hexToRgba(accentBrand, 0.7) }}>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs uppercase tracking-[0.35em] text-brand-accent/70">
             <span>{timingFormat}</span>
             <span>•</span>
             <span>{workoutName}</span>
@@ -260,7 +263,7 @@ export default function DisplayTvPage() {
 
         {/* Status Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div 
+          <div
             className="flex flex-col items-center gap-4 rounded-[24px] border-2 px-6 py-8 text-center"
             style={{
               borderColor: phaseColor,
@@ -271,47 +274,35 @@ export default function DisplayTvPage() {
             <p className="text-xs uppercase tracking-[0.45em]" style={{ color: phaseColor }}>
               Current Phase
             </p>
-            <p 
-              className="text-3xl font-black uppercase" 
+            <p
+              className="text-3xl font-black uppercase"
               style={{ color: phaseColor, textShadow: `0 0 25px ${hexToRgba(phaseColor, 0.35)}` }}
             >
               {PHASE_LABEL[currentPhase]}
             </p>
           </div>
-          
-          <div 
-            className="flex flex-col items-center gap-4 rounded-[24px] border-2 px-6 py-8 text-center"
-            style={{
-              borderColor: primaryBrand,
-              backgroundColor: hexToRgba(primaryBrand, 0.12),
-              boxShadow: `0 0 55px ${hexToRgba(primaryBrand, 0.25)}`,
-            }}
+
+          <div
+            className="flex flex-col items-center gap-4 rounded-[24px] border-2 px-6 py-8 text-center border-brand-primary bg-brand-primary/10 shadow-[0_0_55px_rgba(0,191,255,0.25)]"
           >
-            <p className="text-xs uppercase tracking-[0.45em]" style={{ color: primaryBrand }}>
+            <p className="text-xs uppercase tracking-[0.45em] text-brand-primary">
               Time Remaining
             </p>
-            <p 
-              className="text-4xl font-black" 
-              style={{ color: primaryBrand, textShadow: `0 0 25px ${hexToRgba(primaryBrand, 0.35)}` }}
+            <p
+              className="text-4xl font-black text-brand-primary drop-shadow-[0_0_25px_rgba(0,191,255,0.35)]"
             >
               {remainingTime}s
             </p>
           </div>
 
-          <div 
-            className="flex flex-col items-center gap-4 rounded-[24px] border-2 px-6 py-8 text-center"
-            style={{
-              borderColor: accentBrand,
-              backgroundColor: hexToRgba(accentBrand, 0.12),
-              boxShadow: `0 0 55px ${hexToRgba(accentBrand, 0.25)}`,
-            }}
+          <div
+            className="flex flex-col items-center gap-4 rounded-[24px] border-2 px-6 py-8 text-center border-brand-accent bg-brand-accent/10 shadow-[0_0_55px_rgba(255,209,0,0.25)]"
           >
-            <p className="text-xs uppercase tracking-[0.45em]" style={{ color: accentBrand }}>
+            <p className="text-xs uppercase tracking-[0.45em] text-brand-accent">
               Active Station
             </p>
-            <p 
-              className="text-3xl font-black" 
-              style={{ color: accentBrand, textShadow: `0 0 25px ${hexToRgba(accentBrand, 0.35)}` }}
+            <p
+              className="text-3xl font-black text-brand-accent drop-shadow-[0_0_25px_rgba(255,209,0,0.35)]"
             >
               {currentStationId ? `Station ${currentStationId}` : "TBD"}
             </p>
@@ -319,19 +310,17 @@ export default function DisplayTvPage() {
         </div>
 
         {/* Station Lineup Section */}
-        <div 
+        <div
           className="rounded-[24px] border border-white/10 bg-black/60 px-8 py-10 shadow-[0_0_45px_rgba(0,0,0,0.4)] backdrop-blur-md"
         >
           <div className="flex items-center justify-between mb-8">
-            <h2 
-              className="text-2xl font-bold uppercase tracking-[0.2em]"
-              style={{ color: secondaryBrand }}
+            <h2
+              className="text-2xl font-bold uppercase tracking-[0.2em] text-brand-secondary"
             >
               STATION LINEUP
             </h2>
-            <div 
-              className="text-sm uppercase tracking-[0.15em] font-bold"
-              style={{ color: hexToRgba(accentBrand, 0.7) }}
+            <div
+              className="text-sm uppercase tracking-[0.15em] font-bold text-brand-accent/70"
             >
               {stations.length} STATIONS ON DECK
             </div>
@@ -343,40 +332,27 @@ export default function DisplayTvPage() {
               stations.map((station) => (
                 <div
                   key={station.stationId}
-                  className={`rounded-[20px] border-2 p-6 transition-all duration-300 hover:scale-105 ${
-                    station.stationId === currentStationId 
-                      ? "bg-black/80" 
-                      : "bg-black/50"
-                  }`}
-                  style={{
-                    borderColor: station.stationId === currentStationId ? primaryBrand : "rgba(255,255,255,0.2)",
-                    backgroundColor: station.stationId === currentStationId 
-                      ? hexToRgba(primaryBrand, 0.15)
-                      : "rgba(0,0,0,0.6)",
-                    boxShadow: station.stationId === currentStationId 
-                      ? `0 0 35px ${hexToRgba(primaryBrand, 0.3)}`
-                      : '0 0 20px rgba(0,0,0,0.5)'
-                  }}
+                  className={`rounded-[20px] border-2 p-6 transition-all duration-300 hover:scale-105 ${station.stationId === currentStationId
+                      ? "bg-brand-primary/15 border-brand-primary shadow-[0_0_35px_rgba(0,191,255,0.3)]"
+                      : "bg-black/60 border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+                    }`}
                 >
                   <div className="text-center">
-                    <div 
-                      className="text-xl font-black mb-2 uppercase tracking-wider"
-                      style={{ 
-                        color: station.stationId === currentStationId ? primaryBrand : accentBrand,
-                        textShadow: `0 0 15px ${hexToRgba(station.stationId === currentStationId ? primaryBrand : accentBrand, 0.4)}`
-                      }}
+                    <div
+                      className={`text-xl font-black mb-2 uppercase tracking-wider ${station.stationId === currentStationId
+                          ? "text-brand-primary drop-shadow-[0_0_15px_rgba(0,191,255,0.4)]"
+                          : "text-brand-accent drop-shadow-[0_0_15px_rgba(255,209,0,0.4)]"
+                        }`}
                     >
                       STATION {station.stationId}
                     </div>
-                    <div 
-                      className="text-xs uppercase tracking-[0.1em] font-bold mb-3"
-                      style={{ color: hexToRgba(secondaryBrand, 0.8) }}
+                    <div
+                      className="text-xs uppercase tracking-[0.1em] font-bold mb-3 text-brand-secondary/80"
                     >
                       {setup?.stations.find((s) => s.id === station.stationId)?.equipment ?? "EQUIPMENT"}
                     </div>
-                    <div 
-                      className="text-sm font-bold leading-tight"
-                      style={{ color: "white", textShadow: '0 0 10px rgba(255, 255, 255, 0.2)' }}
+                    <div
+                      className="text-sm font-bold leading-tight text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
                     >
                       {station.name}
                     </div>
@@ -384,23 +360,18 @@ export default function DisplayTvPage() {
                 </div>
               ))
             ) : (
-              <div 
-                className="col-span-full text-center p-12 border-2 rounded-[20px]"
-                style={{
-                  borderColor: hexToRgba(accentBrand, 0.4),
-                  backgroundColor: hexToRgba(accentBrand, 0.1),
-                  boxShadow: `0 0 40px ${hexToRgba(accentBrand, 0.1)}`
-                }}
+              <div
+                className="col-span-full text-center p-12 border-2 rounded-[20px] border-brand-accent/40 bg-brand-accent/10 shadow-[0_0_40px_rgba(255,209,0,0.1)]"
               >
-                <p className="text-xl font-bold" style={{ color: accentBrand }}>No stations assigned yet</p>
-                <p className="text-sm mt-2" style={{ color: hexToRgba(accentBrand, 0.7) }}>Use the builder to assign exercises to stations.</p>
+                <p className="text-xl font-bold text-brand-accent">No stations assigned yet</p>
+                <p className="text-sm mt-2 text-brand-accent/70">Use the builder to assign exercises to stations.</p>
               </div>
             )}
           </div>
         </div>
 
         {error && (
-          <div 
+          <div
             className="text-sm text-center border-2 rounded-[20px] px-6 py-4"
             style={{
               borderColor: "#FF4D4D",

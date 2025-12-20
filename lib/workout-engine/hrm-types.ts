@@ -14,6 +14,9 @@ export interface HRMAssignment {
   sessionId: string;
   userId: string;
   userName: string;
+  weight?: number; // Added for calorie calc
+  age?: number; // Added for calorie calc
+  gender?: 'male' | 'female'; // Added for calorie calc
   assigned: boolean;
   assignedAt: string;
 }

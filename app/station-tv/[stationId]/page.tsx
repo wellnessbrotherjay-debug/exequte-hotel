@@ -7,14 +7,19 @@ import { Orbitron } from "next/font/google";
 import {
   storage,
   STORAGE_KEYS,
-  getDefaultBrandColors,
   type SessionPhase,
   type SessionState,
   type WorkoutPlan,
   type WorkoutSetup,
 } from "@/lib/workout-engine/storage";
-import { getMediaForExercise } from "@/lib/workout-engine/media";
+import {
+  FALLBACK_EXERCISE_VIDEO,
+  resolveExerciseMedia,
+} from "@/lib/workout-engine/media";
 import { getExerciseInstructions } from "@/lib/workout-engine/instructions";
+import { resolveBrandColors } from "@/lib/workout-engine/brand-colors";
+import { useExerciseMediaLibrary } from "@/lib/workout-engine/library-hooks";
+import { useVenueContext } from "@/lib/venue-context";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -43,7 +48,7 @@ const PHASE_COLOR: Record<SessionPhase, string> = {
   complete: "#FFD100",
 };
 
-const FALLBACK_VIDEO = "/videos/public/Incline press.mp4";
+const FALLBACK_VIDEO = FALLBACK_EXERCISE_VIDEO;
 
 function formatTime(seconds: number) {
   const min = Math.floor(seconds / 60);
@@ -76,6 +81,14 @@ export default function StationTvDisplayPage() {
   const [error, setError] = useState<string | null>(null);
   const [lastSynced, setLastSynced] = useState<string | null>(null);
   const [showDebug, setShowDebug] = useState(false);
+  const { activeVenue } = useVenueContext();
+  const { library: exerciseLibrary } = useExerciseMediaLibrary();
+
+  const brandColors = useMemo(
+    () => resolveBrandColors({ activeVenue, setup }),
+    [activeVenue, setup]
+  );
+  const { primary: primaryBrand, accent: accentBrand } = brandColors;
 
   useEffect(() => {
     if (Number.isNaN(stationId)) {
@@ -207,24 +220,25 @@ export default function StationTvDisplayPage() {
     }
   }, [setup, plan, stationId]);
 
-  const brandColors = useMemo(() => {
-    if (setup?.colors) return setup.colors;
-    return getDefaultBrandColors(setup?.theme);
-  }, [setup]);
-
   const currentExercise = useMemo(() => {
     if (!plan?.exercises?.length) return null;
     const assignment = plan.exercises.find((exercise) => exercise.stationId === stationId);
     return assignment ?? null;
   }, [plan, stationId]);
 
-  const currentMedia = currentExercise ? getMediaForExercise(currentExercise.name) : null;
+  const currentMedia = resolveExerciseMedia(currentExercise, { library: exerciseLibrary });
   const currentVideo = currentMedia?.video ?? FALLBACK_VIDEO;
-  const instructions = currentExercise ? getExerciseInstructions(currentExercise.name) ?? [] : [];
+  const instructions =
+    currentExercise?.cues?.length
+      ? currentExercise.cues
+      : currentMedia?.cues?.length
+        ? currentMedia.cues
+        : getExerciseInstructions(currentExercise?.name) ?? [];
   const currentEquipment =
-    currentExercise && setup
+    currentExercise?.equipment ??
+    (currentExercise && setup
       ? setup.stations.find((station) => station.id === currentExercise.stationId)?.equipment ?? null
-      : null;
+      : currentMedia?.equipment ?? null);
 
   const nextExercise = useMemo(() => {
     if (!plan?.exercises?.length) return null;
@@ -235,9 +249,9 @@ export default function StationTvDisplayPage() {
     return assignments[nextIndex];
   }, [plan, stationId]);
 
-  const nextMedia = nextExercise ? getMediaForExercise(nextExercise.name) : null;
+  const nextMedia = resolveExerciseMedia(nextExercise, { library: exerciseLibrary });
 
-  const phaseColor = PHASE_COLOR[currentPhase] ?? brandColors.primary;
+  const phaseColor = PHASE_COLOR[currentPhase] ?? primaryBrand;
   const phaseLabel = PHASE_LABEL[currentPhase]?.toUpperCase() ?? "GET READY";
   const remainingTime = Math.max(timeLeft, 0);
   const totalRounds = setup?.rounds ?? 1;
@@ -268,9 +282,9 @@ export default function StationTvDisplayPage() {
         <button
           className="absolute left-6 top-6 z-50 flex h-10 w-10 items-center justify-center rounded-full border bg-[#0b1420] text-sm"
           style={{
-            borderColor: hexToRgba(brandColors.primary, 0.65),
-            boxShadow: `0 0 20px ${hexToRgba(brandColors.primary, 0.45)}`,
-            color: hexToRgba(brandColors.primary, 0.9),
+            borderColor: hexToRgba(primaryBrand, 0.65),
+            boxShadow: `0 0 20px ${hexToRgba(primaryBrand, 0.45)}`,
+            color: hexToRgba(primaryBrand, 0.9),
           }}
           onClick={() => setShowDebug(true)}
         >
@@ -282,9 +296,9 @@ export default function StationTvDisplayPage() {
         <div
           className="absolute left-6 top-6 z-50 w-64 rounded-2xl border bg-[#050b12]/95 p-4 text-xs shadow-[0_0_24px_rgba(0,175,255,0.3)]"
           style={{
-            borderColor: hexToRgba(brandColors.primary, 0.4),
-            boxShadow: `0 0 24px ${hexToRgba(brandColors.primary, 0.3)}`,
-            color: hexToRgba(brandColors.primary, 0.85),
+            borderColor: hexToRgba(primaryBrand, 0.4),
+            boxShadow: `0 0 24px ${hexToRgba(primaryBrand, 0.3)}`,
+            color: hexToRgba(primaryBrand, 0.85),
           }}
         >
           <div className="mb-2 flex items-center justify-between">
@@ -292,8 +306,8 @@ export default function StationTvDisplayPage() {
             <button
               className="rounded-full border px-2 py-1 text-[10px] uppercase tracking-wide"
               style={{
-                borderColor: hexToRgba(brandColors.primary, 0.55),
-                color: hexToRgba(brandColors.primary, 0.9),
+                borderColor: hexToRgba(primaryBrand, 0.55),
+                color: hexToRgba(primaryBrand, 0.9),
               }}
               onClick={() => setShowDebug(false)}
             >
@@ -329,15 +343,15 @@ export default function StationTvDisplayPage() {
           <div
             className="text-[clamp(26px,3.2vw,60px)] font-black"
             style={{
-              color: brandColors.primary,
-              textShadow: `0 0 24px ${hexToRgba(brandColors.primary, 0.25)}`,
+              color: primaryBrand,
+              textShadow: `0 0 24px ${hexToRgba(primaryBrand, 0.25)}`,
             }}
           >
             {stationLabel.toUpperCase()}
           </div>
           <div
             className="mt-3 text-[clamp(12px,1.1vw,16px)] tracking-[0.4em]"
-            style={{ color: hexToRgba(brandColors.accent, 0.7) }}
+            style={{ color: hexToRgba(accentBrand, 0.7) }}
           >
             {setup
               ? `${setup.workTime}s WORK · ${setup.restTime}s REST · ROUND ${currentRound}/${totalRounds}`
@@ -367,7 +381,7 @@ export default function StationTvDisplayPage() {
               <div className="flex flex-col gap-2 text-left">
                 <div
                   className="text-[clamp(22px,2.2vw,38px)] font-bold uppercase tracking-[0.18em]"
-                  style={{ color: brandColors.primary }}
+                  style={{ color: primaryBrand }}
                 >
                   {currentExercise?.name ?? "Assign Exercise"}
                 </div>
@@ -412,7 +426,7 @@ export default function StationTvDisplayPage() {
             </div>
 
             <div className="flex flex-col gap-4 rounded-[24px] border border-white/10 bg-black/40 p-6">
-              <div className="text-[clamp(14px,1.1vw,18px)] uppercase tracking-[0.4em]" style={{ color: hexToRgba(brandColors.accent, 0.85) }}>
+              <div className="text-[clamp(14px,1.1vw,18px)] uppercase tracking-[0.4em]" style={{ color: hexToRgba(accentBrand, 0.85) }}>
                 Form Checklist
               </div>
               {instructions.length ? (

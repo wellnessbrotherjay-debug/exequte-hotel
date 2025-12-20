@@ -1,14 +1,13 @@
 -- Create tables for hotel room workout system
 
--- ROOMS & SESSIONS
-create table rooms (
+create table if not exists rooms (
   id uuid primary key default gen_random_uuid(),
   hotel_id uuid not null,
   name text,
   qr_slug text unique
 );
 
-create table workout_sessions (
+create table if not exists workout_sessions (
   id uuid primary key default gen_random_uuid(),
   room_id uuid references rooms(id) on delete cascade,
   user_id uuid, -- nullable guest
@@ -18,7 +17,7 @@ create table workout_sessions (
 );
 
 -- USER PROFILE & TESTING
-create table user_profiles (
+create table if not exists user_profiles (
   id uuid primary key default gen_random_uuid(),
   email text unique,
   display_name text,
@@ -32,7 +31,64 @@ create table user_profiles (
   meals_per_day int default 3
 );
 
-create table fitness_tests (
+-- Compatibility: some environments may already have a user_profiles table keyed by user_id.
+-- Ensure an `id` column exists and is unique so downstream foreign keys succeed.
+do $$
+declare
+  has_user_id boolean;
+begin
+  select exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'user_profiles'
+      and column_name = 'user_id'
+  ) into has_user_id;
+
+  if not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'user_profiles'
+      and column_name = 'id'
+  ) then
+    alter table public.user_profiles add column id uuid;
+  end if;
+
+  if has_user_id then
+    update public.user_profiles
+    set id = coalesce(id, user_id)
+    where id is null;
+  else
+    update public.user_profiles
+    set id = coalesce(id, gen_random_uuid())
+    where id is null;
+  end if;
+
+  alter table public.user_profiles
+    alter column id set not null,
+    alter column id set default gen_random_uuid();
+
+  begin
+    alter table public.user_profiles
+      add constraint user_profiles_id_unique unique (id);
+  exception
+    when duplicate_object then null;
+  end;
+end $$;
+
+create or replace function public.handle_user_profiles_id()
+returns trigger as $$
+begin
+  new.id := coalesce(new.id, new.user_id, gen_random_uuid());
+  return new;
+end;
+$$ language plpgsql;
+
+drop trigger if exists user_profiles_set_id on public.user_profiles;
+create trigger user_profiles_set_id
+  before insert on public.user_profiles
+  for each row execute function public.handle_user_profiles_id();
+
+create table if not exists fitness_tests (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references user_profiles(id) on delete cascade,
   session_id uuid references workout_sessions(id) on delete cascade,
@@ -51,7 +107,7 @@ create table fitness_tests (
 );
 
 -- WORKOUT LIBRARY
-create table workout_templates (
+create table if not exists workout_templates (
   id uuid primary key default gen_random_uuid(),
   slug text unique,
   title text,
@@ -64,7 +120,7 @@ create table workout_templates (
 );
 
 -- EXERCISES
-create table exercises (
+create table if not exists exercises (
   id uuid primary key default gen_random_uuid(),
   slug text unique,
   name text,
@@ -75,7 +131,7 @@ create table exercises (
 );
 
 -- SESSION RUN DATA
-create table session_events (
+create table if not exists session_events (
   id uuid primary key default gen_random_uuid(),
   session_id uuid references workout_sessions(id) on delete cascade,
   ts timestamptz default now(),
@@ -83,7 +139,7 @@ create table session_events (
   payload jsonb
 );
 
-create table workout_logs (
+create table if not exists workout_logs (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references user_profiles(id) on delete cascade,
   session_id uuid references workout_sessions(id) on delete set null,
@@ -97,7 +153,7 @@ create table workout_logs (
 );
 
 -- MEALS / MENU / ORDERS
-create table menu_items (
+create table if not exists menu_items (
   id uuid primary key default gen_random_uuid(),
   category text,
   name text,
@@ -109,7 +165,7 @@ create table menu_items (
   options jsonb
 );
 
-create table meal_orders (
+create table if not exists meal_orders (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references user_profiles(id) on delete set null,
   session_id uuid references workout_sessions(id) on delete set null,
@@ -121,5 +177,22 @@ create table meal_orders (
 );
 
 -- Realtime channels
-alter table session_events replica identity full;
-alter table meal_orders replica identity full;
+do $$
+begin
+  if exists (
+    select 1 from information_schema.tables
+    where table_schema = 'public' and table_name = 'session_events'
+  ) then
+    execute 'alter table session_events replica identity full';
+  end if;
+end $$;
+
+do $$
+begin
+  if exists (
+    select 1 from information_schema.tables
+    where table_schema = 'public' and table_name = 'meal_orders'
+  ) then
+    execute 'alter table meal_orders replica identity full';
+  end if;
+end $$;

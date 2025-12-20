@@ -223,21 +223,21 @@ export default function QRCodesPage() {
               <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
               <div>
                 <p className="font-semibold text-white">Scan QR Code</p>
-                <p>Open your phone's camera and point it at the QR code above</p>
+                <p>Open your phone&apos;s camera and point it at the QR code above</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
               <div>
                 <p className="font-semibold text-white">Start Workout</p>
-                <p>Tap "Start Workout" on your phone to begin the complete circuit</p>
+                <p>Tap &quot;Start Workout&quot; on your phone to begin the complete circuit</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
               <div>
                 <p className="font-semibold text-white">Control Your Pace</p>
-                <p>Use "Start" and "Finished" buttons to move through each exercise at your own speed</p>
+                <p>Use &quot;Start&quot; and &quot;Finished&quot; buttons to move through each exercise at your own speed</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -255,7 +255,7 @@ export default function QRCodesPage() {
             <ul className="text-xs text-gray-400 space-y-1">
               <li>• Your phone must be on the same WiFi network as this computer</li>
               <li>• Make sure your phone can access: <code className="bg-gray-800 px-1 rounded">{baseUrl}</code></li>
-              <li>• If the QR code doesn't work, try typing the URL directly in your phone's browser</li>
+              <li>• If the QR code doesn&apos;t work, try typing the URL directly in your phone&apos;s browser</li>
             </ul>
           </div>
         </div>

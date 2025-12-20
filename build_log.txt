@@ -1,0 +1,17 @@
+
+> exequte-hotel-1@1.0.0 build
+> next build
+
+   ▲ Next.js 14.0.2
+   - Environments: .env.local, .env.production
+
+   Creating an optimized production build ...
+Failed to compile.
+
+./app/glvt/circuit/page.tsx
+Module not found: Can't resolve '../../theme'
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+> Build failed because of webpack errors

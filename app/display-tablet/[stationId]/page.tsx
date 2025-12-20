@@ -8,14 +8,19 @@ import Image from "next/image";
 import {
   storage,
   STORAGE_KEYS,
-  getDefaultBrandColors,
   type SessionPhase,
   type SessionState,
   type WorkoutPlan,
   type WorkoutSetup,
 } from "@/lib/workout-engine/storage";
-import { getMediaForExercise } from "@/lib/workout-engine/media";
+import {
+  FALLBACK_EXERCISE_VIDEO,
+  resolveExerciseMedia,
+} from "@/lib/workout-engine/media";
 import { getExerciseInstructions } from "@/lib/workout-engine/instructions";
+import { useVenueContext } from "@/lib/venue-context";
+import { resolveBrandColors } from "@/lib/workout-engine/brand-colors";
+import { useExerciseMediaLibrary } from "@/lib/workout-engine/library-hooks";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -44,7 +49,7 @@ const PHASE_COLOR: Record<SessionPhase, string> = {
   complete: "#FFD100",
 };
 
-const FALLBACK_VIDEO = "/videos/fallback.mp4";
+const FALLBACK_VIDEO = FALLBACK_EXERCISE_VIDEO;
 
 function hexToRgba(hex: string, alpha: number) {
   const sanitized = hex.replace("#", "");
@@ -68,11 +73,12 @@ export default function TabletStationPage() {
   const [currentPhase, setCurrentPhase] = useState<SessionPhase>("prep");
   const [currentRound, setCurrentRound] = useState(1);
 
-  // Get brand colors using default values since branding might not exist in setup
+  const { activeVenue } = useVenueContext();
+  const { library: exerciseLibrary } = useExerciseMediaLibrary();
+
   const brandColors = useMemo(() => {
-    const defaults = { primary: "#00BFFF", secondary: "#14B8A6", accent: "#F59E0B" };
-    return defaults;
-  }, []);
+    return resolveBrandColors({ activeVenue, setup });
+  }, [activeVenue, setup]);
 
   const { primary: primaryBrand, secondary: secondaryBrand, accent: accentBrand } = brandColors;
   const [activeStation, setActiveStation] = useState<number | null>(null);
@@ -197,15 +203,25 @@ export default function TabletStationPage() {
 
   const exerciseName =
     currentExercise?.name ?? (plan ? `No Exercise Assigned (Station ${stationId})` : "No Plan Loaded");
+  const resolvedMedia = useMemo(
+    () => resolveExerciseMedia(currentExercise, { library: exerciseLibrary }),
+    [currentExercise, exerciseLibrary]
+  );
+  const resolvedEquipment = resolvedMedia?.equipment;
   const exerciseEquipment = useMemo(() => {
+    if (currentExercise?.equipment) return currentExercise.equipment;
+    if (resolvedEquipment) return resolvedEquipment;
     if (!setup) return "N/A";
     return setup.stations.find((station) => station.id === stationId)?.equipment ?? "N/A";
-  }, [setup, stationId]);
-
-  const instructions = getExerciseInstructions(currentExercise?.name);
-  const exerciseDescription = instructions.join(" ");
-  const media = currentExercise ? getMediaForExercise(currentExercise.name) : null;
-  const videoSrc = media?.video || FALLBACK_VIDEO;
+  }, [currentExercise, resolvedEquipment, setup, stationId]);
+  const instructions =
+    currentExercise?.cues?.length
+      ? currentExercise.cues
+      : resolvedMedia?.cues?.length
+        ? resolvedMedia.cues
+        : getExerciseInstructions(currentExercise?.name);
+  const exerciseDescription = (instructions ?? []).join(" ");
+  const videoSrc = resolvedMedia?.video || FALLBACK_VIDEO;
 
   useEffect(() => {
     if (!setup) {

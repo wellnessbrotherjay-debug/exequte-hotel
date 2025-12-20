@@ -6,12 +6,13 @@ import { Orbitron } from "next/font/google";
 import {
   storage,
   STORAGE_KEYS,
-  getDefaultBrandColors,
   type SessionPhase,
   type SessionState,
   type WorkoutPlan,
   type WorkoutSetup,
 } from "@/lib/workout-engine/storage";
+import { resolveBrandColors } from "@/lib/workout-engine/brand-colors";
+import { useVenueContext } from "@/lib/venue-context";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -68,6 +69,13 @@ export default function TimerDisplayPage() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const lastPhaseRef = useRef<SessionPhase | null>(null);
   const countdownCallouts = useRef<Set<number>>(new Set());
+  const { activeVenue } = useVenueContext();
+
+  const brandColors = useMemo(
+    () => resolveBrandColors({ activeVenue, setup }),
+    [activeVenue, setup]
+  );
+  const { primary: primaryBrand, secondary: secondaryBrand, accent: accentBrand } = brandColors;
 
   useEffect(() => {
     const nextSetup = storage.getSetup();
@@ -156,10 +164,6 @@ export default function TimerDisplayPage() {
       : setup
         ? `Rounds: ${setup.rounds}`
         : "Rounds: --";
-  const defaultPalette = useMemo(() => getDefaultBrandColors(setup?.theme), [setup?.theme]);
-  const primaryBrand = setup?.colors?.primary ?? defaultPalette.primary;
-  const secondaryBrand = setup?.colors?.secondary ?? defaultPalette.secondary;
-  const accentBrand = setup?.colors?.accent ?? defaultPalette.accent;
   const facilityName = setup?.facilityName ?? "RaceFit Facility";
   const totalWork = setup ? setup.workTime : 0;
   const totalRest = setup ? setup.restTime : 0;

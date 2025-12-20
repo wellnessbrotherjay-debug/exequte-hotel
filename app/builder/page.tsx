@@ -5,25 +5,16 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
-import { Orbitron } from "next/font/google";
 import {
   storage,
   STORAGE_KEYS,
-  getDefaultBrandColors,
   type StationExercise,
   type WorkoutPlan,
   type WorkoutSetup,
 } from "@/lib/workout-engine/storage";
-import {
-  EXERCISE_MEDIA as EXERCISE_LIBRARY,
-  type ExerciseMedia,
-} from "@/lib/lib/exercise-library";
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800", "900"],
-  variable: "--font-orbitron",
-});
+import { type ExerciseMedia } from "@/lib/lib/exercise-library";
+import { useExerciseMediaLibrary } from "@/lib/workout-engine/library-hooks";
+import { useVenueContext } from "@/lib/venue-context";
 
 const GOALS = ["Fat Loss", "Strength", "Endurance"] as const;
 type GoalOption = (typeof GOALS)[number];
@@ -47,17 +38,25 @@ export default function BuilderPage() {
   const router = useRouter();
   const setup = useMemo<WorkoutSetup | null>(() => storage.getSetup(), []);
   const storedPlan = useMemo<WorkoutPlan | null>(() => storage.getPlan(), []);
+  const { activeVenue } = useVenueContext();
 
   // Get brand colors using default values since branding might not exist in setup
   const brandColors = useMemo(() => {
-    const defaults = { primary: "#00BFFF", secondary: "#14B8A6", accent: "#F59E0B" };
-    return defaults;
-  }, []);
+    if (activeVenue?.colors) return activeVenue.colors;
+    if (setup?.colors) return setup.colors;
+    return { primary: "#00BFFF", secondary: "#14B8A6", accent: "#F59E0B" };
+  }, [activeVenue, setup]);
 
   const { primary: primaryBrand, secondary: secondaryBrand, accent: accentBrand } = brandColors;
 
   const [goal, setGoal] = useState<GoalOption>(
     (storedPlan?.goal as GoalOption | undefined) ?? "Fat Loss"
+  );
+  const [libraryEquipment, setLibraryEquipment] = useState<string | null>(
+    null
+  );
+  const [libraryExercise, setLibraryExercise] = useState<string | null>(
+    null
   );
   const [selectedExercises, setSelectedExercises] = useState<Record<number, string>>(() => {
     if (!setup || !storedPlan?.exercises?.length) return {};
@@ -70,6 +69,12 @@ export default function BuilderPage() {
   const [error, setError] = useState<string | null>(null);
   const [showDebug, setShowDebug] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const {
+    library: exerciseLibrary,
+    isLoading: isLibraryLoading,
+    error: libraryLoadError,
+  } = useExerciseMediaLibrary();
+  const libraryError = libraryLoadError;
 
   useEffect(() => {
     if (!setup) router.replace("/setup");
@@ -90,17 +95,45 @@ export default function BuilderPage() {
     return () => unsubscribe?.();
   }, []);
 
+  const libraryEquipmentOptions = useMemo(() => {
+    return Array.from(
+      new Set(exerciseLibrary.map((exercise) => exercise.equipment.toLowerCase()))
+    ).sort();
+  }, [exerciseLibrary]);
+
+  const libraryExercisesForEquipment = useMemo(() => {
+    if (!libraryEquipment) return [];
+    return exerciseLibrary.filter(
+      (exercise) => exercise.equipment.toLowerCase() === libraryEquipment.toLowerCase()
+    );
+  }, [exerciseLibrary, libraryEquipment]);
+
+  const selectedLibraryExerciseData = useMemo(() => {
+    if (!libraryExercise) return null;
+    return exerciseLibrary.find(
+      (exercise) =>
+        exercise.name === libraryExercise &&
+        (!libraryEquipment || exercise.equipment.toLowerCase() === libraryEquipment.toLowerCase())
+    );
+  }, [exerciseLibrary, libraryExercise, libraryEquipment]);
+
+  useEffect(() => {
+    if (!libraryEquipment && exerciseLibrary.length) {
+      setLibraryEquipment(exerciseLibrary[0].equipment);
+      setLibraryExercise(exerciseLibrary[0].name);
+    }
+  }, [exerciseLibrary, libraryEquipment]);
+
   if (!setup) {
     return null;
   }
 
   const getOptionsForEquipment = (equipment: string): ExerciseMedia[] => {
-    const matches = EXERCISE_LIBRARY.filter(
+    return exerciseLibrary.filter(
       (exercise) =>
         exercise.equipment.toLowerCase() === equipment.toLowerCase() &&
         Boolean(exercise.video?.trim())
     );
-    return matches;
   };
 
   const ensureSelections = (): StationExercise[] | null => {
@@ -115,11 +148,22 @@ export default function BuilderPage() {
         );
         return null;
       }
+
       const chosenName = sanitizedSelections[station.id];
-      const validChoice = options.find((option) => option.name === chosenName)?.name ?? options[0].name;
-      sanitizedSelections[station.id] = validChoice;
-      assignments.push({ stationId: station.id, name: validChoice });
+      const selectedMeta =
+        options.find((option) => option.name === chosenName) ?? options[0];
+
+      sanitizedSelections[station.id] = selectedMeta.name;
+      assignments.push({
+        stationId: station.id,
+        name: selectedMeta.name,
+        video: selectedMeta.video ?? null,
+        equipment: selectedMeta.equipment ?? station.equipment,
+        muscles: selectedMeta.muscles,
+        cues: selectedMeta.cues,
+      });
     }
+
     setSelectedExercises(sanitizedSelections);
     return assignments;
   };
@@ -162,9 +206,21 @@ export default function BuilderPage() {
     setSelectedExercises((prev) => ({ ...prev, [stationId]: name }));
   };
 
+  const handleLibraryEquipmentChange = (value: string) => {
+    setLibraryEquipment(value);
+    const firstExercise = exerciseLibrary.find(
+      (exercise) => exercise.equipment.toLowerCase() === value.toLowerCase()
+    );
+    setLibraryExercise(firstExercise?.name ?? null);
+  };
+
+  const handleLibraryExerciseChange = (value: string) => {
+    setLibraryExercise(value);
+  };
+
   return (
-    <main 
-      className={`${orbitron.variable} ${orbitron.className} relative flex min-h-screen w-screen items-center justify-center bg-black text-white`}
+    <main
+      className="font-orbitron relative flex min-h-screen w-screen items-center justify-center bg-black text-white"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#202020,transparent_55%)]" />
 
@@ -196,11 +252,126 @@ export default function BuilderPage() {
       )}
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-10 lg:px-12 lg:py-12">
-        <div 
+        {libraryError && (
+          <div className="mb-4 rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
+            {libraryError} Using the local exercise list as a fallback.
+          </div>
+        )}
+        <div className="mb-6 rounded-xl border border-white/10 bg-black/40 p-4 text-sm text-slate-300 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Active Venue</p>
+            <p className="text-base text-white">
+              {activeVenue?.name ?? setup?.facilityName ?? "Default Builder Context"}
+            </p>
+          </div>
+          <div className="flex gap-3">
+            {(["primary", "secondary", "accent"] as const).map((token) => (
+              <div key={token} className="flex flex-col items-center text-[10px] uppercase tracking-[0.4em] text-slate-500">
+                <span>{token}</span>
+                <span
+                  className="mt-1 h-8 w-8 rounded-full border border-white/10"
+                  style={{ backgroundColor: brandColors[token] }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mb-8">
+          <div className="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur">
+            <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.4em] text-slate-400">Exercise Library</p>
+                <h3 className="text-2xl font-semibold text-white">Equipment & Videos</h3>
+                <p className="text-sm text-slate-300">
+                  Explore every exercise we have stored in Supabase. Use this when planning new
+                  equipment or uploading additional media.
+                </p>
+                {isLibraryLoading ? (
+                  <p className="text-xs uppercase tracking-[0.35em] text-slate-500 mt-2">
+                    Loading venue library...
+                  </p>
+                ) : null}
+              </div>
+              <div className="flex flex-col gap-3 md:flex-row">
+                <div>
+                  <label className="text-xs uppercase tracking-[0.3em] text-slate-400">
+                    Equipment
+                  </label>
+                  <select
+                    value={libraryEquipment ?? ""}
+                    onChange={(event) => handleLibraryEquipmentChange(event.target.value)}
+                    className="mt-1 w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:border-sky-400 focus:outline-none"
+                  >
+                    {libraryEquipmentOptions.map((equipment) => (
+                      <option key={equipment} value={equipment}>
+                        {equipment}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs uppercase tracking-[0.3em] text-slate-400">
+                    Exercise
+                  </label>
+                  <select
+                    value={libraryExercise ?? ""}
+                    onChange={(event) => handleLibraryExerciseChange(event.target.value)}
+                    className="mt-1 w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:border-sky-400 focus:outline-none"
+                  >
+                    {libraryExercisesForEquipment.map((exercise) => (
+                      <option key={exercise.name} value={exercise.name}>
+                        {exercise.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+            {selectedLibraryExerciseData && (
+              <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
+                <div className="rounded-xl border border-white/10 bg-black/40 p-4 text-sm text-slate-200">
+                  <p>
+                    <span className="text-slate-400">Video URL:</span>{" "}
+                    <a
+                      className="text-sky-300 underline"
+                      href={selectedLibraryExerciseData.video}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {selectedLibraryExerciseData.video}
+                    </a>
+                  </p>
+                  {selectedLibraryExerciseData.muscles && (
+                    <p className="mt-2">
+                      <span className="text-slate-400">Muscles:</span>{" "}
+                      {selectedLibraryExerciseData.muscles.join(", ")}
+                    </p>
+                  )}
+                  {selectedLibraryExerciseData.cues && (
+                    <p className="mt-2">
+                      <span className="text-slate-400">Cues:</span>{" "}
+                      {selectedLibraryExerciseData.cues.join(" • ")}
+                    </p>
+                  )}
+                </div>
+                <div className="rounded-xl border border-white/10 bg-black/60 p-4 text-sm text-slate-200">
+                  <p className="text-slate-400">Next Steps</p>
+                  <ul className="mt-2 space-y-1 text-slate-200">
+                    <li>• Upload new exercise videos to Supabase storage.</li>
+                    <li>• Insert metadata into the `exercise_media` table.</li>
+                    <li>• Refresh this page to see the updates instantly.</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div
           className="rounded-[24px] border border-white/10 bg-black/60 p-10 shadow-[0_0_45px_rgba(0,0,0,0.4)] backdrop-blur-md"
         >
           <div className="flex justify-end mb-6">
-            <span 
+            <span
               className="text-xs uppercase tracking-[0.3em] rounded-full px-4 py-2 border-2"
               style={{
                 color: accentBrand,
@@ -229,15 +400,15 @@ export default function BuilderPage() {
               </div>
             )}
             <div>
-              <p 
+              <p
                 className="text-sm uppercase tracking-[0.55em] mb-3"
                 style={{ color: hexToRgba(secondaryBrand, 0.9) }}
               >
                 {setup?.facilityName || "BUILDER CONSOLE"}
               </p>
-              <h1 
+              <h1
                 className="text-4xl font-extrabold uppercase"
-                style={{ 
+                style={{
                   color: primaryBrand,
                   textShadow: `0 0 25px ${hexToRgba(primaryBrand, 0.5)}`
                 }}
@@ -247,7 +418,7 @@ export default function BuilderPage() {
             </div>
           </header>
 
-          <section 
+          <section
             className="flex flex-col gap-6 rounded-[20px] border-2 p-6 mb-8 shadow-lg"
             style={{
               borderColor: hexToRgba(accentBrand, 0.4),
@@ -257,7 +428,7 @@ export default function BuilderPage() {
           >
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <label className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center">
-                <span 
+                <span
                   className="font-bold uppercase tracking-[0.25em]"
                   style={{ color: accentBrand }}
                 >
@@ -279,8 +450,8 @@ export default function BuilderPage() {
                   ))}
                 </select>
               </label>
-              <Link 
-                href="/setup" 
+              <Link
+                href="/setup"
                 className="text-sm uppercase tracking-[0.25em] hover:opacity-80 transition-opacity"
                 style={{ color: secondaryBrand }}
               >
@@ -291,64 +462,64 @@ export default function BuilderPage() {
 
           <section className="space-y-6">
             {setup.stations.map((station) => {
-            const options = getOptionsForEquipment(station.equipment);
-            const currentSelection = selectedExercises[station.id];
-            const selection = options.find((exercise) => exercise.name === currentSelection)?.name ?? options[0]?.name ?? "";
+              const options = getOptionsForEquipment(station.equipment);
+              const currentSelection = selectedExercises[station.id];
+              const selection = options.find((exercise) => exercise.name === currentSelection)?.name ?? options[0]?.name ?? "";
 
-            return (
-              <div
-                key={station.id}
-                className="flex flex-col gap-4 rounded-[20px] border-2 p-6 shadow-lg"
-                style={{
-                  borderColor: hexToRgba(primaryBrand, 0.3),
-                  backgroundColor: "rgba(0,0,0,0.6)",
-                  boxShadow: `0 0 25px ${hexToRgba(primaryBrand, 0.1)}`
-                }}
-              >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p 
-                      className="text-sm uppercase tracking-[0.3em] font-bold mb-1"
-                      style={{ color: primaryBrand }}
+              return (
+                <div
+                  key={station.id}
+                  className="flex flex-col gap-4 rounded-[20px] border-2 p-6 shadow-lg"
+                  style={{
+                    borderColor: hexToRgba(primaryBrand, 0.3),
+                    backgroundColor: "rgba(0,0,0,0.6)",
+                    boxShadow: `0 0 25px ${hexToRgba(primaryBrand, 0.1)}`
+                  }}
+                >
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p
+                        className="text-sm uppercase tracking-[0.3em] font-bold mb-1"
+                        style={{ color: primaryBrand }}
+                      >
+                        STATION {station.id}
+                      </p>
+                      <p
+                        className="text-sm"
+                        style={{ color: hexToRgba(secondaryBrand, 0.8) }}
+                      >
+                        Equipment: <span className="text-white font-medium">{station.equipment}</span>
+                      </p>
+                    </div>
+                    <select
+                      className="rounded-[12px] border-2 px-4 py-3 font-medium bg-black/80 sm:w-80"
+                      style={{
+                        borderColor: hexToRgba(accentBrand, 0.4),
+                        color: "white"
+                      }}
+                      value={selection}
+                      onChange={(event) => handleExerciseChange(station.id, event.target.value)}
                     >
-                      STATION {station.id}
-                    </p>
-                    <p 
-                      className="text-sm"
-                      style={{ color: hexToRgba(secondaryBrand, 0.8) }}
-                    >
-                      Equipment: <span className="text-white font-medium">{station.equipment}</span>
-                    </p>
+                      {options.map((exercise) => (
+                        <option key={exercise.name} value={exercise.name} className="bg-black">
+                          {exercise.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <select
-                    className="rounded-[12px] border-2 px-4 py-3 font-medium bg-black/80 sm:w-80"
-                    style={{
-                      borderColor: hexToRgba(accentBrand, 0.4),
-                      color: "white"
-                    }}
-                    value={selection}
-                    onChange={(event) => handleExerciseChange(station.id, event.target.value)}
-                  >
-                    {options.map((exercise) => (
-                      <option key={exercise.name} value={exercise.name} className="bg-black">
-                        {exercise.name}
-                      </option>
-                    ))}
-                  </select>
+                  {!options.length && (
+                    <p className="text-xs text-red-400 font-medium">
+                      No exercises available for {station.equipment}. Update your library to continue.
+                    </p>
+                  )}
                 </div>
-                {!options.length && (
-                  <p className="text-xs text-red-400 font-medium">
-                    No exercises available for {station.equipment}. Update your library to continue.
-                  </p>
-                )}
-              </div>
-            );
-          })}
-        </section>
+              );
+            })}
+          </section>
 
           <div className="flex justify-end items-center gap-6 mt-8">
             {error && (
-              <span 
+              <span
                 className="text-sm font-medium"
                 style={{ color: "#FF4D4D" }}
               >

@@ -154,6 +154,28 @@ export interface OrderItem {
   line_cents: number;
 }
 
+export interface Booking {
+  id: string;
+  user_id?: string;
+  room_id?: string;
+  room?: {
+    id: string;
+    name: string;
+  };
+  status: 'pending' | 'confirmed' | 'checked_in' | 'checked_out' | 'canceled';
+  check_in: string;
+  check_out: string;
+  guest_name?: string;
+  guest_email?: string;
+  guest_phone?: string;
+  package_name?: string;
+  party_size?: number;
+  special_requests?: string;
+  source?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // Calculation Types
 export interface MacroTargets {
   kcal: number;
@@ -219,6 +241,25 @@ export const CreateOrderSchema = z.object({
     size: z.enum(['S', 'M', 'L']).default('M'),
   })),
   special_instructions: z.string().max(500).optional(),
+});
+
+const isoDateString = z.string().refine(
+  (value) => !Number.isNaN(Date.parse(value)),
+  { message: 'Invalid date string' }
+);
+
+export const CreateBookingSchema = z.object({
+  userId: z.string().uuid(),
+  roomId: z.string().uuid(),
+  checkIn: isoDateString,
+  checkOut: isoDateString,
+  guestName: z.string().min(1, 'Guest name required'),
+  guestEmail: z.string().email().optional(),
+  guestPhone: z.string().optional(),
+  packageName: z.string().optional(),
+  partySize: z.number().int().min(1).max(6).optional(),
+  specialRequests: z.string().max(500).optional(),
+  source: z.string().optional(),
 });
 
 // Workout State Types

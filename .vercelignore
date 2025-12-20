@@ -1,0 +1,23 @@
+
+# Dependencies and System
+node_modules
+.next
+.git
+.DS_Store
+*.log
+
+# Large Monorepo Folders to Exclude
+APPS
+Finance
+flutter
+exequte-miniprogram
+hotel-nexus
+videos_backup
+brand-assets-temp
+docs
+
+# Build Artifacts
+.tmp
+artifacts
+dist
+build

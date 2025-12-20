@@ -156,17 +156,33 @@ CREATE TABLE workout_logs (
   created_at timestamptz DEFAULT now()
 );
 
--- MEALS / MENU / ORDERS
+-- Recipe library powers kitchen + macro adjustments
+CREATE TABLE recipes (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  slug text UNIQUE,
+  title text NOT NULL,
+  description text,
+  instructions text,
+  ingredients jsonb NOT NULL DEFAULT '[]',   -- [{name, amount, unit}]
+  base_macros jsonb NOT NULL DEFAULT '{}',   -- {kcal, protein_g, carbs_g, fat_g}
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
 CREATE TABLE menu_items (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   category text NOT NULL,         -- 'breakfast','pre','post','lunch','dinner','snack'
   name text NOT NULL,
+  description text,
+  image_url text,
   base_kcal int NOT NULL,
   protein_g numeric NOT NULL,
   carbs_g numeric NOT NULL,
   fat_g numeric NOT NULL,
   price_cents int NOT NULL,
   options jsonb DEFAULT '{}',          -- e.g. size multipliers, swaps
+  base_macros jsonb DEFAULT '{}',
+  recipe_id uuid REFERENCES recipes(id),
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
 );
@@ -176,10 +192,95 @@ CREATE TABLE meal_orders (
   user_id uuid REFERENCES user_profiles(id) ON DELETE SET NULL,
   session_id uuid REFERENCES workout_sessions(id) ON DELETE SET NULL,
   status text CHECK (status IN ('queued','in_kitchen','ready','delivered','cancelled')) DEFAULT 'queued',
+  room_number text,
+  guest_name text,
+  delivery_method text DEFAULT 'room' CHECK (delivery_method in ('room','pickup','dine_in')),
+  ticket_ref text,
   total_cents int DEFAULT 0,
   macros jsonb DEFAULT '{}',          -- target/day & per-meal allocations
   items jsonb DEFAULT '[]',           -- [{menu_item_id, qty, size, kcal, p,c,f, line_cents}]
+  macro_adjustments jsonb DEFAULT '{}',
+  recipe_snapshot jsonb DEFAULT '[]',
   special_instructions text,
+  kitchen_notes text,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE venues (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  city text,
+  country text,
+  logo_url text,
+  hero_image_url text,
+  story text,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE facilities (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  description text,
+  hours text,
+  icon text,
+  booking_url text,
+  image_url text,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE hotel_services (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  description text,
+  price_cents integer NOT NULL DEFAULT 0,
+  duration_minutes integer,
+  booking_url text,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE brand_settings (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  slug text UNIQUE NOT NULL,
+  name text NOT NULL,
+  logo_url text,
+  background_url text,
+  video_url text,
+  primary_color text NOT NULL DEFAULT '#00CFFF',
+  secondary_color text NOT NULL DEFAULT '#1AE6B5',
+  accent_color text NOT NULL DEFAULT '#FFB400',
+  font_family text NOT NULL DEFAULT 'Inter, sans-serif',
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE kitchen_queue (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  meal_order_id uuid REFERENCES meal_orders(id) ON DELETE CASCADE,
+  user_id uuid REFERENCES user_profiles(id) ON DELETE SET NULL,
+  room_number text,
+  guest_name text,
+  status text NOT NULL DEFAULT 'queued',
+  priority text DEFAULT 'standard',
+  meta jsonb DEFAULT '{}'::jsonb,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE workouts (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  slug text UNIQUE,
+  description text,
+  duration int NOT NULL DEFAULT 45,
+  workout_type text NOT NULL DEFAULT 'strength',
+  thumbnail_url text,
+  video_url text,
+  station_lineup jsonb DEFAULT '[]',
+  equipment jsonb DEFAULT '[]',
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
 );
@@ -192,6 +293,8 @@ CREATE INDEX idx_session_events_session_id ON session_events(session_id);
 CREATE INDEX idx_session_events_ts ON session_events(ts);
 CREATE INDEX idx_meal_orders_status ON meal_orders(status);
 CREATE INDEX idx_meal_orders_created_at ON meal_orders(created_at);
+CREATE INDEX idx_meal_orders_room_number ON meal_orders(room_number);
+CREATE INDEX idx_menu_items_recipe_id ON menu_items(recipe_id);
 CREATE INDEX idx_workout_templates_level ON workout_templates(level);
 CREATE INDEX idx_workout_templates_category ON workout_templates(category);
 CREATE INDEX idx_exercises_type ON exercises(type);
@@ -199,11 +302,17 @@ CREATE INDEX idx_equipment_category ON equipment(category_id);
 CREATE INDEX idx_exercise_equipment_equipment ON exercise_equipment(equipment_id);
 CREATE INDEX idx_room_equipment_room ON room_equipment(room_id);
 CREATE INDEX idx_menu_items_category ON menu_items(category);
+CREATE INDEX idx_kitchen_queue_status ON kitchen_queue(status);
+CREATE INDEX idx_kitchen_queue_created_at ON kitchen_queue(created_at DESC);
+CREATE INDEX idx_workouts_type ON workouts(workout_type);
+CREATE INDEX idx_workouts_duration ON workouts(duration);
+CREATE INDEX idx_workouts_slug ON workouts(slug);
 
 -- Realtime channels (Supabase Realtime listens on these tables)
 ALTER TABLE session_events REPLICA IDENTITY FULL;
 ALTER TABLE meal_orders REPLICA IDENTITY FULL;
 ALTER TABLE workout_sessions REPLICA IDENTITY FULL;
+ALTER TABLE kitchen_queue REPLICA IDENTITY FULL;
 
 -- Functions for updated_at timestamps
 CREATE OR REPLACE FUNCTION trigger_set_timestamp()
@@ -224,6 +333,13 @@ CREATE TRIGGER set_timestamp_equipment_categories BEFORE UPDATE ON equipment_cat
 CREATE TRIGGER set_timestamp_equipment BEFORE UPDATE ON equipment FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
 CREATE TRIGGER set_timestamp_menu_items BEFORE UPDATE ON menu_items FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
 CREATE TRIGGER set_timestamp_meal_orders BEFORE UPDATE ON meal_orders FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_recipes BEFORE UPDATE ON recipes FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_brand_settings BEFORE UPDATE ON brand_settings FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_kitchen_queue BEFORE UPDATE ON kitchen_queue FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_workouts BEFORE UPDATE ON workouts FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_venues BEFORE UPDATE ON venues FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_facilities BEFORE UPDATE ON facilities FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_hotel_services BEFORE UPDATE ON hotel_services FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
 
 -- Sample data for development
 
@@ -248,20 +364,39 @@ INSERT INTO exercises (slug, name, cues, demo_url, type, tags) VALUES
   ('deadbug', 'Dead Bug', 'Back flat, opposite arm/leg, control', '/videos/public/deadbug.mp4', 'mobility', ARRAY['core', 'stability']),
   ('bird_dog', 'Bird Dog', 'Opposite arm/leg reach, hold balance', '/videos/public/bird-dog.mp4', 'mobility', ARRAY['core', 'back']);
 
+-- Insert sample recipes
+INSERT INTO recipes (slug, title, description, instructions, ingredients, base_macros) VALUES
+  ('ham-eggs-toast', 'Ham & Eggs + Toast', 'Classic protein-forward breakfast', 'Grill ham, fry eggs over-easy, toast sourdough. Plate with herb butter.', '[{"name":"Ham","amount":"90","unit":"g"},{"name":"Eggs","amount":"2","unit":"each"},{"name":"Sourdough toast","amount":"2","unit":"slices"}]', '{"kcal":520,"protein_g":32,"carbs_g":36,"fat_g":26}'),
+  ('greek-yogurt-bowl', 'Greek Yogurt Bowl', 'High-protein yogurt bowl with berries', 'Layer yogurt, oats, berries, finish with honey drizzle.', '[{"name":"Greek yogurt","amount":"180","unit":"g"},{"name":"Rolled oats","amount":"40","unit":"g"},{"name":"Berries","amount":"80","unit":"g"}]', '{"kcal":450,"protein_g":28,"carbs_g":55,"fat_g":12}'),
+  ('chicken-rice-bowl', 'Chicken Rice Bowl', 'Post-workout carb reload', 'Grill chicken, steam jasmine rice, sauté veggies, toss with sesame dressing.', '[{"name":"Chicken breast","amount":"160","unit":"g"},{"name":"Jasmine rice","amount":"180","unit":"g"},{"name":"Veg medley","amount":"120","unit":"g"}]', '{"kcal":600,"protein_g":38,"carbs_g":70,"fat_g":16}');
+
 -- Insert sample menu items
-INSERT INTO menu_items (category, name, base_kcal, protein_g, carbs_g, fat_g, price_cents, options) VALUES
-  ('breakfast', 'Ham & Eggs + Toast', 520, 32, 36, 26, 6500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('breakfast', 'Greek Yogurt + Oats + Berries', 450, 28, 55, 12, 6000, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('breakfast', 'Egg-White Omelette + Veg + Feta', 390, 35, 20, 18, 6200, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('post', 'Whey Smoothie (banana + oats)', 420, 32, 55, 8, 5500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('post', 'Chicken Rice Bowl', 600, 38, 70, 16, 7500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('lunch', 'Grilled Chicken, Rice, Greens', 620, 42, 70, 14, 7800, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('lunch', 'Salmon, Potato, Broccoli', 650, 38, 50, 26, 9500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('lunch', 'Tofu Stir-Fry, Rice', 580, 30, 75, 16, 7000, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('dinner', 'Grilled Steak + Sweet Potato', 720, 45, 55, 22, 11500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('dinner', 'Fish Tacos (3) + Black Beans', 580, 35, 65, 18, 8500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('snack', 'Protein Bar + Apple', 280, 20, 35, 8, 3500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}'),
-  ('snack', 'Mixed Nuts (30g)', 180, 6, 6, 16, 2800, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}');
+INSERT INTO menu_items (category, name, description, image_url, base_kcal, protein_g, carbs_g, fat_g, price_cents, options, base_macros, recipe_id) VALUES
+  ('breakfast', 'Ham & Eggs + Toast', 'Protein-focused breakfast staple', '/assets/menu/ham-eggs.jpg', 520, 32, 36, 26, 6500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":520,"protein_g":32,"carbs_g":36,"fat_g":26}', (select id from recipes where slug='ham-eggs-toast')),
+  ('breakfast', 'Greek Yogurt + Oats + Berries', 'Gut-friendly yogurt bowl', '/assets/menu/yogurt-bowl.jpg', 450, 28, 55, 12, 6000, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":450,"protein_g":28,"carbs_g":55,"fat_g":12}', (select id from recipes where slug='greek-yogurt-bowl')),
+  ('post', 'Chicken Rice Bowl', 'Rapid carb reload after training', '/assets/menu/chicken-rice.jpg', 600, 38, 70, 16, 7500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":600,"protein_g":38,"carbs_g":70,"fat_g":16}', (select id from recipes where slug='chicken-rice-bowl')),
+  ('lunch', 'Salmon, Potato, Broccoli', 'Omega-rich lunch plate', '/assets/menu/salmon-plate.jpg', 650, 38, 50, 26, 9500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":650,"protein_g":38,"carbs_g":50,"fat_g":26}', NULL),
+  ('lunch', 'Tofu Stir-Fry, Rice', 'Plant-forward stir fry', '/assets/menu/tofu-stirfry.jpg', 580, 30, 75, 16, 7000, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":580,"protein_g":30,"carbs_g":75,"fat_g":16}', NULL),
+  ('dinner', 'Grilled Steak + Sweet Potato', 'Charred steak with herb butter and smoked salt.', '/assets/menu/steak-sweetpotato.jpg', 720, 45, 55, 22, 11500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":720,"protein_g":45,"carbs_g":55,"fat_g":22}', NULL),
+  ('dinner', 'Fish Tacos (3) + Black Beans', 'Seared mahi tacos with lime crema.', '/assets/menu/fish-tacos.jpg', 580, 35, 65, 18, 8500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":580,"protein_g":35,"carbs_g":65,"fat_g":18}', NULL),
+  ('snack', 'Protein Bar + Apple', 'In-room grab & go pairing.', '/assets/menu/protein-bar.jpg', 280, 20, 35, 8, 3500, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":280,"protein_g":20,"carbs_g":35,"fat_g":8}', NULL),
+  ('snack', 'Mixed Nuts (30g)', 'Roasted cashews, pistachios, almonds.', '/assets/menu/mixed-nuts.jpg', 180, 6, 6, 16, 2800, '{"sizes": {"S": 0.8, "M": 1.0, "L": 1.3}}', '{"kcal":180,"protein_g":6,"carbs_g":6,"fat_g":16}', NULL);
+
+INSERT INTO hotel_services (name, description, price_cents, duration_minutes, booking_url) VALUES
+  ('Signature Personal Training', 'Private in-suite coaching with biometric tracking.', 24000, 60, 'https://booking.hotelfit.com/pt'),
+  ('Thermal Reset Ritual', 'Cold plunge + infrared + breathwork concierge.', 28000, 75, 'https://booking.hotelfit.com/thermal'),
+  ('Room Recovery Upgrade', 'Normatec compression + guided mobility kit.', 18000, 45, 'https://booking.hotelfit.com/recovery')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO facilities (name, description, hours, icon, booking_url, image_url) VALUES
+  ('Skyline Pool Deck', 'Heated infinity pools with DJ sunsets + cabanas.', '6am – 11pm', '🏖️', 'https://booking.hotelfit.com/cabana', '/assets/facilities/pool.jpg'),
+  ('Recovery Lab', 'Infrared, cold plunge, compression boots, and lab techs.', '7am – 10pm', '❄️', 'https://booking.hotelfit.com/recovery-lab', '/assets/facilities/recovery.jpg'),
+  ('Movement Studio', 'Reformers, yoga, and functional circuits overlooking the bay.', '24/7', '🧘', 'https://booking.hotelfit.com/studio', '/assets/facilities/studio.jpg')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO venues (name, city, country, logo_url, hero_image_url, story) VALUES
+  ('TS Suites Skyline', 'Bali', 'Indonesia', '/assets/logo.png', '/assets/hotel-bg.jpg', 'Residences engineered with HotelFit labs, thermal suites, and private gyms.')
+ON CONFLICT DO NOTHING;
 
 -- Create RLS policies (Row Level Security)
 ALTER TABLE rooms ENABLE ROW LEVEL SECURITY;
@@ -274,12 +409,26 @@ ALTER TABLE session_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE workout_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE menu_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE meal_orders ENABLE ROW LEVEL SECURITY;
+ALTER TABLE recipes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE brand_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE kitchen_queue ENABLE ROW LEVEL SECURITY;
+ALTER TABLE workouts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE venues ENABLE ROW LEVEL SECURITY;
+ALTER TABLE facilities ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hotel_services ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for templates and exercises
 CREATE POLICY "Public read workout_templates" ON workout_templates FOR SELECT USING (true);
 CREATE POLICY "Public read exercises" ON exercises FOR SELECT USING (true);
 CREATE POLICY "Public read menu_items" ON menu_items FOR SELECT USING (true);
+CREATE POLICY "Public read recipes" ON recipes FOR SELECT USING (true);
 CREATE POLICY "Public read rooms" ON rooms FOR SELECT USING (true);
+CREATE POLICY "Public read brand_settings" ON brand_settings FOR SELECT USING (true);
+CREATE POLICY "Public read workouts" ON workouts FOR SELECT USING (true);
+CREATE POLICY "Public read kitchen_queue" ON kitchen_queue FOR SELECT USING (true);
+CREATE POLICY "Public read venues" ON venues FOR SELECT USING (true);
+CREATE POLICY "Public read facilities" ON facilities FOR SELECT USING (true);
+CREATE POLICY "Public read hotel_services" ON hotel_services FOR SELECT USING (true);
 
 -- Session-based access for workout data
 CREATE POLICY "Session access workout_sessions" ON workout_sessions FOR ALL USING (true);
@@ -288,6 +437,7 @@ CREATE POLICY "Session access fitness_tests" ON fitness_tests FOR ALL USING (tru
 CREATE POLICY "Session access workout_logs" ON workout_logs FOR ALL USING (true);
 CREATE POLICY "Session access user_profiles" ON user_profiles FOR ALL USING (true);
 CREATE POLICY "Session access meal_orders" ON meal_orders FOR ALL USING (true);
+CREATE POLICY "Service role manage recipes" ON recipes FOR ALL USING (auth.role() = 'service_role') WITH CHECK (auth.role() = 'service_role');
 -- Insert sample equipment categories
 INSERT INTO equipment_categories (slug, label, description, sort_order) VALUES
   ('bodyweight', 'Bodyweight', 'Movements that require no or minimal equipment', 10),

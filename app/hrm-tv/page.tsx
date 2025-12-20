@@ -1,16 +1,22 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Orbitron } from "next/font/google";
-import { storage, type WorkoutSetup } from "@/lib/workout-engine/storage";
+import {
+  storage,
+  type WorkoutSetup,
+  type BrandPalette,
+} from "@/lib/workout-engine/storage";
 import { hrmStorage } from "@/lib/workout-engine/hrm-storage";
 import { HR_ZONES } from "@/lib/workout-engine/hrm-types";
 import type { 
   WorkoutSession, 
   HRMMetrics 
 } from "@/lib/workout-engine/hrm-types";
+import { resolveBrandColors } from "@/lib/workout-engine/brand-colors";
+import { useVenueContext } from "@/lib/venue-context";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -117,15 +123,16 @@ function HeartRateGauge({ heartRate, maxHR = 200 }: { heartRate: number; maxHR?:
   );
 }
 // Participant card component with timer-style design
-function ParticipantCard({ 
-  metric, 
-  setup,
-  isLeader = false 
-}: { 
-  metric: HRMMetrics; 
-  setup: WorkoutSetup;
+function ParticipantCard({
+  metric,
+  isLeader = false,
+  brandColors,
+}: {
+  metric: HRMMetrics;
   isLeader?: boolean;
+  brandColors: BrandPalette;
 }) {
+  const { primary: primaryBrand, secondary: secondaryBrand, accent: accentBrand } = brandColors;
   const zone = HR_ZONES[metric.zone as keyof typeof HR_ZONES];
   const percentage = (metric.currentHR / 200) * 100;
 
@@ -137,9 +144,9 @@ function ParticipantCard({
           : ''
       }`}
       style={{
-        backgroundColor: isLeader 
-          ? hexToRgba('#FFD100', 0.08)
-          : hexToRgba(zone.color, 0.05)
+        backgroundColor: isLeader
+          ? hexToRgba(secondaryBrand, 0.08)
+          : hexToRgba(zone.color, 0.05),
       }}
     >
       {/* Rank Badge */}
@@ -151,17 +158,17 @@ function ParticipantCard({
               : 'bg-white/10 text-white border border-white/20'
           }`}
           style={{
-            backgroundColor: isLeader ? '#FFD100' : hexToRgba(zone.color, 0.2),
-            border: isLeader ? 'none' : `1px solid ${hexToRgba(zone.color, 0.3)}`
+            backgroundColor: isLeader ? secondaryBrand : hexToRgba(zone.color, 0.2),
+            border: isLeader ? "none" : `1px solid ${hexToRgba(zone.color, 0.3)}`,
           }}
         >
           {metric.rank}
         </div>
         <div className="text-right">
-          <div className="text-xs uppercase tracking-[0.25em]" style={{ color: hexToRgba('#00BFFF', 0.7) }}>
+          <div className="text-xs uppercase tracking-[0.25em]" style={{ color: hexToRgba(primaryBrand, 0.7) }}>
             CALORIES
           </div>
-          <div className="text-2xl font-bold" style={{ color: '#F59E0B' }}>
+          <div className="text-2xl font-bold" style={{ color: accentBrand }}>
             {metric.calories}
           </div>
         </div>
@@ -199,7 +206,7 @@ function ParticipantCard({
       {/* Stats */}
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="rounded-2xl border border-white/10 bg-black/50 px-3 py-3">
-          <div className="text-xs uppercase tracking-[0.25em]" style={{ color: hexToRgba('#00BFFF', 0.7) }}>
+          <div className="text-xs uppercase tracking-[0.25em]" style={{ color: hexToRgba(primaryBrand, 0.7) }}>
             AVG HR
           </div>
           <div className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-orbitron)' }}>
@@ -207,7 +214,7 @@ function ParticipantCard({
           </div>
         </div>
         <div className="rounded-2xl border border-white/10 bg-black/50 px-3 py-3">
-          <div className="text-xs uppercase tracking-[0.25em]" style={{ color: hexToRgba('#00BFFF', 0.7) }}>
+          <div className="text-xs uppercase tracking-[0.25em]" style={{ color: hexToRgba(primaryBrand, 0.7) }}>
             MAX HR
           </div>
           <div className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-orbitron)' }}>
@@ -218,7 +225,10 @@ function ParticipantCard({
 
       {/* Intensity Bar */}
       <div>
-        <div className="flex justify-between text-xs uppercase tracking-[0.25em] mb-2" style={{ color: hexToRgba('#00BFFF', 0.7) }}>
+        <div
+          className="flex justify-between text-xs uppercase tracking-[0.25em] mb-2"
+          style={{ color: hexToRgba(primaryBrand, 0.7) }}
+        >
           <span>Intensity</span>
           <span>{metric.intensity}%</span>
         </div>
@@ -260,6 +270,13 @@ function HRMTVContent() {
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [metrics, setMetrics] = useState<HRMMetrics[]>([]);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const { activeVenue } = useVenueContext();
+
+  const brandColors = useMemo(
+    () => resolveBrandColors({ activeVenue, setup }),
+    [activeVenue, setup]
+  );
+  const { primary: primaryBrand, secondary: secondaryBrand, accent: accentBrand } = brandColors;
 
   useEffect(() => {
     // Load initial data
@@ -326,7 +343,7 @@ function HRMTVContent() {
             />
           )}
           <div>
-            <h1 className="text-4xl font-bold" style={{ color: '#00BFFF' }}>
+            <h1 className="text-4xl font-bold" style={{ color: primaryBrand }}>
               {setup.facilityName || "Fitness Center"}
             </h1>
             <p className="text-lg tracking-[0.15em] uppercase" style={{ color: hexToRgba('#6B7280', 0.8) }}>
@@ -343,7 +360,7 @@ function HRMTVContent() {
             {session?.currentBlock || "Ready"}
           </div>
           {session && (
-            <div className="text-lg font-bold" style={{ color: '#00BFFF' }}>
+            <div className="text-lg font-bold" style={{ color: primaryBrand }}>
               {session.remaining}s remaining
             </div>
           )}
@@ -353,7 +370,7 @@ function HRMTVContent() {
       {/* Stats Summary */}
       <div className="relative z-10 grid grid-cols-4 gap-8 p-8 border-b border-white/10">
         <div className="rounded-[24px] border border-white/10 bg-black/60 p-6 text-center shadow-[0_0_45px_rgba(0,0,0,0.4)] backdrop-blur-md">
-          <div className="text-5xl font-black" style={{ color: '#00BFFF', fontFamily: 'var(--font-orbitron)' }}>
+          <div className="text-5xl font-black" style={{ color: primaryBrand, fontFamily: 'var(--font-orbitron)' }}>
             {activeMetrics.length}
           </div>
           <div className="text-sm uppercase tracking-[0.25em]" style={{ color: hexToRgba('#6B7280', 0.8) }}>
@@ -369,7 +386,7 @@ function HRMTVContent() {
           </div>
         </div>
         <div className="rounded-[24px] border border-white/10 bg-black/60 p-6 text-center shadow-[0_0_45px_rgba(0,0,0,0.4)] backdrop-blur-md">
-          <div className="text-5xl font-black" style={{ color: '#F59E0B', fontFamily: 'var(--font-orbitron)' }}>
+          <div className="text-5xl font-black" style={{ color: accentBrand, fontFamily: 'var(--font-orbitron)' }}>
             {totalCalories}
           </div>
           <div className="text-sm uppercase tracking-[0.25em]" style={{ color: hexToRgba('#6B7280', 0.8) }}>
@@ -377,7 +394,7 @@ function HRMTVContent() {
           </div>
         </div>
         <div className="rounded-[24px] border border-white/10 bg-black/60 p-6 text-center shadow-[0_0_45px_rgba(0,0,0,0.4)] backdrop-blur-md">
-          <div className="text-5xl font-black" style={{ color: '#FFD100', fontFamily: 'var(--font-orbitron)' }}>
+          <div className="text-5xl font-black" style={{ color: secondaryBrand, fontFamily: 'var(--font-orbitron)' }}>
             {leader ? `${leader.userName.split(' ')[0]}` : "N/A"}
           </div>
           <div className="text-sm uppercase tracking-[0.25em]" style={{ color: hexToRgba('#6B7280', 0.8) }}>
@@ -394,8 +411,8 @@ function HRMTVContent() {
               <ParticipantCard
                 key={metric.userId}
                 metric={metric}
-                setup={setup}
                 isLeader={index === 0}
+                brandColors={brandColors}
               />
             ))}
           </div>

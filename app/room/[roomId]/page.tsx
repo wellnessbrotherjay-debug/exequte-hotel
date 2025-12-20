@@ -422,12 +422,12 @@ export default function RoomPage() {
 
                 <div className="mt-6 p-4 bg-yellow-500/20 rounded-lg">
                   <h3 className="font-bold text-yellow-300 mb-2">Instructions:</h3>
-                  <ol className="text-sm text-yellow-100 space-y-1">
-                    <li>1. Scan QR code with your phone</li>
-                    <li>2. Click "Start TV Player" for the big screen</li>
-                    <li>3. Use your phone to control the workout</li>
-                    <li>4. Follow along on the TV display</li>
-                  </ol>
+                    <ol className="text-sm text-yellow-100 space-y-1">
+                      <li>1. Scan QR code with your phone</li>
+                      <li>2. Click &quot;Start TV Player&quot; for the big screen</li>
+                      <li>3. Use your phone to control the workout</li>
+                      <li>4. Follow along on the TV display</li>
+                    </ol>
                 </div>
               </div>
             </div>

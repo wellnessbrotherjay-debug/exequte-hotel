@@ -1,17 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Orbitron } from 'next/font/google';
 import QRCode from 'qrcode';
 import Image from 'next/image';
 import { EXERCISE_MEDIA } from '@/lib/lib/exercise-library';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const orbitron = Orbitron({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
-  variable: '--font-orbitron',
-});
 
 const availableExercises = EXERCISE_MEDIA.filter(ex => ex.video);
 
@@ -21,7 +14,7 @@ export default function DemoPlayer() {
   const [isRunning, setIsRunning] = useState(false);
   const [exerciseIndex, setExerciseIndex] = useState(0);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
-  
+
   // Generate QR code for workout control
   useEffect(() => {
     const generateQR = async () => {
@@ -55,8 +48,8 @@ export default function DemoPlayer() {
   }, [isRunning, phase]);
 
   return (
-    <main 
-      className={`${orbitron.variable} font-orbitron min-h-screen w-screen bg-gradient-to-b from-[#000510] to-[#0A0F18] text-white overflow-hidden`}
+    <main
+      className="font-orbitron min-h-screen w-screen bg-gradient-to-b from-[#000510] to-[#0A0F18] text-white overflow-hidden"
     >
       <div className="relative w-full h-screen p-16">
         {/* Centered Top Section */}
@@ -86,11 +79,11 @@ export default function DemoPlayer() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/4 w-full max-w-[90%] grid grid-cols-12 gap-8">
           {/* Left Section - Current Exercise (≈45%) */}
           <div className="col-span-5">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="relative aspect-video rounded-lg overflow-hidden"
-              style={{ 
+              style={{
                 boxShadow: '0 0 0 1.5px #00AFFF, 0 0 20px rgba(0,175,255,0.3)'
               }}
             >
@@ -117,18 +110,18 @@ export default function DemoPlayer() {
 
           {/* Center Section - Timer Block (≈30%) */}
           <div className="col-span-4">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className="relative h-full rounded-lg border-[1.5px] border-[#00AFFF] overflow-hidden"
-              style={{ 
+              style={{
                 boxShadow: '0 0 30px rgba(0,175,255,0.2)',
                 background: 'radial-gradient(circle at center, rgba(0,175,255,0.1) 0%, transparent 70%)'
               }}
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                 <AnimatePresence mode="wait">
-                  <motion.div 
+                  <motion.div
                     key={phase}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -140,9 +133,9 @@ export default function DemoPlayer() {
                 </AnimatePresence>
 
                 {/* Timer Digits */}
-                <div 
+                <div
                   className="text-[180px] font-black leading-none tracking-wider text-[#00AFFF]"
-                  style={{ 
+                  style={{
                     textShadow: '0 0 30px rgba(0,175,255,0.4)',
                   }}
                 >
@@ -182,11 +175,11 @@ export default function DemoPlayer() {
             {/* Up Next */}
             <div>
               <div className="text-xl tracking-[0.3em] text-[#00AFFF] mb-4">UP NEXT</div>
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="relative aspect-video rounded-lg overflow-hidden"
-                style={{ 
+                style={{
                   boxShadow: '0 0 0 1.5px #00AFFF, 0 0 20px rgba(0,175,255,0.2)'
                 }}
               >
@@ -212,7 +205,7 @@ export default function DemoPlayer() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="relative rounded-lg overflow-hidden border-[1.5px] border-[#00AFFF]/30 p-6"
-              style={{ 
+              style={{
                 boxShadow: '0 0 20px rgba(0,175,255,0.1)'
               }}
             >
@@ -220,13 +213,13 @@ export default function DemoPlayer() {
                 <div className="text-lg tracking-[0.3em] text-[#00AFFF] mb-6">
                   SCAN TO START WORKOUT
                 </div>
-                <motion.div 
-                  animate={{ 
+                <motion.div
+                  animate={{
                     boxShadow: ['0 0 20px rgba(0,175,255,0.2)', '0 0 30px rgba(0,175,255,0.4)', '0 0 20px rgba(0,175,255,0.2)']
                   }}
-                  transition={{ 
+                  transition={{
                     duration: 2,
-                    repeat: Infinity 
+                    repeat: Infinity
                   }}
                   className="bg-white inline-block rounded-lg p-4"
                 >

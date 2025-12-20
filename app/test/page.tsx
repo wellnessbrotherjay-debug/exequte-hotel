@@ -293,7 +293,7 @@ function FitnessTestContent() {
           <h3 className="font-semibold text-blue-300 mb-3">Why do we need this?</h3>
           <p className="text-gray-300">
             This assessment helps us customize your workout intensity and exercise selection.
-            We'll use this data to:
+            We&apos;ll use this data to:
           </p>
           <ul className="mt-3 space-y-2 text-gray-400">
             <li>• Calculate your optimal workout intensity</li>

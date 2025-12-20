@@ -1,0 +1,103 @@
+.nexus-theme {
+  --background: 0 0% 100%;
+  --foreground: 220 25% 12%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 220 25% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 25% 12%;
+
+  --primary: 220 50% 35%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 220 15% 95%;
+  --secondary-foreground: 220 25% 12%;
+
+  --muted: 220 12% 93%;
+  --muted-foreground: 220 10% 45%;
+
+  --accent: 42 88% 55%;
+  --accent-foreground: 220 25% 12%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 220 12% 90%;
+  --input: 220 12% 90%;
+  --ring: 220 50% 35%;
+
+  --radius: 0.5rem;
+
+  /* Luxury Hospitality Palette */
+  --luxury-black: 220 25% 12%;
+  --luxury-gold: 42 88% 55%;
+  --luxury-deep-blue: 220 50% 35%;
+  --luxury-navy: 220 45% 25%;
+  --luxury-light: 220 15% 97%;
+  --luxury-cream: 42 35% 95%;
+
+  /* Gradients */
+  --gradient-luxury: linear-gradient(135deg, hsl(220 25% 12%) 0%, hsl(220 45% 25%) 100%);
+  --gradient-gold: linear-gradient(135deg, hsl(42 88% 55%) 0%, hsl(42 78% 65%) 100%);
+  --gradient-blue: linear-gradient(135deg, hsl(220 50% 35%) 0%, hsl(220 60% 45%) 100%);
+  --gradient-subtle: linear-gradient(180deg, hsl(220 15% 97%) 0%, hsl(220 12% 93%) 100%);
+
+  /* Effects */
+  --glow-gold: 0 0 40px hsl(42 88% 55% / 0.3);
+  --glow-blue: 0 0 40px hsl(220 50% 35% / 0.3);
+  --shadow-luxury: 0 10px 40px -10px hsl(220 25% 12% / 0.2);
+
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-elegant: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.nexus-theme * {
+  border-color: hsl(var(--border));
+}
+
+.nexus-theme h1,
+.nexus-theme h2,
+.nexus-theme h3,
+.nexus-theme h4,
+.nexus-theme h5,
+.nexus-theme h6 {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: hsl(var(--luxury-black));
+}
+
+.nexus-theme h1 {
+  font-size: 4.5rem;
+  line-height: 1.1;
+}
+
+.nexus-theme h2 {
+  font-size: 3.5rem;
+  line-height: 1.15;
+}
+
+.nexus-theme h3 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .nexus-theme h1 {
+    font-size: 3rem;
+  }
+  .nexus-theme h2 {
+    font-size: 2.25rem;
+  }
+  .nexus-theme h3 {
+    font-size: 1.75rem;
+  }
+}

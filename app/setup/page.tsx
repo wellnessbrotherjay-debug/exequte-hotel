@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -298,6 +299,12 @@ export default function SetupPage() {
           <p className="text-sm text-slate-400">
             Configure stations, equipment, and branding before you launch a workout.
           </p>
+          <Link
+            href="/setup/console"
+            className="text-sm font-semibold text-sky-300 underline-offset-4 transition hover:text-sky-100"
+          >
+            View Library Catalogs
+          </Link>
         </header>
 
         <section className="grid gap-6 rounded-2xl border border-white/10 bg-black/30 p-6 shadow-[0_0_30px_rgba(0,175,255,0.18)] lg:grid-cols-2">

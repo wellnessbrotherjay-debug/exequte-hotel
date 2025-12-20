@@ -142,3 +142,9 @@ vite.config.ts.timestamp-*
 /public/videos/*.mp4
 .DS_Store
 .vercel
+
+# Exclude large nested projects/directories
+APPS/
+Finance/
+exequte-miniprogram/
+videos_backup/
