@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import HomeButton from "@/components/HomeButton";
+import AppShell from "@/components/AppShell";
 import VenueSwitcher from "@/components/VenueSwitcher";
 import { VenueProvider } from "@/lib/venue-context";
 import PwaUpdater from "@/components/PwaUpdater";
@@ -27,11 +27,9 @@ export default function RootLayout({
         <VenueProvider>
           <BrandProvider>
             <PwaUpdater />
-            <div className="app-shell-chrome fixed left-4 top-4 z-50 flex items-center gap-3">
-              <HomeButton />
-              <VenueSwitcher />
-            </div>
-            <div className="app-shell-content pt-20">{children}</div>
+            <PwaUpdater />
+            <AppShell />
+            <div className="app-shell-content">{children}</div>
           </BrandProvider>
         </VenueProvider>
       </body>

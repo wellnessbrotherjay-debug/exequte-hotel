@@ -58,7 +58,7 @@ const Navigation = () => {
               </a>
             ))}
             <Button size="default" className="ml-4" asChild>
-              <a href="/solutions">Admin</a>
+              <a href="/home">Admin</a>
             </Button>
           </div>
 
@@ -87,7 +87,7 @@ const Navigation = () => {
               </a>
             ))}
             <Button size="default" className="w-full mt-2" asChild>
-              <a href="/solutions">Admin</a>
+              <a href="/home">Admin</a>
             </Button>
           </div>
         </div>
