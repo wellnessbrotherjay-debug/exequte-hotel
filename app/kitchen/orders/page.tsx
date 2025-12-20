@@ -44,7 +44,8 @@ export default async function KitchenOrdersPage() {
     );
   }
 
-  const normalizedOrders: MealOrder[] = (queue as QueueRow[] | null)?.map((ticket) => {
+  const normalizedOrders: MealOrder[] = queue?.map((t: any) => {
+    const ticket = t as QueueRow;
     const base = ticket.meal_order ?? ({} as Partial<MealOrder>);
     const meta = ticket.meta ?? {};
     return {

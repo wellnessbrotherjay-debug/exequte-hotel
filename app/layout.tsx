@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import AppShell from "@/components/AppShell";
-import VenueSwitcher from "@/components/VenueSwitcher";
+
 import { VenueProvider } from "@/lib/venue-context";
 import PwaUpdater from "@/components/PwaUpdater";
 import { BrandProvider } from "@/lib/brand-context";
@@ -26,7 +26,6 @@ export default function RootLayout({
       <body className="font-sans bg-neutral-950 text-neutral-100">
         <VenueProvider>
           <BrandProvider>
-            <PwaUpdater />
             <PwaUpdater />
             <AppShell />
             <div className="app-shell-content">{children}</div>
