@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/hotel-nexus/lib/utils";
+import { cn } from "@/lib/utils";
 
 type NexusCardProps = React.HTMLAttributes<HTMLDivElement>;
 

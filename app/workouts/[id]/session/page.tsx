@@ -65,7 +65,7 @@ export default function WorkoutSessionPage({ params }: { params: { id: string } 
         }));
     };
 
-    const saveSet = Async(blockId: string, exerciseId: string, setNum: number) => {
+    const saveSet = async (blockId: string, exerciseId: string, setNum: number) => {
         if (!sessionId) return;
         const key = `${exerciseId}_${setNum}`;
         const entry = logs[key];
