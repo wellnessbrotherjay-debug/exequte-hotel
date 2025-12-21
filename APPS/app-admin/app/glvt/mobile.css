@@ -1,0 +1,7 @@
+/* Mobile-optimized styles for GLVT app */
+/* Removed iPhone simulator frame - production ready */
+
+.glvt-app {
+  min-height: 100vh;
+  width: 100%;
+}
