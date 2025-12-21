@@ -144,7 +144,6 @@ vite.config.ts.timestamp-*
 .vercel
 
 # Exclude large nested projects/directories
-APPS/
 Finance/
 exequte-miniprogram/
 videos_backup/
