@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import "./mobile.css";
+import { RouterBottomNav } from "./_components/RouterBottomNav";
 
 export default function GlvtLayout({ children }: { children: React.ReactNode }) {
     // Enforce dark mode
@@ -13,8 +14,16 @@ export default function GlvtLayout({ children }: { children: React.ReactNode }) 
     }, []);
 
     return (
-        <div className="min-h-screen w-full bg-[#0a0a0a] text-white">
-            {children}
+        <div className="min-h-screen w-full flex flex-col bg-[#0a0a0a] text-white">
+            {/* App Content */}
+            <div className="flex-1 overflow-y-auto pb-24">
+                {children}
+            </div>
+
+            {/* Bottom Navigation */}
+            <div className="fixed bottom-0 w-full z-50">
+                <RouterBottomNav />
+            </div>
         </div>
     );
 }
