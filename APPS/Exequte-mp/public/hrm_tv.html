@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Exequte HRM TV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: radial-gradient(80% 120% at 50% 20%, rgba(72, 99, 168, 0.38), rgba(9, 14, 26, 0.92));
+        --primary: #2fb5ff;
+        --primary-soft: rgba(47, 181, 255, 0.45);
+        --accent: #f24976;
+        --accent-soft: rgba(242, 73, 118, 0.45);
+        --panel: rgba(8, 12, 22, 0.72);
+        --card: rgba(15, 21, 32, 0.82);
+        --border: rgba(170, 199, 255, 0.18);
+        --text: #f0f5ff;
+        --muted: #9fb3d1;
+        --warning: #ffb347;
+        --success: #25f291;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Montserrat", "Segoe UI", sans-serif;
+        color: var(--text);
+        background: var(--bg), url("https://images.unsplash.com/photo-1609705025031-6741c1dcac7c?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat fixed;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .layer {
+        backdrop-filter: blur(24px);
+        background: linear-gradient(120deg, rgba(12, 16, 28, 0.72), rgba(9, 12, 22, 0.88));
+        min-height: 100vh;
+        padding: 32px 40px 40px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 32px;
+      }
+
+      .brand {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .brand img {
+        height: 60px;
+        filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.35));
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: clamp(32px, 3vw, 46px);
+        text-transform: uppercase;
+        letter-spacing: 4px;
+      }
+
+      .brand small {
+        display: block;
+        margin-top: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--muted);
+        letter-spacing: 3px;
+      }
+
+      .session-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 18px;
+        margin-top: 12px;
+      }
+
+      .info-card {
+        background: rgba(23, 32, 48, 0.7);
+        padding: 18px 20px;
+        border-radius: 18px;
+        border: 1px solid rgba(125, 154, 218, 0.2);
+        box-shadow: 0 18px 32px rgba(6, 9, 20, 0.45);
+      }
+
+      .info-card h4 {
+        margin: 0;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .info-card strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: minmax(420px, 32%) 1fr minmax(260px, 22%);
+        gap: 28px;
+        margin-top: 36px;
+        flex: 1;
+      }
+
+      .gauge-panel {
+        background: var(--panel);
+        border-radius: 26px;
+        padding: 28px 30px;
+        border: 1px solid var(--border);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: 0 24px 44px rgba(8, 11, 24, 0.6);
+      }
+
+      .gauge {
+        width: 320px;
+        height: 160px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .gauge .arc {
+        width: 100%;
+        height: 100%;
+        border-radius: 320px 320px 0 0;
+        background: conic-gradient(
+          from 180deg,
+          var(--primary) calc(var(--arc) * 1%),
+          rgba(255, 255, 255, 0.08) 0
+        );
+        transform-origin: center bottom;
+        mask: radial-gradient(circle at 50% 100%, transparent 70px, black 70px);
+        -webkit-mask: radial-gradient(circle at 50% 100%, transparent 70px, black 70px);
+      }
+
+      .gauge .tick {
+        position: absolute;
+        width: 4px;
+        height: 16px;
+        background: rgba(255, 255, 255, 0.15);
+        top: 10px;
+        left: 50%;
+        transform-origin: bottom center;
+      }
+
+      .stats {
+        text-align: center;
+        margin-top: 18px;
+      }
+
+      .stats .value {
+        font-size: 54px;
+        font-weight: 700;
+      }
+
+      .stats .label {
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        font-size: 18px;
+        color: var(--muted);
+      }
+
+      .leaderboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 18px;
+        align-content: start;
+      }
+
+      .athlete {
+        position: relative;
+        border-radius: 22px;
+        padding: 18px;
+        background: linear-gradient(160deg, rgba(18, 25, 38, 0.95), rgba(14, 18, 32, 0.75));
+        border: 1px solid rgba(147, 189, 255, 0.2);
+        box-shadow: 0 28px 54px rgba(5, 8, 16, 0.55);
+        overflow: hidden;
+      }
+
+      .athlete::before {
+        content: "";
+        position: absolute;
+        inset: -60% 40% 20% -60%;
+        background: radial-gradient(circle at 30% 30%, rgba(45, 187, 255, 0.3), transparent 60%);
+        opacity: 0.65;
+      }
+
+      .athlete-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        z-index: 1;
+        position: relative;
+      }
+
+      .athlete-header .bpm {
+        font-size: 32px;
+        font-weight: 700;
+      }
+
+      .athlete-header span {
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .athlete-body {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        gap: 14px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.08);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 26px;
+        letter-spacing: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        overflow: hidden;
+      }
+
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .athlete-body h3 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .meta {
+        display: flex;
+        gap: 14px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.75);
+        margin-top: 6px;
+      }
+
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .callout {
+        padding: 24px;
+        border-radius: 26px;
+        background: linear-gradient(180deg, rgba(19, 24, 39, 0.9), rgba(15, 19, 32, 0.65));
+        border: 1px solid rgba(79, 125, 255, 0.25);
+        box-shadow: 0 28px 48px rgba(6, 8, 18, 0.55);
+      }
+
+      .callout h2 {
+        margin: 0 0 14px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 18px;
+        color: var(--primary);
+      }
+
+      .callout p {
+        margin: 0;
+        color: rgba(222, 235, 255, 0.86);
+        line-height: 1.6;
+        font-size: 15px;
+      }
+
+      footer {
+        margin-top: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--muted);
+        font-size: 14px;
+        letter-spacing: 1px;
+      }
+
+      .alert {
+        color: #ffc654;
+      }
+
+      @media (max-width: 1400px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          flex-direction: row;
+        }
+        .callout {
+          flex: 1;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .layer {
+          padding: 28px 24px 36px;
+        }
+        .leaderboard {
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          font-family: "Inter", sans-serif;
+        }
+        header {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .brand h1 {
+          letter-spacing: 2px;
+        }
+        main {
+          gap: 18px;
+        }
+        .layer {
+          padding: 20px 18px 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layer">
+      <header>
+        <div class="brand">
+          <img src="https://assets.exequte.cn/logo.svg" alt="Exequte" onerror="this.style.display='none'" />
+          <div>
+            <h1>Exequte HRM Wall</h1>
+            <small id="session-title">Loading class information…</small>
+          </div>
+        </div>
+        <div class="session-info" id="session-info">
+          <div class="info-card">
+            <h4>Clock</h4>
+            <strong id="time-remaining">--:--</strong>
+          </div>
+          <div class="info-card">
+            <h4>Average BPM</h4>
+            <strong id="avg-bpm">--</strong>
+          </div>
+          <div class="info-card">
+            <h4>Peak BPM</h4>
+            <strong id="peak-bpm">--</strong>
+          </div>
+          <div class="info-card">
+            <h4>Updated</h4>
+            <strong id="updated-at">--:--</strong>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="gauge-panel">
+          <div class="gauge">
+            <div class="arc" id="gauge-arc" style="--arc: 0;"></div>
+          </div>
+          <div class="stats">
+            <div class="value" id="class-average">--%</div>
+            <div class="label">Class Effort</div>
+          </div>
+        </section>
+
+        <section class="leaderboard" id="leaderboard">
+          <!-- cards injected here -->
+        </section>
+
+        <aside class="sidebar">
+          <div class="callout">
+            <h2>Lighting Engine</h2>
+            <p>
+              As class intensity climbs, Exequte XQ automations shift the studio lighting based on live heart rate data. Push comfort zone, trigger a colour storm.
+            </p>
+          </div>
+          <div class="callout" id="announcements">
+            <h2>Coach Notes</h2>
+            <p id="coach-note">Stay on rhythm, breathe through the blocks, and chase that 80% class average peak!</p>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <span id="session-meta">Waiting for class data…</span>
+        <span>Refreshes every 5 seconds</span>
+      </footer>
+    </div>
+
+    <template id="athlete-template">
+      <article class="athlete">
+        <div class="athlete-header">
+          <div class="bpm"><span class="bpm-value">0</span> bpm</div>
+          <span class="rank">#0</span>
+        </div>
+        <div class="athlete-body">
+          <div class="avatar"><img alt="" /></div>
+          <div>
+            <h3 class="name"></h3>
+            <div class="meta">
+              <span class="calories"></span>
+              <span class="strap"></span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script>
+      const locationParam = new URLSearchParams(window.location.search).get("location") || "Studio A";
+      const apiUrl = `/api/v1/training_sessions/current_hrm?location=${encodeURIComponent(locationParam)}`;
+      const sessionTitle = document.getElementById("session-title");
+      const sessionMeta = document.getElementById("session-meta");
+      const leaderboard = document.getElementById("leaderboard");
+      const timeRemaining = document.getElementById("time-remaining");
+      const avgBpmEl = document.getElementById("avg-bpm");
+      const peakBpmEl = document.getElementById("peak-bpm");
+      const updatedAt = document.getElementById("updated-at");
+      const gaugeArc = document.getElementById("gauge-arc");
+      const classAverageEl = document.getElementById("class-average");
+      const coachNote = document.getElementById("coach-note");
+
+      const FALLBACK_AVATARS = [
+        "https://i.pravatar.cc/120?img=5",
+        "https://i.pravatar.cc/120?img=8",
+        "https://i.pravatar.cc/120?img=15",
+        "https://i.pravatar.cc/120?img=22",
+        "https://i.pravatar.cc/120?img=37",
+        "https://i.pravatar.cc/120?img=45"
+      ];
+
+      function randomBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function computeMetrics(assignments) {
+        const metrics = assignments.map((assign, index) => {
+          // Use live data if available, otherwise fallback to pseudo values.
+          const bpm =
+            Number(assign?.metrics?.bpm) ||
+            Number(assign?.hrm_data?.bpm) ||
+            randomBetween(85, 165);
+          const calories =
+            Number(assign?.metrics?.calories) ||
+            Number(assign?.hrm_data?.calories_burned) ||
+            randomBetween(40, 120);
+
+          return {
+            bpm,
+            calories,
+            rank: index + 1,
+            strap: assign.hrm_display_name || assign.hrm_name || `Strap ${index + 1}`,
+            name: assign.assigned_to || "Unassigned",
+            avatar: assign.user?.avatar || FALLBACK_AVATARS[index % FALLBACK_AVATARS.length],
+            gender: assign.user?.gender || "—",
+            age: assign.user?.age || "—",
+            weight: assign.user?.weight ? `${assign.user.weight}kg` : "—"
+          };
+        });
+
+        const avgBpm = metrics.length
+          ? Math.round(metrics.reduce((acc, m) => acc + m.bpm, 0) / metrics.length)
+          : 0;
+        const peakBpm = metrics.length ? Math.max(...metrics.map((m) => m.bpm)) : 0;
+
+        return { metrics, avgBpm, peakBpm };
+      }
+
+      function gaugePercentage(avgBpm, peakBpm) {
+        if (!avgBpm) return 0;
+        const target = peakBpm || 170;
+        return Math.min(100, Math.round((avgBpm / target) * 100));
+      }
+
+      function render(session) {
+        if (!session) {
+          sessionTitle.innerHTML = `Studio ${locationParam} — waiting for class`;
+          sessionMeta.textContent = "No active session";
+          leaderboard.innerHTML = `<p class="alert">No straps detected for this studio.</p>`;
+          return;
+        }
+
+        sessionTitle.innerHTML = `${session.name} &middot; ${session.instructor_name || "Coach TBD"}`;
+        const start = session.begins_at ? new Date(session.begins_at) : null;
+        const end = start ? new Date(start.getTime() + session.duration * 60000) : null;
+
+        if (start && end) {
+          const now = new Date();
+          const remainingMs = Math.max(0, end - now);
+          const minutes = Math.floor(remainingMs / 60000)
+            .toString()
+            .padStart(2, "0");
+          const seconds = Math.floor((remainingMs % 60000) / 1000)
+            .toString()
+            .padStart(2, "0");
+          timeRemaining.textContent = `${minutes}:${seconds}`;
+          sessionMeta.textContent = `${start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} – ${end.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} · ${session.location}`;
+        }
+
+        const { metrics, avgBpm, peakBpm } = computeMetrics(session.hrm_assignments || []);
+        avgBpmEl.textContent = metrics.length ? `${avgBpm}` : "--";
+        peakBpmEl.textContent = metrics.length ? `${peakBpm}` : "--";
+        updatedAt.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
+        const effort = gaugePercentage(avgBpm, peakBpm);
+        classAverageEl.textContent = `${effort}%`;
+        gaugeArc.style.setProperty("--arc", effort);
+
+        leaderboard.innerHTML = "";
+        const template = document.getElementById("athlete-template").content;
+        metrics
+          .sort((a, b) => b.bpm - a.bpm)
+          .slice(0, 8)
+          .forEach((athlete, idx) => {
+            const clone = template.cloneNode(true);
+            clone.querySelector(".bpm-value").textContent = athlete.bpm;
+            clone.querySelector(".rank").textContent = `#${idx + 1}`;
+            clone.querySelector(".name").textContent = athlete.name;
+            clone.querySelector(".calories").textContent = `${athlete.calories} cal`;
+            clone.querySelector(".strap").textContent = athlete.strap;
+            clone.querySelector(".avatar").style.background = `linear-gradient(150deg, rgba(47, 181, 255, 0.18), rgba(255, 255, 255, 0.05))`;
+
+            const img = clone.querySelector(".avatar img");
+            if (athlete.avatar) {
+              img.src = athlete.avatar;
+              img.alt = `${athlete.name} avatar`;
+            } else {
+              img.remove();
+              clone.querySelector(".avatar").textContent = athlete.name
+                ? athlete.name[0]?.toUpperCase()
+                : "?";
+            }
+
+            leaderboard.appendChild(clone);
+          });
+
+        if (!metrics.length) {
+          leaderboard.innerHTML = `<p class="alert">HRM straps are free. Ask members to tap their devices on the reader.</p>`;
+        }
+
+        const notes = [
+          "Encourage riders to sync breathing with the beat; lights will flare once we cross 80% average effort.",
+          "Next block is explosive sprints. Prep team for 20-second all-out intervals.",
+          "Remember to hydrate! Every 10 minutes take a sip – smoother heart rate recovery."
+        ];
+        coachNote.textContent = notes[new Date().getMinutes() % notes.length];
+      }
+
+      async function poll() {
+        try {
+          const res = await fetch(apiUrl, { cache: "no-cache" });
+          const payload = await res.json();
+          render(payload.data?.[0]);
+        } catch (error) {
+          console.error("HRM wall error:", error);
+          sessionTitle.textContent = "Connection lost – retrying…";
+        }
+      }
+
+      poll();
+      setInterval(poll, 5000);
+    </script>
+  </body>
+</html>

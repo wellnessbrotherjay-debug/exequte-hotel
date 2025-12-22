@@ -1,0 +1,97 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--gradient-hero);
+}
+
+.header img {
+  height: 4rem;
+}
+
+.hero-section {
+  padding: 2rem;
+  background: var(--gradient-teal);
+  color: var(--primary-foreground);
+}
+
+.feature-section {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem 0;
+}
+
+.community-section {
+  padding: 2rem;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  text-align: center;
+}
+
+.recommendations-section {
+  padding: 2rem;
+  background: var(--card);
+  color: var(--card-foreground);
+  box-shadow: var(--shadow-soft);
+}
+
+.footer {
+  padding: 1rem;
+  background: var(--background);
+  color: var(--foreground);
+  text-align: center;
+}
+
+.footer nav a {
+  margin: 0 1rem;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.footer nav a:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}

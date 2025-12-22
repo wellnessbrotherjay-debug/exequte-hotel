@@ -1,0 +1,10 @@
+project_id = "pactttoeilavjtgvdoge"
+
+[functions.mindset-coach]
+verify_jwt = false
+
+[functions.generate-boat-setup]
+verify_jwt = false
+
+[functions.boat-tuning-assistant]
+verify_jwt = false

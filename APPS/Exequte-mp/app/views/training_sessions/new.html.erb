@@ -1,0 +1,16 @@
+<div class="container" style="height: 1000px" >
+  <%= simple_form_for(@training_session) do |f| %>
+    <%= f.association :training , label_method: :full_name %>
+    <%= f.association :instructor, collection: User.where(instructor: true), label_method: :full_name %>
+    <%= f.association :workouts, label_method: :full_name %>
+
+    <%= f.input :begins_at, as: :datetime %>
+    <%= f.input :price_1_cents, label: "Price (e.g. 50 = 50元， 100 = 100元)"  %>
+    <%= f.input :cancel_before, label: "Cancel Before (number of hours, e.g. 8)"  %>
+    <div>
+      <label for="weeks"> Create this training session for weeks</label>
+      <input type="number" name="weeks">
+    </div>
+    <%= f.button :submit, style: 'background-color: #5C0C17; color: #FFF' %>
+  <% end %>
+</div>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Rotation Page</title>
+  <style>
+    body {
+      background-color:black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+    }
+
+    h2 {
+      /*font-size: 10vh;*/
+    }
+    .container {
+      display: flex;
+      width: 100%;
+    }
+
+    .block {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-color: red;
+      border-width: 30px;
+      border-style: solid;
+    }
+
+    .block h2 {
+      margin-bottom: 20px;
+    }
+
+    .block video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="block" id="blockC">
+    <h2>Block C</h2>
+    <div class="video-container"></div>
+  </div>
+  <div class="block" id="blockB">
+    <h2>Block B</h2>
+    <div class="video-container"></div>
+  </div>
+  <div class="block" id="blockA">
+    <h2>Block A</h2>
+    <div class="video-container"></div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    loadCurrentWorkout();
+  });
+
+  function loadCurrentWorkout() {
+    fetch('http://0.0.0.0:3000/api/v1/training_sessions/current')
+            .then(response => response.json())
+            .then(data => {
+              showCurrentWorkout(data.data);
+            })
+            .catch(error => console.log(error));
+  }
+
+  function showCurrentWorkout(data) {
+    console.log(data);
+    if (data && data[0] && data[0].workout) {
+      generatePage(data[0].workout);
+    }
+  }
+
+  function createVideoElement(videoPath, exerciseName) {
+    const video = document.createElement('video');
+    video.src = videoPath;
+    video.controls = true;
+    video.style.display = 'none';
+
+    const exerciseTitle = document.createElement('h3');
+    exerciseTitle.textContent = exerciseName;
+
+    const videoContainer = document.createElement('div');
+    videoContainer.classList.add('video-container');
+    videoContainer.appendChild(video);
+    videoContainer.appendChild(exerciseTitle);
+
+    return videoContainer;
+  }
+
+  function generatePage(jsonData) {
+    const blockA = $('#blockA');
+    const blockB = $('#blockB');
+    const blockC = $('#blockC');
+
+    const exercisesA = jsonData.exercises_workouts['block-a'];
+    const exercisesB = jsonData.exercises_workouts['block-b'];
+    const exercisesC = jsonData.exercises_workouts.finisher;
+
+    const videosA = exercisesA.map(exercise => createVideoElement(exercise.video, exercise.name));
+    const videosB = exercisesB.map(exercise => createVideoElement(exercise.video, exercise.name));
+    const videosC = exercisesC.map(exercise => createVideoElement(exercise.video, exercise.name));
+
+    let currentVideoIndexA = 0;
+    let currentVideoIndexB = 0;
+    let currentVideoIndexC = 0;
+
+    function playNextVideo(block, videos, currentVideoIndex) {
+      const currentVideo = videos[currentVideoIndex];
+      const videoElement = currentVideo.querySelector('video');
+
+      videoElement.style.display = 'block';
+      videoElement.currentTime = 0;
+      videoElement.play()
+              .then(() => {
+                // Video started playing successfully
+              })
+              .catch(error => {
+                // Failed to start playing the video
+                console.log(error);
+              });
+
+      currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+
+      videoElement.addEventListener('ended', () => {
+        //videoElement.style.display = 'none';
+        playNextVideo(block, videos, currentVideoIndex);
+      });
+    }
+
+    blockA.find('.video-container').append(videosA);
+    blockB.find('.video-container').append(videosB);
+    blockC.find('.video-container').append(videosC);
+
+    playNextVideo(blockA, videosA, currentVideoIndexA);
+    playNextVideo(blockB, videosB, currentVideoIndexB);
+    playNextVideo(blockC, videosC, currentVideoIndexC);
+  }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<div>
+  New Info Item was created:
+</div>
+<% if @info_item.title.present? %>
+  <div>Title <%= @info_item.title %></div>
+<% end %>
+<% if @info_item.item_text.present? %>
+  <%= @info_item.item_text %>
+<% end %>
+<%= link_to "Create another Info Item", new_info_item_path %>

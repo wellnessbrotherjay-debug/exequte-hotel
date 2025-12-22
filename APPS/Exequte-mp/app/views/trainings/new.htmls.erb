@@ -1,0 +1,14 @@
+<div class="container">
+  <%= simple_form_for(@training) do |f| %>
+    <%= f.input :name %>
+    <%= f.input :cn_name %>
+    <%= f.input :description, as: :text %>
+    <%= f.input :cn_description, as: :text %>
+    <%= f.input :calories, as: :integer %>
+    <%= f.input :duration, as: :integer %>
+    <%= f.input :capacity, as: :integer %>
+    <%= f.association :class_type %>
+    <%= f.input :photo, as: :file %>
+    <%= f.button :submit %>
+  <% end %>
+</div>

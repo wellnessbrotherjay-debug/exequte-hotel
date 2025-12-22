@@ -1,0 +1,71 @@
+<script>
+    // Enable/disable format input based on format select
+    document.addEventListener('DOMContentLoaded', function() {
+        window.toggleJSON = function(event) {
+            var content = event.target.nextElementSibling;
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleFormatInput(selectId, inputId) {
+            var selectBox = document.getElementById(selectId);
+            var formatInput = document.getElementById(inputId);
+
+            if (selectBox.value === 'OTHER') {
+                formatInput.disabled = false;
+            } else {
+                formatInput.disabled = true;
+                formatInput.value = selectBox.value;
+            }
+        }
+
+        function updateValues(selectId, inputId) {
+            var selectBox = document.getElementById(selectId);
+            var formatInput = document.getElementById(inputId);
+            selectBox.value = formatInput.value;
+        }
+
+        function attachEventHandlers(container) {
+            var selectBoxes = container.querySelectorAll('[id^="format-select-"]');
+            var inputBoxes = container.querySelectorAll('[id^="format-input-"]');
+
+            for (var i = 0; i < selectBoxes.length; i++) {
+                (function(selectId, inputId) {
+                    var selectBox = document.getElementById(selectId);
+                    var inputBox = document.getElementById(inputId);
+
+                    selectBox.addEventListener('change', function(event) {
+                        toggleFormatInput(selectId, inputId);
+                    });
+
+                    inputBox.addEventListener('keyup', function(event) {
+                        updateValues(selectId, inputId);
+                    });
+                })(selectBoxes[i].id, inputBoxes[i].id);
+            }
+        }
+
+        function initializeFormatInputs() {
+            try {
+                var mainContainer = document.querySelectorAll('[id="main_content"]')[0];
+                //var mainContainer = document.querySelectorAll(".has_many_container.exercises_workouts")[0];
+                attachEventHandlers(mainContainer);
+            } catch (e) {
+                console.log(e);
+            }
+            try {
+                var addButton = document.querySelectorAll('[data-placeholder="NEW_EXERCISES_WORKOUT_RECORD"]')[0];
+                addButton.addEventListener('click', function () {
+                    setTimeout(function(){
+                        console.log('attaching event');
+                        var newContainer = document.querySelectorAll('[id="main_content"]')[0];
+                        // var newContainer = document.querySelectorAll(".has_many_container.exercises_workouts")[0];
+                        attachEventHandlers(newContainer);
+                    }, 500);
+                });
+            } catch(e){
+                console.log(e);
+            }
+        }
+
+        initializeFormatInputs();
+    });
+</script>

@@ -1,0 +1,515 @@
+<script>
+    function initializeAndDrawCanvas(json, hideCanvas) {
+        // Define an array of font names and URLs
+        var fontList = [
+            {name: 'Lato Black', url: 'url(https://exequte.oss-cn-shanghai.aliyuncs.com/lato-black.ttf)'},
+            {name: 'Play Bold', url: 'url(https://exequte.oss-cn-shanghai.aliyuncs.com/play-bold.ttf)'},
+            {name: 'Myriad Pro Bold', url: 'url(https://exequte.oss-cn-shanghai.aliyuncs.com/myriad.ttf)'},
+            {name: 'Vermin Vibes', url: 'url(https://exequte.oss-cn-shanghai.aliyuncs.com/vermin-2.ttf)'},
+            {name: 'High Voltage', url: 'url(https://exequte.oss-cn-shanghai.aliyuncs.com/highvoltage.ttf)'}
+        ];
+
+        // Create an array to store loaded fonts
+        var loadedFonts = [];
+
+        // Load each font asynchronously
+        var loadPromises = fontList.map(function (font) {
+            var fontFace = new FontFace(font.name, font.url);
+            return fontFace.load().then(function (loadedFont) {
+                document.fonts.add(loadedFont);
+                loadedFonts.push(loadedFont);
+            }).catch(function (error) {
+                console.log('Font loading failed for ' + font.name + ': ' + error);
+            });
+        });
+
+        // Wait for all fonts to finish loading
+        Promise.all(loadPromises).then(function () {
+            // All fonts are loaded and ready to use
+            // Proceed with your canvas drawing operations
+            drawCanvas(json, hideCanvas);
+        });
+    }
+
+    function applyTitleEffects(ctx, tileX, tileY, tileWidth, tileHeight) {
+        // Apply Bevel & Emboss effect
+        var bevelColor = 'rgba(255, 255, 255, 0.4)'; // Color for the inner bevel effect
+        var bevelDepth = 0.43; // Depth of the bevel effect (percentage)
+        var bevelHighlightAlpha = 0.1; // Alpha value for the bevel highlight
+        var bevelShadowAlpha = 0.2; // Alpha value for the bevel shadow
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(tileX, tileY, tileWidth, tileHeight);
+        ctx.closePath();
+        ctx.clip();
+
+        // Draw the inner bevel effect
+        var bevelGradient = ctx.createLinearGradient(tileX, tileY, tileX, tileY + tileHeight);
+        bevelGradient.addColorStop(0, bevelColor);
+        bevelGradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = bevelGradient;
+        ctx.fillRect(tileX, tileY, tileWidth, tileHeight);
+
+        // Draw the bevel highlight
+        ctx.globalAlpha = bevelHighlightAlpha;
+        ctx.beginPath();
+        ctx.moveTo(tileX, tileY + tileHeight);
+        ctx.lineTo(tileX + tileWidth, tileY + tileHeight);
+        ctx.lineTo(tileX + tileWidth, tileY);
+        ctx.lineTo(tileX, tileY);
+        ctx.closePath();
+        ctx.fillStyle = 'white';
+        ctx.fill();
+
+        // Draw the bevel shadow
+        ctx.globalAlpha = bevelShadowAlpha;
+        ctx.beginPath();
+        ctx.moveTo(tileX, tileY + tileHeight);
+        ctx.lineTo(tileX + tileWidth, tileY + tileHeight);
+        ctx.lineTo(tileX + tileWidth, tileY);
+        ctx.lineTo(tileX, tileY);
+        ctx.closePath();
+        ctx.fillStyle = 'black';
+        ctx.fill();
+
+        ctx.restore();
+
+        // Apply Drop Shadow effect
+        var shadowColor = 'rgba(0, 0, 0, 0.49)'; // Shadow color
+        var shadowAngle = 145; // Angle of the shadow (in degrees)
+        var shadowDistance = 2; // Distance of the shadow
+        var shadowSpread = 0.3; // Spread of the shadow (percentage)
+
+        ctx.shadowColor = shadowColor;
+        ctx.shadowBlur = tileWidth * shadowSpread;
+        ctx.shadowOffsetX = Math.cos(shadowAngle * Math.PI / 180) * shadowDistance;
+        ctx.shadowOffsetY = Math.sin(shadowAngle * Math.PI / 180) * shadowDistance;
+
+        // Draw the tile
+        ctx.fillStyle = 'red'; // Modify the fill color as needed
+        ctx.fillRect(tileX, tileY, tileWidth, tileHeight);
+
+        ctx.shadowColor = 'rgba(0, 0, 0, 0)'; // Reset shadow settings
+    }
+
+    function displayExercises(ctx, titleX, titleY, isCentered, shiftX, shiftY, exerciseYspacing, blockName, json, maxLineWidth) {
+        var warmUpExercises = json["exercises_workouts"][blockName];
+        if (warmUpExercises) {
+            var exerciseTextY = titleY + shiftY; // Position below the warm-up duration text
+
+            ctx.font = '16pt Lato'; // Exercise font size and style
+            ctx.fillStyle = 'white'; // Exercise text color
+
+            for (var i = 0; i < warmUpExercises.length; i++) {
+                var exercise = warmUpExercises[i];
+                var exerciseText = exercise["name"];
+                if (exercise["reps"] != "") {
+                    exerciseText = exercise["reps"] + " " + exercise["name"];
+                }
+
+                var exerciseTextLines = splitTextIntoLines(ctx, exerciseText, maxLineWidth ? maxLineWidth : 300); // Split exercise text into lines
+
+                for (var j = 0; j < exerciseTextLines.length; j++) {
+                    var line = exerciseTextLines[j];
+                    var exerciseTextWidth = ctx.measureText(line).width;
+                    var exerciseTextX = (titleX + shiftX) - exerciseTextWidth / 2; // Center the exercise text
+                    if (!isCentered)
+                        exerciseTextX = titleX;
+
+                    ctx.fillText(line, exerciseTextX, exerciseTextY);
+
+                    exerciseTextY += exerciseYspacing; // Add vertical spacing between exercises
+                }
+            }
+
+            // Return the bottom position
+            return exerciseTextY;
+        }
+    }
+
+    function splitTextIntoLines(ctx, text, maxWidth) {
+        var words = text.split(' ');
+        var lines = [];
+        var currentLine = '';
+
+        for (var i = 0; i < words.length; i++) {
+            var word = words[i];
+            var testLine = currentLine + word + ' ';
+            var testWidth = ctx.measureText(testLine).width;
+            if (testWidth > maxWidth && i > 0) {
+                lines.push(currentLine.trim());
+                currentLine = word + ' ';
+            } else {
+                currentLine = testLine;
+            }
+        }
+
+        lines.push(currentLine.trim());
+
+        return lines;
+    }
+
+
+    function drawCanvas(json, hideCanvas) {
+        //warm-up exercise block
+        // Get the canvas element and its context
+        var canvas = document.getElementById('myCanvas');
+        if (!hideCanvas)
+            canvas.style.display = "";
+        var ctx = canvas.getContext('2d');
+
+        // Draw the background image
+        var backgroundImage = new Image();
+        backgroundImage.src = 'https://exequte.oss-cn-shanghai.aliyuncs.com/bg-no-text.png';
+        backgroundImage.crossOrigin = "anonymous";
+        backgroundImage.onload = function () {
+            //background
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+
+            //quote
+// Quote
+            var quote = json.quote ? json.quote : '"Do what you can, with what you have, where you are."';
+            var quoteFontSize = 40; // Initial font size
+            var maxQuoteWidth = canvas.width - 200; // Maximum width for the quote
+
+// Set the initial font size
+            ctx.font = quoteFontSize + "pt Myriad Pro Bold";
+
+// Reduce font size if necessary to fit the quote within the canvas
+            while (ctx.measureText(quote).width > maxQuoteWidth && quoteFontSize > 2) {
+                quoteFontSize -= 2; // Decrease font size by 2 pixels
+                ctx.font = quoteFontSize + "pt High Voltage";
+            }
+
+            var quoteWidth = ctx.measureText(quote).width;
+            var quoteX = (canvas.width - quoteWidth) / 2; // Centered horizontally
+            var quoteY = 70; // Positioned at the top
+            ctx.fillStyle = "white"; // White color
+
+            ctx.fillText(quote, quoteX, quoteY);
+
+            // title
+            ctx.font = '100 35pt High Voltage'; // Title font
+            ctx.fillStyle = 'red'; // Red color
+            var title = json.title ? json.title : "ExeQute WORKOUT";
+            var titleWidth = ctx.measureText(title).width;
+            var titleX = quoteX + (quoteWidth - titleWidth) / 2 + 350; // Shifted to the right
+            var titleY = quoteY + 200; // Positioned below the quote
+            ctx.fillText(title, titleX, titleY);
+
+            //level
+            ctx.font = '16pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            var level = json.level ? json.level : '5';
+            var levelX =  240; // Shifted to the right
+            var levelY = 171; // Positioned below the quote
+            ctx.fillText(level, levelX, levelY);
+
+            //duration text
+            ctx.font = '200 10pt Lato Black'; // Title font
+            ctx.fillStyle = 'gray'; // Red color
+            var duration = json.duration ? json.duration : '60';
+            var durationX =  219; // Shifted to the right
+            var durationY = 189; // Positioned below the quote
+            ctx.fillText(duration, durationX, durationY);
+
+            //duration clock
+            ctx.font = '200 32pt Vermin Vibes'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            durationX =  110; // Shifted to the right
+            durationY = 230; // Positioned below the quote
+            ctx.fillText(duration, durationX, durationY);
+
+            //warm-up title
+            ctx.font = '200 20pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            var warmUpTitle = 'WARM UP';
+            var warmUpTitleX =  109; // Shifted to the right
+            var warmUpTitleY = 359; // Positioned below the quote
+            ctx.fillText(warmUpTitle, warmUpTitleX, warmUpTitleY);
+            //needed to center the following section
+            var warmUpTitleWidth = ctx.measureText(warmUpTitle).width;
+            //warm-up duration text
+
+            //working start
+            /*
+            ctx.font = '200 20pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            var warmUpDurationText = json.warmup_duration_format ? json.warmup_duration_format : "";
+            var warmUpDurationTextWidth = ctx.measureText(warmUpDurationText).width;
+            if (warmUpDurationText.includes("\\n")){
+                console.log('includes new line, splitting ');
+                warmUpDurationTextWidth = ctx.measureText(warmUpDurationText.split('\\n')[0]).width;
+                console.log('actual width of first line:' + warmUpDurationTextWidth);
+            }
+            var warmUpDurationTextX = warmUpTitleX + (ctx.measureText(warmUpTitle).width - warmUpDurationTextWidth) / 2;
+            var warmUpDurationTextY = warmUpTitleY + 50; // Positioned below the warm-up title
+            var lines = warmUpDurationText.split('\\n');
+            // Draw each line individually
+            var lastLineY = warmUpDurationTextY;
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i];
+                lastLineY = warmUpDurationTextY + (i * 40); // Adjust vertical position for each line
+                ctx.fillText(line, warmUpDurationTextX, lastLineY);
+            }
+            */
+            //working finish
+            var warmUpDurationText = json.warmup_duration_format ? json.warmup_duration_format : "";
+            //warm-up duration text
+            var maxWarmUpBlockWidth = 170; // Maximum width for the quote
+            // Set the initial font size
+            var warmUpDurationTextFontSize = 40;
+            ctx.font = warmUpDurationTextFontSize + "pt Lato Black";
+            var warmUpDurationTextWidth = ctx.measureText(warmUpDurationText).width;
+            var longestLine = warmUpDurationText;
+            var xShift = 0;
+            if (warmUpDurationText.includes("\\n")){
+                xShift = 60;
+                console.log('includes new line, splitting ');
+                var warmUpDurationTextLines = warmUpDurationText.split('\\n');
+                longestLine = warmUpDurationTextLines.sort(
+                  function (a, b) {
+                      return b.length - a.length;
+                  }
+                )[0];
+                warmUpDurationTextWidth = ctx.measureText(longestLine).width;
+                console.log('actual width of longest line:' + warmUpDurationTextWidth);
+            }
+            // Reduce font size if necessary to fit the quote within the canvas
+            while (ctx.measureText(longestLine).width > maxWarmUpBlockWidth && warmUpDurationTextFontSize > 2) {
+                warmUpDurationTextFontSize -= 2; // Decrease font size by 2 pixels
+                ctx.font = warmUpDurationTextFontSize + "pt Lato Black";
+            }
+            //re-compute the width after adjusting the font
+            warmUpDurationTextWidth = ctx.measureText(warmUpDurationText).width;
+            console.log("by now font size is : " + ctx.font);
+            ctx.fillStyle = "white"; // White color
+            var warmUpDurationTextX = warmUpTitleX + xShift + (warmUpTitleWidth - warmUpDurationTextWidth) / 2;
+            console.log(warmUpDurationTextX + "=" + warmUpTitleX  + " + (" + warmUpTitleWidth + "-" + warmUpDurationTextWidth + ")/2")
+            var warmUpDurationTextY = warmUpTitleY + 50; // Positioned below the warm-up title
+            var lines = warmUpDurationText.split('\\n');
+            // Draw each line individually
+            var lastLineY = warmUpDurationTextY;
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i];
+                lastLineY = warmUpDurationTextY + (i * 40); // Adjust vertical position for each line
+                ctx.fillText(line, warmUpDurationTextX, lastLineY);
+            }
+
+            //warm-up exercise
+            displayExercises(ctx, warmUpDurationTextX, lastLineY, true, 80, 90, 40, "warm-up", json, 200);
+
+
+            //block duration text
+            var blocks_duration_text = json.blocks_duration_text ? json.blocks_duration_text : "";
+            //blocks_duration_text = blocks_duration_text.replace(/\\n/g, "\n");
+            ctx.font = '200 20pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            var blocks_duration_textX =  379; // Shifted to the right
+            var blocks_duration_textY = 329; // Positioned below the quote
+            var lines = blocks_duration_text.split('\\n');
+            // Draw each line individually
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i];
+                var lineY = blocks_duration_textY + (i * 40); // Adjust vertical position for each line
+                ctx.fillText(line, blocks_duration_textX, lineY);
+            }
+
+            //block title
+            var block_title = json.block_a_title ? json.block_a_title : "";
+            ctx.font = '200 18pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            var lastLineY = blocks_duration_textY + (lines.length - 1) * 40; // Position below the last line
+            var block_titleX = blocks_duration_textX;
+            var block_titleY = lastLineY + 60; // Shifted below the last line
+            ctx.fillText(block_title, block_titleX, block_titleY);
+            var block_title_duration,block_title_durationX = block_titleX,block_title_durationY = block_titleY;
+            block_title_duration = json.block_a_duration_format ? json.block_a_duration_format : "";
+            if (block_title_duration != "") {
+                ctx.font = '200 18pt Lato Black'; // Title font
+                ctx.fillStyle = 'white'; // Red color
+                //var lastLineY = blocks_duration_textY + (lines.length - 1) * 40; // Position below the last line
+                block_title_durationX = block_titleX;
+                block_title_durationY = block_titleY + 40; // Shifted below the last line
+                var lines = block_title_duration.split('\\n');
+                // Draw each line individually
+                var lastLineY = block_title_durationY;
+                for (var i = 0; i < lines.length; i++) {
+                    var line = lines[i];
+                    lastLineY = block_title_durationY + (i * 40); // Adjust vertical position for each line
+                    ctx.fillText(line, block_title_durationX, lastLineY);
+                }
+                //ctx.fillText(block_title_duration, block_title_durationX, block_title_durationY);
+                displayExercises(ctx, block_title_durationX , lastLineY, false, 20, 80, 25, "block-a", json)
+            } else {
+                displayExercises(ctx, block_title_durationX, block_title_durationY - 40, false, 20, 80, 25, "block-a", json)
+            }
+
+            //block-b
+            block_title = json.block_b_title ? json.block_b_title : "";
+            ctx.font = '200 18pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            block_titleX =  blocks_duration_textX + 300; // Shifted to the right
+            ctx.fillText(block_title, block_titleX, block_titleY);
+            block_title_duration =  json.block_b_duration_format ? json.block_b_duration_format : "";
+            block_title_durationX = block_titleX,block_title_durationY = block_titleY;
+            if (block_title_duration != "") {
+                ctx.font = '200 18pt Lato Black'; // Title font
+                ctx.fillStyle = 'white'; // Red color
+                //var lastLineY = blocks_duration_textY + (lines.length - 1) * 40; // Position below the last line
+                block_title_durationX = block_titleX;
+                block_title_durationY = block_titleY + 40; // Shifted below the last line
+                var lines = block_title_duration.split('\\n');
+                // Draw each line individually
+                var lastLineY = block_title_durationY;
+                for (var i = 0; i < lines.length; i++) {
+                    var line = lines[i];
+                    lastLineY = block_title_durationY + (i * 40); // Adjust vertical position for each line
+                    ctx.fillText(line, block_title_durationX, lastLineY);
+                }
+                //ctx.fillText(block_title_duration, block_title_durationX, block_title_durationY);
+                displayExercises(ctx, block_title_durationX , lastLineY, false, 20, 80, 25, "block-b", json)
+            } else {
+                displayExercises(ctx, block_title_durationX, block_title_durationY - 40, false, 20, 80, 25, "block-b", json)
+            }
+            //block-c
+            block_title = json.block_c_title ? json.block_c_title : "";
+            ctx.font = '200 18pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            block_titleX =  blocks_duration_textX + 600; // Shifted to the right
+            ctx.fillText(block_title, block_titleX, block_titleY);
+            block_title_duration =  json.block_c_duration_format ? json.block_c_duration_format : "";
+            block_title_durationX = block_titleX,block_title_durationY = block_titleY;
+            var lastY = "";
+            if (block_title_duration != "") {
+                ctx.font = '200 18pt Lato Black'; // Title font
+                ctx.fillStyle = 'white'; // Red color
+                //var lastLineY = blocks_duration_textY + (lines.length - 1) * 40; // Position below the last line
+                block_title_durationX = block_titleX;
+                block_title_durationY = block_titleY + 40; // Shifted below the last line
+                var lines = block_title_duration.split('\\n');
+                // Draw each line individually
+                var lastLineY = block_title_durationY;
+                for (var i = 0; i < lines.length; i++) {
+                    var line = lines[i];
+                    lastLineY = block_title_durationY + (i * 40); // Adjust vertical position for each line
+                    ctx.fillText(line, block_title_durationX, lastLineY);
+                }
+                //ctx.fillText(block_title_duration, block_title_durationX, block_title_durationY);
+                lastY = displayExercises(ctx, block_title_durationX , lastLineY, false, 20, 80, 25, "block-c", json)
+            } else {
+                lastY = displayExercises(ctx, block_title_durationX, block_title_durationY - 40, false, 20, 80, 25, "block-c", json)
+            }
+            if (!lastY)
+                lastY = block_title_durationY;
+
+            //finisher
+            block_title = json.finisher_title ? json.finisher_title : "";
+            ctx.font = '200 26pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            block_titleX =  blocks_duration_textX + 600; // Shifted to the right
+            console.log('block_title:' + block_title + ",block_titleX:" + block_titleX + ",lastY + 50:" + lastY + 50);
+            ctx.fillText(block_title, block_titleX, lastY + 50);
+            block_title_durationY = lastY + 60; // Shifted below the last line
+            //finisher exercises
+
+            displayExercises(ctx, block_title_durationX , block_title_durationY, false, 20, 20, 25, "finisher", json)
+
+            //cool-down and breathing
+            block_title = "COOL DOWN 5min";
+            ctx.font = '200 16pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            block_titleX =  blocks_duration_textX; // Shifted to the right
+            ctx.fillText(block_title, block_titleX, 750);
+            block_title = "BREATHING 5min";
+            ctx.font = '200 16pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            block_titleX =  blocks_duration_textX; // Shifted to the right
+            ctx.fillText(block_title, block_titleX, 775);
+
+
+
+            var footer_text = "SCAN THE QR CODE For further information and class descriptions.\n" +
+                "We are here to help you."
+            lines = footer_text.split('\n');
+            ctx.font = '200 7pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            // Draw each line individually
+            for (var i = 0; i < lines.length; i++) {
+                line = lines[i];
+                lineY = 868 + (i * 15); // Adjust vertical position for each line
+                ctx.fillText(line, 50, lineY);
+            }
+
+            footer_text = "Our Address - 425 Yanping lu, room 104";
+            ctx.font = '200 10pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            // Draw each line individually
+            ctx.fillText(footer_text, 80, 930);
+
+
+            // title footer
+            ctx.font = 'italic 35pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            footer_text = json.title_footer ?  json.title_footer : 'WARRIOR';
+            ctx.fillText(footer_text, 680, 850);
+            ctx.fillStyle = '#767474'; // Red color
+            ctx.fillText(footer_text, 680, 900);
+            // Draw the logo
+            var logo = new Image();
+            logo.src = 'https://exequte.oss-cn-shanghai.aliyuncs.com/logo-top.png';
+            logo.crossOrigin = "anonymous";
+            logo.onload = function () {
+                ctx.drawImage(logo, 10, 80, 100, 100); // Adjust the position and size as needed
+            };
+
+            footer_text = "All workouts are done at own risk. XQ does not take any responsibility for injury caused during the workout.\nAll participants must be in good health and inform the trainers of any pre existing conditions";
+            lines = footer_text.split('\n');
+            ctx.font = '200 9pt Lato Black'; // Title font
+            ctx.fillStyle = 'white'; // Red color
+            // Draw each line individually
+            for (var i = 0; i < lines.length; i++) {
+                line = lines[i];
+                lineY = 928 + (i * 12); // Adjust vertical position for each line
+                ctx.fillText(line, 600, lineY);
+            }
+            // Draw the QR code image
+            var qrCode = new Image();
+            qrCode.src = 'https://exequte.oss-cn-shanghai.aliyuncs.com/qr-code.png';
+            qrCode.crossOrigin = "anonymous";
+            qrCode.onload = function () {
+                var qrCodeX = 364; // Shifted to the right
+                var qrCodeY = canvas.height - 125; // Positioned slightly above the bottom
+                ctx.drawImage(qrCode, qrCodeX, qrCodeY, 100, 100); // Adjust the position and size as needed
+
+                // // Call the function to apply title effects
+                // var tileX = titleX - 10;
+                // var tileY = titleY + 20;
+                // var tileWidth = titleWidth + 20;
+                // var tileHeight = 60;
+                // applyTitleEffects(ctx, tileX, tileY, tileWidth, tileHeight);
+
+                // Save the canvas as an image
+                //var image = canvas.toDataURL('image/png');
+                //console.log(image); // This is the generated image as a data URL
+            };
+        };
+    }
+</script>
+<style>
+  .clickable {
+     cursor:pointer;
+  }
+  .clickable-btn {
+      background-color: #5E6469;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      display: inline-block;
+      transition: border 0.2s linear, color 0.2s linear, width 0.2s linear, background-color 0.2s linear;
+      cursor: pointer;
+      padding: 5px 8px;
+  }
+</style>

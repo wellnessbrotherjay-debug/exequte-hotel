@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Rotation Page</title>
+  <style>
+    body {
+      background-color:black;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      font-size: 10em;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      z-index: 9999;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<button id="w-btn">Warm-UP</button>
+<button id="a-btn">Block A</button>
+<button id="b-btn">Block B</button>
+<button id="c-btn">Block C</button>
+<button id="f-btn">Finisher</button>
+<button id="cd-btn">Cool Down</button>
+<div class="popup" id="popup"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+  $(document).ready(function() {
+    let warmupBtn = document.getElementById("w-btn");
+    let blockABtn = document.getElementById("a-btn");
+    let blockBBtn = document.getElementById("b-btn");
+    let blockCBtn = document.getElementById("c-btn");
+    let finisherBtn = document.getElementById("f-btn");
+    let coolDownBtn = document.getElementById("cd-btn");
+
+    warmupBtn.addEventListener('click', function(event) {
+      switchBlock("blockwarmup");
+    });
+
+    blockABtn.addEventListener('click', function(event) {
+      switchBlock("blockA");
+    });
+
+    blockBBtn.addEventListener('click', function(event) {
+      switchBlock("blockB");
+    });
+
+    blockCBtn.addEventListener('click', function(event) {
+      switchBlock("blockC");
+    });
+
+    finisherBtn.addEventListener('click', function(event) {
+      switchBlock("blockfinisher");
+    });
+
+    coolDownBtn.addEventListener('click', function(event) {
+      switchBlock("blockcooldown");
+    });
+  });
+
+  function switchBlock(blockName) {
+    fetch('http://0.0.0.0:3000/api/v1/training_sessions/current_switch_block?name=' + blockName)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              if (data && data.data && data.data.msg) {
+                showPopup(data.data.msg);
+              }
+            })
+            .catch(error => console.log(error));
+  }
+
+  function showPopup(message) {
+    const popup = document.getElementById('popup');
+    popup.innerText = message;
+    popup.style.display = 'block';
+
+    setTimeout(() => {
+      popup.style.display = 'none';
+      popup.innerText = '';
+    }, 5000);
+  }
+
+  function loadCurrentWorkout() {
+    fetch('http://0.0.0.0:3000/api/v1/training_sessions/current')
+            .then(response => response.json())
+            .then(data => {
+              showCurrentWorkout(data.data);
+            })
+            .catch(error => console.log(error));
+  }
+
+  function showCurrentWorkout(data) {
+    console.log(data);
+    if (data && data[0] && data[0].workout) {
+      //generatePage(data[0].workout);
+    }
+  }
+
+</script>
+</body>
+</html>

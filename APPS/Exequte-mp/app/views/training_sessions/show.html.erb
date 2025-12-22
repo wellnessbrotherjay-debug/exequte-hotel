@@ -1,0 +1,11 @@
+New Trainig Session was created:
+<div>Name:<%= @training_session.name %></div>
+<div>Subtitle:<%= @training_session.subtitle %></div>
+<div>Begins At: <%= @training_session.begins_at %> </div>
+<% if !@weeks_ts.empty? %>
+  Also created Training Sessions for these dates:
+  <% @weeks_ts.each do |ts| %>
+    <div><%= ts.begins_at %></div>
+  <% end %>
+<% end %>
+<%= link_to "Create another Training Session", new_training_session_path %>

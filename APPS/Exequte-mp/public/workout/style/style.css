@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Myriad Pro Bold';
+    src: url('font/myriad.tff') format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato Black';
+    src: url('font/lato-black.tff') format('truetype');
+}
+
+@font-face {
+    font-family: 'Play Bold';
+    src: url('font/play-bold.tff') format('truetype');
+}
+
+@font-face {
+    font-family: 'Rajdhani Bold';
+    src: url('font/rajdhani-bold.tff') format('truetype');
+}
+
+@font-face {
+    font-family: 'Vermin Vibes';
+    src: url('font/vermin-2.tff') format('truetype');
+}

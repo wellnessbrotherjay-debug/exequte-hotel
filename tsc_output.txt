@@ -1,0 +1,780 @@
+app/admin/equipment-library/page.tsx(64,51): error TS2339: Property 'error' does not exist on type 'EquipmentLibraryRow[] | { error?: string | undefined; }'.
+  Property 'error' does not exist on type 'EquipmentLibraryRow[]'.
+app/admin/equipment-library/page.tsx(65,23): error TS2339: Property 'error' does not exist on type 'EquipmentLibraryRow[] | { error?: string | undefined; }'.
+  Property 'error' does not exist on type 'EquipmentLibraryRow[]'.
+app/admin/exercise-library/page.tsx(79,51): error TS2339: Property 'error' does not exist on type 'ExerciseLibraryRow[] | { error?: string | undefined; }'.
+  Property 'error' does not exist on type 'ExerciseLibraryRow[]'.
+app/admin/exercise-library/page.tsx(80,23): error TS2339: Property 'error' does not exist on type 'ExerciseLibraryRow[] | { error?: string | undefined; }'.
+  Property 'error' does not exist on type 'ExerciseLibraryRow[]'.
+app/api/ai/insights/route.ts(32,34): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'StoredTables'.
+  No index signature with a parameter of type 'string' was found on type 'StoredTables'.
+app/api/analytics/route.ts(11,69): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "analytics_events", never, "POST">', gave the following error.
+    Argument of type '{ hotel_id: any; screen_code: any; event_type: any; payload: any; }[]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "analytics_events", never, "POST">', gave the following error.
+    Type '{ hotel_id: any; screen_code: any; event_type: any; payload: any; }' is not assignable to type 'never'.
+app/api/import/csv/route.ts(2,23): error TS7016: Could not find a declaration file for module 'papaparse'. '/Users/a11/exequte-hotel-1/node_modules/papaparse/papaparse.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/papaparse` if it exists or add a new declaration (.d.ts) file containing `declare module 'papaparse';`
+app/api/import/csv/route.ts(26,58): error TS7006: Parameter 'err' implicitly has an 'any' type.
+app/api/import/csv/route.ts(64,24): error TS7006: Parameter 'row' implicitly has an 'any' type.
+app/api/orders/route.ts(13,82): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "orders", never, "POST">', gave the following error.
+    Argument of type 'any[]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "orders", never, "POST">', gave the following error.
+    Type 'any' is not assignable to type 'never'.
+app/api/orders/route.ts(18,78): error TS2339: Property 'id' does not exist on type 'never'.
+app/api/orders/route.ts(19,79): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "order_items", never, "POST">', gave the following error.
+    Argument of type 'any[]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "order_items", never, "POST">', gave the following error.
+    Argument of type 'any[]' is not assignable to parameter of type 'never[]'.
+      Type 'any' is not assignable to type 'never'.
+app/api/orders/route.ts(36,66): error TS2345: Argument of type 'any' is not assignable to parameter of type 'never'.
+app/brand-book/_components/views/Identity.tsx(359,47): error TS2345: Argument of type '{ content: string; }' is not assignable to parameter of type 'string'.
+app/brand-book/_components/views/Identity.tsx(366,21): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+app/brand-book/_components/views/Integrations.tsx(28,88): error TS2367: This comparison appears to be unintentional because the types '"youtube" | "tiktok" | "google_drive" | "notion" | "monday"' and '"google"' have no overlap.
+app/brand-book/_components/views/SocialKit.tsx(34,5): error TS2322: Type 'null' is not assignable to type 'string'.
+app/brand-book/_components/views/SocialSearchModal.tsx(31,32): error TS2554: Expected 2 arguments, but got 1.
+app/brand-book/_components/views/TeamManagement.tsx(29,17): error TS2783: 'id' is specified more than once, so this usage will be overwritten.
+app/brand-book/_components/views/TeamManagement.tsx(30,17): error TS2783: 'avatar_url' is specified more than once, so this usage will be overwritten.
+app/brand-book/_components/views/TemplateStudio.tsx(131,37): error TS2322: Type 'string | null' is not assignable to type 'string'.
+  Type 'null' is not assignable to type 'string'.
+app/demo-player/page.tsx(85,15): error TS2322: Type '{ children: Element[]; initial: { opacity: number; }; animate: { opacity: number; }; className: string; style: { boxShadow: "0 0 0 1.5px #00AFFF, 0 0 20px rgba(0,175,255,0.3)"; }; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/demo-player/page.tsx(116,15): error TS2322: Type '{ children: Element; initial: { opacity: number; scale: number; }; animate: { opacity: number; scale: number; }; className: string; style: { boxShadow: "0 0 30px rgba(0,175,255,0.2)"; background: string; }; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/demo-player/page.tsx(129,21): error TS2322: Type '{ children: string; key: "work" | "rest" | "prep"; initial: { opacity: number; }; animate: { opacity: number; }; exit: { opacity: number; }; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/demo-player/page.tsx(181,17): error TS2322: Type '{ children: Element[]; initial: { opacity: number; y: number; }; animate: { opacity: number; y: number; }; className: string; style: { boxShadow: "0 0 0 1.5px #00AFFF, 0 0 20px rgba(0,175,255,0.2)"; }; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/demo-player/page.tsx(207,15): error TS2322: Type '{ children: Element; initial: { opacity: number; }; animate: { opacity: number; }; className: string; style: { boxShadow: "0 0 20px rgba(0,175,255,0.1)"; }; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/demo-player/page.tsx(224,19): error TS2322: Type '{ children: "" | Element; animate: { boxShadow: ["0 0 20px rgba(0,175,255,0.2)", "0 0 30px rgba(0,175,255,0.4)", "0 0 20px rgba(0,175,255,0.2)"]; }; transition: { duration: number; repeat: number; }; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/facilities/page.tsx(63,26): error TS2339: Property 'id' does not exist on type 'never'.
+app/facilities/page.tsx(64,28): error TS2339: Property 'name' does not exist on type 'never'.
+app/facilities/page.tsx(65,35): error TS2339: Property 'description' does not exist on type 'never'.
+app/facilities/page.tsx(101,15): error TS2322: Type '{ children: ("" | Element | null | undefined)[]; key: string; whileHover: { y: number; }; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/financials/page.tsx(32,23): error TS7016: Could not find a declaration file for module 'papaparse'. '/Users/a11/exequte-hotel-1/node_modules/papaparse/papaparse.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/papaparse` if it exists or add a new declaration (.d.ts) file containing `declare module 'papaparse';`
+app/financials/page.tsx(308,40): error TS7006: Parameter 'error' implicitly has an 'any' type.
+app/financials/page.tsx(313,13): error TS7006: Parameter 'row' implicitly has an 'any' type.
+app/financials/page.tsx(317,11): error TS2322: Type '{}' is not assignable to type 'string'.
+app/financials/page.tsx(326,16): error TS7006: Parameter 'row' implicitly has an 'any' type.
+app/financials/page.tsx(764,45): error TS2345: Argument of type '{ name: string | number; drop_in: number; membership: number; class_pack: number; }' is not assignable to parameter of type 'CompetitorPricingRow'.
+  Types of property 'name' are incompatible.
+    Type 'string | number' is not assignable to type 'string'.
+      Type 'number' is not assignable to type 'string'.
+app/financials/page.tsx(785,51): error TS2345: Argument of type '{ name: string | number; drop_in: number; membership: number; class_pack: number; }' is not assignable to parameter of type 'CompetitorPricingRow'.
+  Types of property 'name' are incompatible.
+    Type 'string | number' is not assignable to type 'string'.
+      Type 'number' is not assignable to type 'string'.
+app/glvt/body-scan/reference-body.tsx(2,33): error TS2307: Cannot find module 'react-router-dom' or its corresponding type declarations.
+app/glvt/body-scan/reference-body.tsx(11,29): error TS2307: Cannot find module 'react-router-dom' or its corresponding type declarations.
+app/glvt/body-scan/reference-body.tsx(12,29): error TS2307: Cannot find module './WearableDevices' or its corresponding type declarations.
+app/glvt/body-scan/reference-body.tsx(13,25): error TS2307: Cannot find module '@/components/BodyMetrics' or its corresponding type declarations.
+app/glvt/body-scan/reference-body.tsx(14,30): error TS2307: Cannot find module '@/components/NutritionPlanner' or its corresponding type declarations.
+app/glvt/body-scan/reference-body.tsx(15,39): error TS2307: Cannot find module '@/components/WorkoutHistoryContent' or its corresponding type declarations.
+app/glvt/body-scan/reference-nutrition.tsx(4,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+app/glvt/body-scan/reference-nutrition.tsx(5,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+app/glvt/body-scan/reference-nutrition.tsx(7,29): error TS2307: Cannot find module 'react-router-dom' or its corresponding type declarations.
+app/glvt/book/confirm/page.tsx(54,21): error TS18047: 'searchParams' is possibly 'null'.
+app/glvt/book/confirm/page.tsx(55,21): error TS18047: 'searchParams' is possibly 'null'.
+app/glvt/circuit/[sessionId]/station/[stationId]/page.tsx(30,28): error TS2304: Cannot find name 'p'.
+app/glvt/history/page.tsx(86,81): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(locales?: LocalesArgument, options?: DateTimeFormatOptions | undefined): string', gave the following error.
+    Object literal may only specify known properties, and 'alert' does not exist in type 'DateTimeFormatOptions'.
+  Overload 2 of 3, '(locales?: string | string[] | undefined, options?: DateTimeFormatOptions | undefined): string', gave the following error.
+    Object literal may only specify known properties, and 'alert' does not exist in type 'DateTimeFormatOptions'.
+app/glvt/home/middleware.ts(1,40): error TS2307: Cannot find module '@supabase/auth-helpers-nextjs' or its corresponding type declarations.
+app/glvt/onboarding/page.tsx(60,80): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ ...; }, ... 5 more ..., "POST">', gave the following error.
+    Argument of type '{ id: string | undefined; first_name: string; last_name: string; gender: string; date_of_birth: string; height_cm: number; weight_kg: number; waiver_signed: boolean; waiver_signed_at: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<...>', gave the following error.
+    Object literal may only specify known properties, and 'id' does not exist in type 'never[]'.
+app/glvt/workouts/[id]/page.tsx(53,24): error TS18047: 'params' is possibly 'null'.
+app/glvt/workouts/[id]/page.tsx(54,69): error TS18047: 'params' is possibly 'null'.
+app/glvt/workouts/[id]/page.tsx(59,9): error TS18047: 'params' is possibly 'null'.
+app/glvt/workouts/session/[sessionId]/page.tsx(15,23): error TS18047: 'params' is possibly 'null'.
+app/home/page.tsx(77,13): error TS2322: Type '{ children: Element[]; key: string; onClick: () => Promise<void>; whileHover: { scale: number; boxShadow: "0 30px 90px rgba(0,0,0,0.45)"; }; whileTap: { scale: number; }; className: string; style: { ...; }; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'onClick' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/hrm-tv/page.tsx(267,20): error TS18047: 'searchParams' is possibly 'null'.
+app/menu/MenuExperience.tsx(323,17): error TS2322: Type '{ children: ("" | Element | null | undefined)[]; key: string; whileHover: { y: number; }; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/room/[roomId]/food/FoodOrderClient.tsx(216,44): error TS2304: Cannot find name 'setExpandedRecipeId'.
+app/room/[roomId]/food/FoodOrderClient.tsx(216,65): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+app/room/[roomId]/food/FoodOrderClient.tsx(221,32): error TS2304: Cannot find name 'expandedRecipeId'.
+app/room/[roomId]/food/FoodOrderClient.tsx(224,28): error TS2304: Cannot find name 'expandedRecipeId'.
+app/room/[roomId]/food/page.tsx(52,18): error TS2352: Conversion of type '{ id: any; category: any; name: any; description: any; image_url: any; price_cents: any; base_kcal: any; protein_g: any; carbs_g: any; fat_g: any; base_macros: any; recipe: { id: any; slug: any; title: any; description: any; instructions: any; ingredients: any; base_macros: any; }[]; }[]' to type 'MenuItem[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'recipe_id' is missing in type '{ id: any; category: any; name: any; description: any; image_url: any; price_cents: any; base_kcal: any; protein_g: any; carbs_g: any; fat_g: any; base_macros: any; recipe: { id: any; slug: any; title: any; description: any; instructions: any; ingredients: any; base_macros: any; }[]; }' but required in type 'MenuItem'.
+app/room/[roomId]/page.tsx(44,18): error TS18047: 'params' is possibly 'null'.
+app/room/[roomId]/player/page.tsx(13,21): error TS18047: 'searchParams' is possibly 'null'.
+app/services/page.tsx(81,15): error TS2322: Type '{ children: ("" | Element | null | undefined)[]; key: string; whileHover: { y: number; }; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/staff/bookings/page.tsx(85,38): error TS2339: Property 'name' does not exist on type '{ id: any; name: any; qr_slug: any; }[]'.
+app/staff/bookings/page.tsx(133,34): error TS2339: Property 'id' does not exist on type '{ id: any; name: any; qr_slug: any; }[]'.
+app/staff/bookings/page.tsx(135,51): error TS2339: Property 'id' does not exist on type '{ id: any; name: any; qr_slug: any; }[]'.
+app/test/page.tsx(38,21): error TS18047: 'searchParams' is possibly 'null'.
+app/test/page.tsx(39,18): error TS18047: 'searchParams' is possibly 'null'.
+app/test/page.tsx(76,17): error TS2345: Argument of type '{ status: string; tested_at: string; }' is not assignable to parameter of type 'never'.
+app/tv/[code]/page.tsx(11,28): error TS2339: Property 'hotel_id' does not exist on type 'never'.
+app/tv/[code]/page.tsx(13,139): error TS2339: Property 'playlist_id' does not exist on type 'never'.
+app/tv/[code]/page.tsx(21,46): error TS2339: Property 'name' does not exist on type 'never'.
+app/tv/[code]/page.tsx(26,25): error TS2339: Property 'playlist_items' does not exist on type 'never'.
+app/tv/workout/page.tsx(32,14): error TS2345: Argument of type 'WorkoutSetup | null' is not assignable to parameter of type 'SetStateAction<null>'.
+  Type 'WorkoutSetup' is not assignable to type 'SetStateAction<null>'.
+    Type 'WorkoutSetup' provides no match for the signature '(prevState: null): null'.
+app/tv/workout/page.tsx(44,23): error TS18047: 'searchParams' is possibly 'null'.
+app/welcome/page.tsx(394,17): error TS2322: Type '{ children: Element[]; key: string; whileHover: { y: number; boxShadow: "0 25px 60px rgba(0,0,0,0.45)"; }; whileTap: { scale: number; }; onClick: () => Promise<void>; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'onClick' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/welcome/page.tsx(409,15): error TS2322: Type '{ children: Element[]; key: string; onClick: () => Promise<void>; whileHover: { scale: number; }; whileTap: { scale: number; }; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'onClick' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+app/workouts/page.tsx(78,15): error TS2322: Type '{ children: Element[]; key: any; onClick: () => Promise<void>; whileHover: { y: number; }; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'onClick' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+APPS/brand-book:/brandbook/sections/moodboard.tsx(10,33): error TS2339: Property 'file_url' does not exist on type 'MoodImage | { url: string; }'.
+  Property 'file_url' does not exist on type '{ url: string; }'.
+APPS/brand-book:/brandbook/sections/moodboard.tsx(10,74): error TS2339: Property 'source' does not exist on type 'MoodImage | { url: string; }'.
+  Property 'source' does not exist on type '{ url: string; }'.
+APPS/brand-book:/global/src/app/api/brands/[id]/brand-pack/route.ts(1,30): error TS2307: Cannot find module '../../../../../../lib/brands' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/brands/[id]/route.ts(1,30): error TS2307: Cannot find module '../../../../../lib/brands' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/calendar/bulk-insert/route.ts(1,36): error TS2307: Cannot find module '../../../../../lib/calendar' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/campaigns/[id]/assets/route.ts(1,35): error TS2307: Cannot find module '../../../../../../lib/campaigns' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/campaigns/[id]/calendar/route.ts(1,39): error TS2307: Cannot find module '../../../../../../lib/calendar' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/campaigns/[id]/channels/route.ts(1,43): error TS2307: Cannot find module '../../../../../../lib/campaigns' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/campaigns/[id]/metrics/route.ts(1,34): error TS2307: Cannot find module '../../../../../../lib/supabase' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/campaigns/[id]/route.ts(1,33): error TS2307: Cannot find module '../../../../../lib/campaigns' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/campaigns/create/route.ts(1,32): error TS2307: Cannot find module '../../../../../lib/campaigns' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/channels/[id]/route.ts(1,31): error TS2307: Cannot find module '../../../../../lib/campaigns' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/insights/insert/route.ts(1,31): error TS2307: Cannot find module '../../../../../lib/insights' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/insights/route.ts(1,31): error TS2307: Cannot find module '../../../../lib/insights' or its corresponding type declarations.
+APPS/brand-book:/global/src/app/api/metrics/bulk-insert/route.ts(1,35): error TS2307: Cannot find module '../../../../../lib/metrics' or its corresponding type declarations.
+APPS/brand-book:/index.tsx(2,22): error TS7016: Could not find a declaration file for module 'react-dom/client'. '/Users/a11/exequte-hotel-1/APPS/brand-book:/node_modules/react-dom/client.js' implicitly has an 'any' type.
+  If the 'react-dom' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom'
+APPS/brand-book:/views/AdGenerator.tsx(34,28): error TS2345: Argument of type '{ brand_id: string; name: string; objective: string; budget_total: number; stage: string; brief: { audience: string; platform: string; generatedCopy: string; }; }' is not assignable to parameter of type 'CampaignPayload'.
+  Types of property 'stage' are incompatible.
+    Type 'string' is not assignable to type '"idea" | "brief" | "production" | "ready_to_schedule" | "scheduled" | "live" | "completed" | "paused" | undefined'.
+APPS/brand-book:/views/BrandBookGLVT.tsx(122,100): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+APPS/brand-book:/views/BrandBookGLVT.tsx(122,116): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+APPS/brand-book:/views/Campaigns.tsx(66,47): error TS2345: Argument of type '{ brand_id: string; name: string; objective: string; budget_total: number | undefined; primary_kpi: string; start_date: string | undefined; end_date: string | undefined; stage: string; }' is not assignable to parameter of type 'CampaignPayload'.
+  Types of property 'stage' are incompatible.
+    Type 'string' is not assignable to type '"idea" | "brief" | "production" | "ready_to_schedule" | "scheduled" | "live" | "completed" | "paused" | undefined'.
+APPS/brand-book:/views/SocialKit.tsx(129,47): error TS2345: Argument of type 'RefObject<HTMLCanvasElement | null>' is not assignable to parameter of type 'RefObject<HTMLCanvasElement>'.
+  Type 'HTMLCanvasElement | null' is not assignable to type 'HTMLCanvasElement'.
+    Type 'null' is not assignable to type 'HTMLCanvasElement'.
+APPS/brand-book:/views/SocialKit.tsx(143,47): error TS2345: Argument of type 'RefObject<HTMLCanvasElement | null>' is not assignable to parameter of type 'RefObject<HTMLCanvasElement>'.
+  Type 'HTMLCanvasElement | null' is not assignable to type 'HTMLCanvasElement'.
+    Type 'null' is not assignable to type 'HTMLCanvasElement'.
+APPS/brand-book:/views/SocialKit.tsx(157,47): error TS2345: Argument of type 'RefObject<HTMLCanvasElement | null>' is not assignable to parameter of type 'RefObject<HTMLCanvasElement>'.
+  Type 'HTMLCanvasElement | null' is not assignable to type 'HTMLCanvasElement'.
+    Type 'null' is not assignable to type 'HTMLCanvasElement'.
+APPS/brand-book:/views/SocialKit.tsx(171,47): error TS2345: Argument of type 'RefObject<HTMLCanvasElement | null>' is not assignable to parameter of type 'RefObject<HTMLCanvasElement>'.
+  Type 'HTMLCanvasElement | null' is not assignable to type 'HTMLCanvasElement'.
+    Type 'null' is not assignable to type 'HTMLCanvasElement'.
+APPS/idea-builder-zone/src/App.tsx(1,25): error TS2307: Cannot find module '@/components/ui/toaster' or its corresponding type declarations.
+APPS/idea-builder-zone/src/App.tsx(2,35): error TS2307: Cannot find module '@/components/ui/sonner' or its corresponding type declarations.
+APPS/idea-builder-zone/src/App.tsx(3,33): error TS2307: Cannot find module '@/components/ui/tooltip' or its corresponding type declarations.
+APPS/idea-builder-zone/src/App.tsx(40,9): error TS2322: Type 'StaticImageData' is not assignable to type 'string | Blob | undefined'.
+APPS/idea-builder-zone/src/components/BodyMetrics.tsx(7,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/BodyMetrics.tsx(8,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/FoodSearch.tsx(6,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/FoodSearch.tsx(7,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/Layout.tsx(6,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/Layout.tsx(8,33): error TS2307: Cannot find module '@/contexts/SubscriptionContext' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/Layout.tsx(27,73): error TS7006: Parameter '_event' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/components/Layout.tsx(27,81): error TS7006: Parameter 'session' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/components/Layout.tsx(72,18): error TS2322: Type 'StaticImageData' is not assignable to type 'string | Blob | undefined'.
+APPS/idea-builder-zone/src/components/NutritionPlanner.tsx(8,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/NutritionPlanner.tsx(9,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/NutritionPlanner.tsx(10,33): error TS2307: Cannot find module '@/contexts/SubscriptionContext' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/NutritionTracker.tsx(2,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/NutritionTracker.tsx(71,43): error TS7006: Parameter 'acc' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/components/NutritionTracker.tsx(71,48): error TS7006: Parameter 'item' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/components/ui/accordion.tsx(31,8): error TS2786: 'ChevronDown' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/breadcrumb.tsx(64,19): error TS2786: 'ChevronRight' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/breadcrumb.tsx(76,6): error TS2786: 'MoreHorizontal' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/calendar.tsx(45,39): error TS2786: 'ChevronLeft' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/calendar.tsx(46,40): error TS2786: 'ChevronRight' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(168,83): error TS2344: Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' does not satisfy the constraint 'JSXElementConstructor<any> | keyof IntrinsicElements'.
+  Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+    Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+      Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(169,6): error TS2339: Property 'className' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(169,17): error TS2339: Property 'variant' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(169,38): error TS2339: Property 'size' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(173,8): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(188,10): error TS2786: 'ArrowLeft' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(196,79): error TS2344: Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' does not satisfy the constraint 'JSXElementConstructor<any> | keyof IntrinsicElements'.
+  Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+    Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+      Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(197,6): error TS2339: Property 'className' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(197,17): error TS2339: Property 'variant' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(197,38): error TS2339: Property 'size' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(201,8): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/carousel.tsx(216,10): error TS2786: 'ArrowRight' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/checkbox.tsx(20,8): error TS2786: 'Check' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/command.tsx(28,6): error TS2786: 'Dialog' cannot be used as a JSX component.
+  Its type 'FC<DialogProps>' is not a valid JSX element type.
+    Type 'FunctionComponent<DialogProps>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'ReactNode | Promise<ReactNode>' is not assignable to type 'ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/command.tsx(29,8): error TS2786: 'DialogContent' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<DialogContentProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<DialogContentProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/command.tsx(43,6): error TS2786: 'Search' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/context-menu.tsx(35,6): error TS2786: 'ChevronRight' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/context-menu.tsx(105,10): error TS2786: 'Check' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/context-menu.tsx(127,10): error TS2786: 'Circle' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/dialog.tsx(46,10): error TS2786: 'X' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/dropdown-menu.tsx(35,6): error TS2786: 'ChevronRight' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/dropdown-menu.tsx(106,10): error TS2786: 'Check' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/dropdown-menu.tsx(128,10): error TS2786: 'Circle' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/form.tsx(81,11): error TS2786: 'Label' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LabelProps & RefAttributes<HTMLLabelElement>, "ref"> & VariantProps<(props?: ClassProp | undefined) => string> & RefAttributes<...>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LabelProps & RefAttributes<HTMLLabelElement>, "ref"> & VariantProps<(props?: ClassProp | undefined) => string> & RefAttributes<...>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/input-otp.tsx(55,8): error TS2786: 'Dot' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/menubar.tsx(60,6): error TS2786: 'ChevronRight' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/menubar.tsx(133,10): error TS2786: 'Check' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/menubar.tsx(155,10): error TS2786: 'Circle' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/navigation-menu.tsx(51,6): error TS2786: 'ChevronDown' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/pagination.tsx(51,6): error TS2786: 'ChevronLeft' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/pagination.tsx(60,6): error TS2786: 'ChevronRight' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/pagination.tsx(67,6): error TS2786: 'MoreHorizontal' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/radio-group.tsx(29,10): error TS2786: 'Circle' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/select.tsx(27,8): error TS2786: 'ChevronDown' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/select.tsx(42,6): error TS2786: 'ChevronUp' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/select.tsx(56,6): error TS2786: 'ChevronDown' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/select.tsx(115,10): error TS2786: 'Check' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sheet.tsx(61,12): error TS2786: 'X' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(6,29): error TS2307: Cannot find module '@/hooks/use-mobile' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(11,37): error TS2307: Cannot find module '@/components/ui/sheet' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(12,26): error TS2307: Cannot find module '@/components/ui/skeleton' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(13,74): error TS2307: Cannot find module '@/components/ui/tooltip' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(219,58): error TS2344: Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' does not satisfy the constraint 'keyof IntrinsicElements | ForwardRefExoticComponent<any> | (new (props: any) => Component<any, {}, any>) | ((props: any, deprecatedLegacyContext?: any) => ReactNode)'.
+  Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not assignable to type 'ForwardRefExoticComponent<any>'.
+    Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+      Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(219,95): error TS2344: Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' does not satisfy the constraint 'JSXElementConstructor<any> | keyof IntrinsicElements'.
+  Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+    Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+      Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(220,6): error TS2339: Property 'className' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(220,17): error TS2339: Property 'onClick' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(224,8): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(236,10): error TS2786: 'PanelLeft' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(287,56): error TS2344: Type 'ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>' does not satisfy the constraint 'keyof IntrinsicElements | ForwardRefExoticComponent<any> | (new (props: any) => Component<any, {}, any>) | ((props: any, deprecatedLegacyContext?: any) => ReactNode)'.
+  Type 'ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>' is not assignable to type 'ForwardRefExoticComponent<any>'.
+    Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+      Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(287,92): error TS2344: Type 'ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>' does not satisfy the constraint 'JSXElementConstructor<any> | keyof IntrinsicElements'.
+  Type 'ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+    Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+      Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(288,6): error TS2339: Property 'className' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(290,8): error TS2786: 'Input' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(314,60): error TS2344: Type 'ForwardRefExoticComponent<Omit<SeparatorProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>>' does not satisfy the constraint 'keyof IntrinsicElements | ForwardRefExoticComponent<any> | (new (props: any) => Component<any, {}, any>) | ((props: any, deprecatedLegacyContext?: any) => ReactNode)'.
+  Type 'ForwardRefExoticComponent<Omit<SeparatorProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>>' is not assignable to type 'ForwardRefExoticComponent<any>'.
+    Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+      Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(314,100): error TS2344: Type 'ForwardRefExoticComponent<Omit<SeparatorProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>>' does not satisfy the constraint 'JSXElementConstructor<any> | keyof IntrinsicElements'.
+  Type 'ForwardRefExoticComponent<Omit<SeparatorProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+    Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+      Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(315,6): error TS2339: Property 'className' does not exist on type '{}'.
+APPS/idea-builder-zone/src/components/ui/sidebar.tsx(317,8): error TS2786: 'Separator' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<SeparatorProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<SeparatorProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/toast.tsx(76,6): error TS2786: 'X' cannot be used as a JSX component.
+  Its type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not a valid JSX element type.
+    Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type '(props: any, deprecatedLegacyContext?: any) => ReactNode'.
+      Type 'React.ReactNode' is not assignable to type 'import("/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/node_modules/@types/react/index").ReactNode'.
+        Type 'bigint' is not assignable to type 'ReactNode'.
+APPS/idea-builder-zone/src/components/ui/toaster.tsx(1,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/ui/toaster.tsx(2,95): error TS2307: Cannot find module '@/components/ui/toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/ui/toaster.tsx(9,31): error TS7031: Binding element 'id' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/components/ui/toaster.tsx(9,35): error TS7031: Binding element 'title' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/components/ui/toaster.tsx(9,42): error TS7031: Binding element 'description' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/components/ui/toaster.tsx(9,55): error TS7031: Binding element 'action' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/components/ui/toggle-group.tsx(6,32): error TS2307: Cannot find module '@/components/ui/toggle' or its corresponding type declarations.
+APPS/idea-builder-zone/src/components/ui/toggle-group.tsx(17,4): error TS2322: Type '{ children: Element; ref: ForwardedRef<HTMLDivElement>; className: string; } | { children: Element; ref: ForwardedRef<HTMLDivElement>; className: string; }' is not assignable to type 'IntrinsicAttributes & ((ToggleGroupSingleProps | ToggleGroupMultipleProps) & RefAttributes<HTMLDivElement>)'.
+  Type '{ children: Element; ref: ForwardedRef<HTMLDivElement>; className: string; }' is not assignable to type 'IntrinsicAttributes & ((ToggleGroupSingleProps | ToggleGroupMultipleProps) & RefAttributes<HTMLDivElement>)'.
+    Property 'type' is missing in type '{ children: Element; ref: ForwardedRef<HTMLDivElement>; className: string; }' but required in type 'ToggleGroupMultipleProps'.
+APPS/idea-builder-zone/src/components/ui/toggle-group.tsx(31,6): error TS2741: Property 'value' is missing in type '{ children: any; ref: ForwardedRef<HTMLButtonElement>; className: string; }' but required in type 'Omit<ToggleGroupItemImplProps, "pressed">'.
+APPS/idea-builder-zone/src/components/ui/use-toast.ts(1,33): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/contexts/SubscriptionContext.tsx(2,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/contexts/SubscriptionContext.tsx(3,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/hooks/use-toast.ts(3,53): error TS2307: Cannot find module '@/components/ui/toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/hooks/use-toast.ts(153,22): error TS7006: Parameter 'open' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/integrations/supabase/client.ts(3,31): error TS2306: File '/Users/a11/exequte-hotel-1/APPS/idea-builder-zone/src/integrations/supabase/types.ts' is not a module.
+APPS/idea-builder-zone/src/pages/Auth.tsx(9,80): error TS2307: Cannot find module '@/components/ui/form' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Auth.tsx(11,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Auth.tsx(12,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Auth.tsx(140,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Auth.tsx(161,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Auth.tsx(192,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Auth.tsx(212,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Auth.tsx(233,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Boat.tsx(7,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(12,97): error TS2307: Cannot find module '@/components/ui/form' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(13,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(14,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(18,79): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(19,94): error TS2307: Cannot find module '@/components/ui/sheet' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(668,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(682,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(710,36): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(734,36): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(767,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(780,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(793,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(806,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(826,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(839,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(852,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(865,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(878,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(891,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(911,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(924,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(937,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(950,38): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(967,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/BoatSetup.tsx(986,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Body.tsx(12,25): error TS2307: Cannot find module '@/components/BodyMetrics' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Body.tsx(13,30): error TS2307: Cannot find module '@/components/NutritionPlanner' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Community.tsx(10,80): error TS2307: Cannot find module '@/components/ui/form' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Community.tsx(12,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Community.tsx(13,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Community.tsx(16,40): error TS2307: Cannot find module '@/components/ui/avatar' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Community.tsx(83,46): error TS7006: Parameter 'p' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Community.tsx(91,28): error TS7006: Parameter 'p' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Community.tsx(211,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Community.tsx(236,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Community.tsx(250,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Community.tsx(268,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Dashboard.tsx(7,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Dashboard.tsx(8,30): error TS2307: Cannot find module '@/components/NutritionTracker' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Dashboard.tsx(52,43): error TS7006: Parameter 's' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Dashboard.tsx(53,44): error TS7006: Parameter 'sum' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Dashboard.tsx(53,49): error TS7006: Parameter 's' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/FoodTracking.tsx(6,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/FoodTracking.tsx(7,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/FoodTracking.tsx(12,28): error TS2307: Cannot find module '@/components/FoodSearch' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/FoodTracking.tsx(240,36): error TS7006: Parameter 'food' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Index.tsx(5,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Mindset.tsx(8,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Mindset.tsx(9,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/NutritionTargets.tsx(4,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/NutritionTargets.tsx(5,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Profile.tsx(9,97): error TS2307: Cannot find module '@/components/ui/form' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Profile.tsx(11,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Profile.tsx(12,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Profile.tsx(15,33): error TS2307: Cannot find module '@/contexts/SubscriptionContext' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Profile.tsx(240,28): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Profile.tsx(255,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Profile.tsx(269,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Profile.tsx(283,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Profile.tsx(297,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Profile.tsx(312,28): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(11,80): error TS2307: Cannot find module '@/components/ui/form' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(12,69): error TS2307: Cannot find module '@/components/ui/collapsible' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(14,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(15,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(418,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(431,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(447,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(474,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(487,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(515,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(531,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(544,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(563,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(579,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(592,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(610,28): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(653,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(679,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(692,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(708,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(721,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(737,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(750,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(763,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(779,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(792,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(805,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(821,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(834,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(847,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/RaceTracking.tsx(860,34): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(12,80): error TS2307: Cannot find module '@/components/ui/form' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(14,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(15,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(255,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(268,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(295,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(319,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(335,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(348,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(361,32): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(386,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/SailManagement.tsx(411,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+APPS/idea-builder-zone/src/pages/Upgrade.tsx(5,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Upgrade.tsx(6,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/Upgrade.tsx(9,33): error TS2307: Cannot find module '@/contexts/SubscriptionContext' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/WearableDevices.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/WorkoutHistory.tsx(4,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/WorkoutHistory.tsx(5,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/WorkoutHistory.tsx(8,33): error TS2307: Cannot find module '@/contexts/SubscriptionContext' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/WorkoutTracker.tsx(11,41): error TS2307: Cannot find module '@/components/ui/alert' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/WorkoutTracker.tsx(12,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/WorkoutTracker.tsx(13,26): error TS2307: Cannot find module '@/integrations/supabase/client' or its corresponding type declarations.
+APPS/idea-builder-zone/src/pages/WorkoutTracker.tsx(30,33): error TS2307: Cannot find module '@/contexts/SubscriptionContext' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/analyze-food-image/index.ts(1,23): error TS2307: Cannot find module 'https://deno.land/std@0.168.0/http/server.ts' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/analyze-food-image/index.ts(8,14): error TS7006: Parameter 'req' implicitly has an 'any' type.
+APPS/idea-builder-zone/supabase/functions/analyze-food-image/index.ts(20,29): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/boat-tuning-assistant/index.ts(1,23): error TS2307: Cannot find module 'https://deno.land/std@0.168.0/http/server.ts' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/boat-tuning-assistant/index.ts(8,14): error TS7006: Parameter 'req' implicitly has an 'any' type.
+APPS/idea-builder-zone/supabase/functions/boat-tuning-assistant/index.ts(15,29): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/check-subscription/index.ts(1,23): error TS2307: Cannot find module 'https://deno.land/std@0.190.0/http/server.ts' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/check-subscription/index.ts(2,20): error TS2307: Cannot find module 'https://esm.sh/stripe@18.5.0' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/check-subscription/index.ts(3,30): error TS2307: Cannot find module 'https://esm.sh/@supabase/supabase-js@2.57.2' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/check-subscription/index.ts(15,14): error TS7006: Parameter 'req' implicitly has an 'any' type.
+APPS/idea-builder-zone/supabase/functions/check-subscription/index.ts(21,5): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/check-subscription/index.ts(22,5): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/check-subscription/index.ts(41,31): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/create-checkout/index.ts(1,23): error TS2307: Cannot find module 'https://deno.land/std@0.190.0/http/server.ts' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/create-checkout/index.ts(2,20): error TS2307: Cannot find module 'https://esm.sh/stripe@18.5.0' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/create-checkout/index.ts(3,30): error TS2307: Cannot find module 'https://esm.sh/@supabase/supabase-js@2.57.2' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/create-checkout/index.ts(15,14): error TS7006: Parameter 'req' implicitly has an 'any' type.
+APPS/idea-builder-zone/supabase/functions/create-checkout/index.ts(21,5): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/create-checkout/index.ts(22,5): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/create-checkout/index.ts(38,31): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/generate-boat-setup/index.ts(1,23): error TS2307: Cannot find module 'https://deno.land/std@0.168.0/http/server.ts' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/generate-boat-setup/index.ts(2,30): error TS2307: Cannot find module 'https://esm.sh/@supabase/supabase-js@2.38.4' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/generate-boat-setup/index.ts(9,14): error TS7006: Parameter 'req' implicitly has an 'any' type.
+APPS/idea-builder-zone/supabase/functions/generate-boat-setup/index.ts(16,29): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/manage-role/index.ts(1,23): error TS2307: Cannot find module 'https://deno.land/std@0.190.0/http/server.ts' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/manage-role/index.ts(2,30): error TS2307: Cannot find module 'https://esm.sh/@supabase/supabase-js@2.57.2' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/manage-role/index.ts(13,14): error TS7006: Parameter 'req' implicitly has an 'any' type.
+APPS/idea-builder-zone/supabase/functions/manage-role/index.ts(21,25): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/manage-role/index.ts(22,24): error TS2304: Cannot find name 'Deno'.
+APPS/idea-builder-zone/supabase/functions/mindset-coach/index.ts(1,23): error TS2307: Cannot find module 'https://deno.land/std@0.168.0/http/server.ts' or its corresponding type declarations.
+APPS/idea-builder-zone/supabase/functions/mindset-coach/index.ts(8,14): error TS7006: Parameter 'req' implicitly has an 'any' type.
+APPS/idea-builder-zone/supabase/functions/mindset-coach/index.ts(15,29): error TS2304: Cannot find name 'Deno'.
+Arthur-sports/api/send-application-email.ts(77,35): error TS7006: Parameter 'url' implicitly has an 'any' type.
+Arthur-sports/api/send-approval-email.ts(1,24): error TS2307: Cannot find module 'resend' or its corresponding type declarations.
+Arthur-sports/index.tsx(3,22): error TS7016: Could not find a declaration file for module 'react-dom/client'. '/Users/a11/exequte-hotel-1/Arthur-sports/node_modules/react-dom/client.js' implicitly has an 'any' type.
+  If the 'react-dom' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom'
+brand-assets-temp/index.tsx(2,22): error TS7016: Could not find a declaration file for module 'react-dom/client'. '/Users/a11/exequte-hotel-1/node_modules/react-dom/client.js' implicitly has an 'any' type.
+  If the 'react-dom' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom'
+brand-assets-temp/services/geminiService.ts(582,24): error TS18048: 'response.candidates' is possibly 'undefined'.
+brand-assets-temp/services/geminiService.ts(582,24): error TS2532: Object is possibly 'undefined'.
+brand-assets-temp/services/geminiService.ts(582,24): error TS2532: Object is possibly 'undefined'.
+brand-assets-temp/views/Approvals.tsx(5,65): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+brand-assets-temp/views/SocialKit.tsx(33,5): error TS2322: Type 'null' is not assignable to type 'string'.
+brand-assets-temp/views/TeamManagement.tsx(29,15): error TS2783: 'id' is specified more than once, so this usage will be overwritten.
+brand-assets-temp/views/TeamManagement.tsx(30,15): error TS2783: 'avatar_url' is specified more than once, so this usage will be overwritten.
+brand-assets-temp/views/TemplateStudio.tsx(131,37): error TS2322: Type 'string | null' is not assignable to type 'string'.
+  Type 'null' is not assignable to type 'string'.
+brand-assets-temp/vite.config.ts(2,39): error TS2307: Cannot find module 'vite' or its corresponding type declarations.
+brand-assets-temp/vite.config.ts(3,19): error TS2307: Cannot find module '@vitejs/plugin-react' or its corresponding type declarations.
+brand-assets-temp/vite.config.ts(5,32): error TS7031: Binding element 'mode' implicitly has an 'any' type.
+components/BrandingConsole.tsx(123,13): error TS2322: Type '{ children: Element; className: string; style: { backgroundImage: `url(${string})`; }; initial: { opacity: number; }; animate: { opacity: number; }; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+components/BrandScreen.tsx(99,13): error TS2322: Type '{ children: ReactNode; initial: { opacity: number; y: number; }; animate: { opacity: number; y: number; }; transition: { duration: number; ease: "easeOut"; }; className: string; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & HTMLAttributesWithoutMotionProps<unknown, unknown> & MotionProps & RefAttributes<unknown>'.
+components/NutritionDashboard.tsx(159,137): error TS2322: Type '{ value: number; className: string; indicatorClassName: string; }' is not assignable to type 'IntrinsicAttributes & Omit<ProgressProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>'.
+  Property 'indicatorClassName' does not exist on type 'IntrinsicAttributes & Omit<ProgressProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>'.
+components/NutritionDashboard.tsx(166,133): error TS2322: Type '{ value: number; className: string; indicatorClassName: string; }' is not assignable to type 'IntrinsicAttributes & Omit<ProgressProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>'.
+  Property 'indicatorClassName' does not exist on type 'IntrinsicAttributes & Omit<ProgressProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>'.
+components/NutritionDashboard.tsx(173,129): error TS2322: Type '{ value: number; className: string; indicatorClassName: string; }' is not assignable to type 'IntrinsicAttributes & Omit<ProgressProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>'.
+  Property 'indicatorClassName' does not exist on type 'IntrinsicAttributes & Omit<ProgressProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>'.
+components/Player.tsx(114,28): error TS2448: Block-scoped variable 'handleRealtimeEvent' used before its declaration.
+components/Player.tsx(114,28): error TS2454: Variable 'handleRealtimeEvent' is used before being assigned.
+exequte-miniprogram-1/Exequte-MP/vendor/bundle/ruby/2.6.0/gems/webpacker-4.3.0/lib/install/examples/angular/hello_angular/app/app.component.ts(1,27): error TS2307: Cannot find module '@angular/core' or its corresponding type declarations.
+exequte-miniprogram-1/Exequte-MP/vendor/bundle/ruby/2.6.0/gems/webpacker-4.3.0/lib/install/examples/angular/hello_angular/app/app.module.ts(1,31): error TS2307: Cannot find module '@angular/platform-browser' or its corresponding type declarations.
+exequte-miniprogram-1/Exequte-MP/vendor/bundle/ruby/2.6.0/gems/webpacker-4.3.0/lib/install/examples/angular/hello_angular/app/app.module.ts(2,26): error TS2307: Cannot find module '@angular/core' or its corresponding type declarations.
+exequte-miniprogram-1/Exequte-MP/vendor/bundle/ruby/2.6.0/gems/webpacker-4.3.0/lib/install/examples/angular/hello_angular/index.ts(3,40): error TS2307: Cannot find module '@angular/platform-browser-dynamic' or its corresponding type declarations.
+Finance/contexts/DataContext.tsx(193,38): error TS7006: Parameter 'results' implicitly has an 'any' type.
+Finance/contexts/DataContext.tsx(193,47): error TS7006: Parameter 'status' implicitly has an 'any' type.
+Finance/contexts/DataContext.tsx(193,55): error TS7006: Parameter 'pagination' implicitly has an 'any' type.
+Finance/contexts/DataContext.tsx(195,59): error TS7006: Parameter 'place' implicitly has an 'any' type.
+Finance/contexts/DataContext.tsx(195,66): error TS7006: Parameter 'index' implicitly has an 'any' type.
+Finance/contexts/DataContext.tsx(232,12): error TS7006: Parameter 'place' implicitly has an 'any' type.
+Finance/contexts/DataContext.tsx(232,19): error TS7006: Parameter 'status' implicitly has an 'any' type.
+Finance/contexts/DataContext.tsx(234,57): error TS7006: Parameter 'r' implicitly has an 'any' type.
+Finance/index.tsx(2,22): error TS7016: Could not find a declaration file for module 'react-dom/client'. '/Users/a11/exequte-hotel-1/Finance/node_modules/react-dom/client.js' implicitly has an 'any' type.
+  If the 'react-dom' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom'
+GLVT-WEB/index.tsx(2,22): error TS7016: Could not find a declaration file for module 'react-dom/client'. '/Users/a11/exequte-hotel-1/GLVT-WEB/node_modules/react-dom/client.js' implicitly has an 'any' type.
+  If the 'react-dom' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom'
+lib/adminSupabase.ts(38,14): error TS2352: Conversion of type '((never[TableName] extends { Relationships: infer R; } ? R : unknown) extends null ? GenericStringError : GenericStringError)[]' to type 'LibraryRow<TableName>[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '(never[TableName] extends { Relationships: infer R; } ? R : unknown) extends null ? GenericStringError : GenericStringError' is not comparable to type 'LibraryRow<TableName>'.
+    Type 'GenericStringError' is not comparable to type 'LibraryRow<TableName>'.
+lib/app-config.ts(35,7): error TS1355: A 'const' assertions can only be applied to references to enum members, or string, number, boolean, array, or object literals.
+lib/brand-context.tsx(101,22): error TS2554: Expected 1 arguments, but got 0.
+lib/brand-context.tsx(148,52): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ ...; }, ... 5 more ..., "POST">', gave the following error.
+    Argument of type '{ slug: string; name: string; logo_url: string; background_url: string; video_url: string | null | undefined; primary_color: string; secondary_color: string; accent_color: string; font_family: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<...>', gave the following error.
+    Argument of type '{ slug: string; name: string; logo_url: string; background_url: string; video_url: string | null | undefined; primary_color: string; secondary_color: string; accent_color: string; font_family: string; }' is not assignable to parameter of type 'never[]'.
+      Type '{ slug: string; name: string; logo_url: string; background_url: string; video_url: string | null | undefined; primary_color: string; secondary_color: string; accent_color: string; font_family: string; }' is missing the following properties from type 'never[]': length, pop, push, concat, and 35 more.
+lib/brand-context.tsx(186,7): error TS2322: Type 'undefined' is not assignable to type 'RealtimeChannel'.
+lib/brand-context.tsx(194,70): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ ...; }, ... 5 more ..., "POST">', gave the following error.
+    Argument of type '{ slug: string; name: string; logo_url: string; background_url: string; video_url: string | null | undefined; primary_color: string; secondary_color: string; accent_color: string; font_family: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<...>', gave the following error.
+    Argument of type '{ slug: string; name: string; logo_url: string; background_url: string; video_url: string | null | undefined; primary_color: string; secondary_color: string; accent_color: string; font_family: string; }' is not assignable to parameter of type 'never[]'.
+      Type '{ slug: string; name: string; logo_url: string; background_url: string; video_url: string | null | undefined; primary_color: string; secondary_color: string; accent_color: string; font_family: string; }' is missing the following properties from type 'never[]': length, pop, push, concat, and 35 more.
+lib/brand-context.tsx(227,33): error TS2322: Type '{ theme: BrandTheme; loading: boolean; error: string | null; refresh: (slug: string) => Promise<void>; saveTheme: (next: BrandTheme) => Promise<void>; patchTheme: (partial: Partial<BrandTheme>) => Promise<...>; resetTheme: () => Promise<...>; }' is not assignable to type 'BrandContextValue'.
+  Types of property 'refresh' are incompatible.
+    Type '(slug: string) => Promise<void>' is not assignable to type '() => Promise<void>'.
+      Target signature provides too few arguments. Expected 1 or more, but got 0.
+lib/integrations/tdee.ts(62,14): error TS2339: Property 'id' does not exist on type 'never'.
+lib/integrations/tdee.ts(63,18): error TS2339: Property 'inputs' does not exist on type 'never'.
+lib/integrations/tdee.ts(64,18): error TS2339: Property 'result' does not exist on type 'never'.
+lib/integrations/tdee.ts(65,21): error TS2339: Property 'created_at' does not exist on type 'never'.
+lib/integrations/tdee.ts(83,13): error TS2339: Property 'id' does not exist on type 'never'.
+lib/integrations/tdee.ts(84,17): error TS2339: Property 'inputs' does not exist on type 'never'.
+lib/integrations/tdee.ts(85,17): error TS2339: Property 'result' does not exist on type 'never'.
+lib/integrations/tdee.ts(86,20): error TS2339: Property 'created_at' does not exist on type 'never'.
+lib/integrations/visbody.ts(29,14): error TS2339: Property 'id' does not exist on type 'never'.
+lib/integrations/visbody.ts(30,22): error TS2339: Property 'member_name' does not exist on type 'never'.
+lib/integrations/visbody.ts(31,26): error TS2339: Property 'body_fat' does not exist on type 'never'.
+lib/integrations/visbody.ts(32,29): error TS2339: Property 'muscle_mass' does not exist on type 'never'.
+lib/integrations/visbody.ts(33,24): error TS2339: Property 'posture_score' does not exist on type 'never'.
+lib/integrations/visbody.ts(34,21): error TS2339: Property 'scanned_at' does not exist on type 'never'.
+lib/integrations/visbody.ts(51,14): error TS2339: Property 'id' does not exist on type 'never'.
+lib/integrations/visbody.ts(52,22): error TS2339: Property 'member_name' does not exist on type 'never'.
+lib/integrations/visbody.ts(53,26): error TS2339: Property 'body_fat' does not exist on type 'never'.
+lib/integrations/visbody.ts(54,29): error TS2339: Property 'muscle_mass' does not exist on type 'never'.
+lib/integrations/visbody.ts(55,24): error TS2339: Property 'posture_score' does not exist on type 'never'.
+lib/integrations/visbody.ts(56,21): error TS2339: Property 'scanned_at' does not exist on type 'never'.
+lib/services/circuitService.ts(4,59): error TS2339: Property 'circuit_sessions' does not exist on type '{ exercise_library: { Row: ExerciseLibraryRow; Insert: ExerciseLibraryInsert; Update: ExerciseLibraryUpdate; }; ... 11 more ...; nutrition_meal_entries: { ...; }; }'.
+lib/services/circuitService.ts(12,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "circuit_sessions", never, "POST">', gave the following error.
+    Argument of type '{ circuit_id: string; status: string; current_round: number; current_phase: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "circuit_sessions", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'circuit_id' does not exist in type 'never[]'.
+lib/services/circuitService.ts(30,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "circuit_devices", never, "POST">', gave the following error.
+    Argument of type '{ session_id: string; device_id: string; device_type: "tablet" | "controller"; assigned_station: number | undefined; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "circuit_devices", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'session_id' does not exist in type 'never[]'.
+lib/services/circuitService.ts(46,21): error TS2345: Argument of type '{ status: string; current_phase: string; phase_start_time: string; started_at: string; }' is not assignable to parameter of type 'never'.
+lib/services/circuitService.ts(58,21): error TS2345: Argument of type '{ status: string; paused_at: string; }' is not assignable to parameter of type 'never'.
+lib/services/circuitService.ts(68,21): error TS2345: Argument of type '{ current_phase: string; phase_start_time: string; }' is not assignable to parameter of type 'never'.
+lib/services/nutritionService.ts(69,41): error TS2339: Property 'id' does not exist on type 'never'.
+lib/services/nutritionService.ts(86,48): error TS2339: Property 'id' does not exist on type 'never'.
+lib/services/nutritionService.ts(99,38): error TS7006: Parameter 'acc' implicitly has an 'any' type.
+lib/services/nutritionService.ts(99,43): error TS7006: Parameter 'curr' implicitly has an 'any' type.
+lib/services/scheduleService.ts(20,22): error TS2339: Property 'item_type' does not exist on type 'never'.
+lib/services/scheduleService.ts(24,36): error TS2339: Property 'reference_id' does not exist on type 'never'.
+lib/services/scheduleService.ts(26,26): error TS2698: Spread types may only be created from object types.
+lib/services/scheduleService.ts(26,51): error TS2339: Property 'title' does not exist on type 'never'.
+lib/services/scheduleService.ts(28,22): error TS2698: Spread types may only be created from object types.
+lib/services/scheduleService.ts(28,43): error TS2339: Property 'item_type' does not exist on type 'never'.
+lib/services/scheduleService.ts(37,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_schedule", never, "POST">', gave the following error.
+    Argument of type '{ user_id: string; scheduled_date: string; item_type: "class" | "workout"; reference_id: string; status: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_schedule", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'user_id' does not exist in type 'never[]'.
+lib/services/scheduleService.ts(54,21): error TS2345: Argument of type '{ status: string; }' is not assignable to parameter of type 'never'.
+lib/services/workoutService.ts(69,18): error TS2698: Spread types may only be created from object types.
+lib/services/workoutService.ts(77,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_workout_sessions", never, "POST">', gave the following error.
+    Argument of type '{ user_id: string; workout_id: string; started_at: string; status: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_workout_sessions", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'user_id' does not exist in type 'never[]'.
+lib/services/workoutService.ts(93,21): error TS2345: Argument of type '{ ended_at: string; status: string; notes: string | undefined; }' is not assignable to parameter of type 'never'.
+lib/services/workoutService.ts(122,25): error TS2345: Argument of type '{ weight_kg: number; reps_completed: number; rpe: number | undefined; }' is not assignable to parameter of type 'never'.
+lib/services/workoutService.ts(123,36): error TS2339: Property 'id' does not exist on type 'never'.
+lib/services/workoutService.ts(127,18): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_workout_logs", never, "POST">', gave the following error.
+    Argument of type '{ session_id: string; exercise_id: string; set_number: number; weight_kg: number; reps_completed: number; rpe: number | undefined; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_workout_logs", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'session_id' does not exist in type 'never[]'.
+lib/utils/guestSession.ts(15,6): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "guest_sessions", never, "POST">', gave the following error.
+    Argument of type '{ room_number: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "guest_sessions", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'room_number' does not exist in type 'never[]'.
+lib/utils/guestSession.ts(24,13): error TS2339: Property 'id' does not exist on type 'never'.
+lib/utils/guestSession.ts(25,57): error TS2339: Property 'id' does not exist on type 'never'.
+lib/utils/guestSession.ts(26,17): error TS2339: Property 'id' does not exist on type 'never'.
+lib/workout-engine/media.ts(34,5): error TS2322: Type 'string | null' is not assignable to type 'string'.
+  Type 'null' is not assignable to type 'string'.
+lib/workout-engine/venue-library.ts(109,53): error TS2345: Argument of type 'string | null' is not assignable to parameter of type '{}'.
+  Type 'null' is not assignable to type '{}'.
+lib/workout-engine/venue-library.ts(145,13): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ ...; }, ... 5 more ..., "POST">', gave the following error.
+    Argument of type '{ venue_id: string | null; id?: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<...>', gave the following error.
+    Argument of type '{ venue_id: string | null; id?: string; }' is not assignable to parameter of type 'never[]'.
+      Type '{ venue_id: string | null; id?: string | undefined; }' is missing the following properties from type 'never[]': length, pop, push, concat, and 35 more.
+services/workoutService.ts(83,46): error TS2339: Property 'id' does not exist on type 'never'.
+services/workoutService.ts(94,13): error TS2698: Spread types may only be created from object types.
+services/workoutService.ts(95,59): error TS2339: Property 'block_id' does not exist on type 'never'.
+services/workoutService.ts(95,78): error TS2339: Property 'id' does not exist on type 'never'.
+services/workoutService.ts(99,13): error TS2698: Spread types may only be created from object types.
+services/workoutService.ts(110,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_workout_sessions", never, "POST">', gave the following error.
+    Argument of type '{ user_id: string; hotel_id: string; workout_id: string; status: string; started_at: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_workout_sessions", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'user_id' does not exist in type 'never[]'.
+services/workoutService.ts(134,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "planned" | "exact" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_set_logs", never, "POST">', gave the following error.
+    Argument of type '{ session_id: string; block_id: string; exercise_id: string; set_number: number; weight_kg: number | undefined; reps_completed: number | undefined; time_sec: number | undefined; logged_at: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "planned" | "exact" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "user_set_logs", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'session_id' does not exist in type 'never[]'.
+services/workoutService.ts(161,21): error TS2345: Argument of type '{ feeling_rating?: number; notes?: string; total_time_sec?: number; status: string; completed_at: string; }' is not assignable to parameter of type 'never'.

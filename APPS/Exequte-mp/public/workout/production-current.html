@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Rotation Page</title>
+  <style>
+    body {
+      background-color:black;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+    }
+
+    h2 {
+      /*font-size: 10vh;*/
+    }
+    .container {
+      /*display: flex;*/
+      width: 100%;
+    }
+
+    .block {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /*border-color: red;*/
+      /*border-width: 30px;*/
+      /*border-style: solid;*/
+    }
+
+    .block h2 {
+      margin-bottom: 20px;
+    }
+
+    .block video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .video-container {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="block hidden" id="blockcooldown">
+    <h2>Cool Down</h2>
+    <div class="video-container"></div>
+  </div>
+  <div class="block hidden" id="blockfinisher">
+    <h2>Finisher</h2>
+    <div class="video-container"></div>
+  </div>
+  <div class="block hidden" id="blockC">
+    <h2>Block C</h2>
+    <div class="video-container"></div>
+  </div>
+  <div class="block hidden" id="blockB">
+    <h2>Block B</h2>
+    <div class="video-container"></div>
+  </div>
+  <div class="block hidden" id="blockA">
+    <h2>Block A</h2>
+    <div class="video-container"></div>
+  </div>
+  <div class="block" id="blockwarmup">
+    <h2>Warm UP</h2>
+    <div class="video-container"></div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+  var previousBlock = '';
+
+  $(document).ready(function() {
+    loadCurrentWorkout();
+    setInterval(checkCurrentBlock, 2000); // Timer set to query every 2 seconds
+
+
+    let warmupBtn = document.getElementById("w-btn");
+    let blockABtn = document.getElementById("a-btn");
+    let blockBBtn = document.getElementById("b-btn");
+    let blockCBtn = document.getElementById("c-btn");
+    let finisherBtn = document.getElementById("f-btn");
+    let coolDownBtn = document.getElementById("cd-btn");
+
+
+    warmupBtn.addEventListener('click', function(event) {
+      switchBlock("blockwarmup")
+    });
+
+    blockABtn.addEventListener('click', function(event) {
+      switchBlock("blockA")
+    });
+
+    blockBBtn.addEventListener('click', function(event) {
+      switchBlock("blockB")
+    });
+
+    blockCBtn.addEventListener('click', function(event) {
+      switchBlock("blockC")
+    });
+
+    finisherBtn.addEventListener('click', function(event) {
+      switchBlock("blockfinisher")
+    });
+
+    coolDownBtn.addEventListener('click', function(event) {
+      switchBlock("blockcooldown")
+    });
+  });
+
+  function switchBlock(blockName){
+    document.querySelectorAll(`[id^="block"]`).forEach(function(el) {
+      el.className = "block hidden";
+      //el.style.display = 'none';
+    });
+    let block = document.getElementById(blockName);
+    if (block){
+      block.className = "block";
+      //block.style.display = "";
+    }
+  }
+
+  function loadCurrentWorkout() {
+    fetch('https://exequte.cn/api/v1/training_sessions/current')
+            .then(response => response.json())
+            .then(data => {
+              showCurrentWorkout(data.data);
+            })
+            .catch(error => console.log(error));
+  }
+
+  function showCurrentWorkout(data) {
+    console.log(data);
+    if (data && data[0] && data[0].workout) {
+      generatePage(data[0]);
+    }
+  }
+
+  function createVideoElement(videoPath, exerciseName) {
+    const video = document.createElement('video');
+    video.src = videoPath;
+    video.setAttribute('loop', '');
+    video.oncanplay = () => {
+      video.muted = true;
+      video.play();
+    }
+//    video.controls = true;
+    // video.style.display = 'none';
+
+    const exerciseTitle = document.createElement('h3');
+    exerciseTitle.textContent = exerciseName;
+
+    const videoContainer = document.createElement('div');
+    videoContainer.classList.add('video-container');
+    videoContainer.appendChild(video);
+    videoContainer.appendChild(exerciseTitle);
+
+    return videoContainer;
+  }
+
+  function generatePage(jsonData) {
+    let session = jsonData;
+    let workout = jsonData.workout;
+
+    const blockA = $('#blockA');
+    const blockB = $('#blockB');
+    const blockC = $('#blockC');
+
+    const exercisesA = workout.exercises_workouts['block-a'];
+    const exercisesB = workout.exercises_workouts['block-b'];
+    const exercisesC = workout.exercises_workouts.finisher;
+
+    const videosA = exercisesA.map(exercise => createVideoElement(exercise.video, exercise.name));
+    const videosB = exercisesB.map(exercise => createVideoElement(exercise.video, exercise.name));
+    const videosC = exercisesC.map(exercise => createVideoElement(exercise.video, exercise.name));
+
+    let currentVideoIndexA = 0;
+    let currentVideoIndexB = 0;
+    let currentVideoIndexC = 0;
+
+    function playNextVideo(block, videos, currentVideoIndex) {
+      const currentVideo = videos[currentVideoIndex];
+      const videoElement = currentVideo.querySelector('video');
+
+      videoElement.style.display = 'block';
+      videoElement.currentTime = 0;
+      videoElement.play()
+              .then(() => {
+                // Video started playing successfully
+              })
+              .catch(error => {
+                // Failed to start playing the video
+                console.log(error);
+              });
+
+      currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+
+      videoElement.addEventListener('ended', () => {
+        //videoElement.style.display = 'none';
+        playNextVideo(block, videos, currentVideoIndex);
+      });
+    }
+
+    blockA.find('.video-container').append(videosA);
+    blockB.find('.video-container').append(videosB);
+    blockC.find('.video-container').append(videosC);
+
+    if (session.current_block){
+      previousBlock = session.current_block;
+      console.log("current block is " + previousBlock);
+      switchBlock(previousBlock);
+    }
+    // playNextVideo(blockA, videosA, currentVideoIndexA);
+    // playNextVideo(blockB, videosB, currentVideoIndexB);
+    // playNextVideo(blockC, videosC, currentVideoIndexC);
+  }
+
+  function checkCurrentBlock() {
+    // Query the API for the current session
+
+    fetch('https://exequte.cn/api/v1/training_sessions/current')
+            .then(response => response.json())
+            .then(data => {
+              const session = data.data[0];
+              const currentBlock = session.current_block;
+
+              if (currentBlock && currentBlock !== previousBlock) {
+                switchBlock(currentBlock);
+                previousBlock = currentBlock;
+              }
+            })
+            .catch(error => console.log(error));
+  }
+
+</script>
+</body>
+</html>

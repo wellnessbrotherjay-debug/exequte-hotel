@@ -1,0 +1,269 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  title: "This is title"
+  dog: "This is dog"
+  focus: "This is focus"
+  errors:
+    failure:
+      unauthenticated: "User unauthenticated!"
+      invalid_api_key: "Invalid Api Key!"
+    wechat:
+      js_code_missing: "JS code missing"
+      wx_app_error: "Wechat MP APP key or secret missing"
+      tencent_error: "Tencent error or JS code expired"
+  miniprogram:
+    home:
+      sign_up: 'SIGN UP'
+      sign_up_explanation: 'Click here to sign up with eXequte and start your new transformational journey.'
+      #coming-up component
+      coming_up: "COMING UP"
+      no_sessions_today: "No sessions today"
+      min: " min"
+      kcal: " kCal"
+      booked: "BOOKED"
+      commit: "COMMIT"
+      in_queue: "IN QUEUE"
+      queue_up: "QUEUE UP"
+    wallet:
+      sign_up: 'SIGN UP'
+      sign_up_explanation: 'Click here to sign up with eXequte and start your new transformational journey.'
+    about:
+      coach: "Coach "
+      address: "Address: "
+      address1: "425 Yanping Road, Street Front 1F"
+      address2: "Metro: "
+      address3: "Changping Road Station Line 7, Exit 5"
+      address4: "DiDi: "
+      address5: "exeQute"
+    index:
+      no_sessions_today: "No sessions today"
+      min: " min"
+      kcal: " kCal"
+      booked: "BOOKED"
+      commit: "COMMIT"
+      in_queue: "IN QUEUE"
+      queue_up: "QUEUE UP"
+      sign_up: "SIGN UP"
+    class-info:
+      min: " min"
+      kcal: " kCal"
+      coach: "Coach "
+      cancellation_1: "Free cancelation "
+      cancellation_2: " hours in advance."
+      date: "Date: "
+      price: "Price: "
+      time: "Time: "
+      booked: "BOOKED"
+      commit: "COMMIT"
+      in_queue: "IN QUEUE"
+      queue_up: "QUEUE UP"
+      sign_up: "SIGN UP"
+      cancel_class: "CANCEL CLASS"
+      cancel_booking_normal_title: "Are you sure?"
+      cancel_booking_cancel: "No"
+      cancel_booking_confirm: "Yes"
+      cancel_booking_late_title: "Please note that this counts as late cancellation, providing no voucher refund/substracting one day from your current membership.Are you sure?"
+      payment_cancelled: "Payment cancelled"
+      booking_cancelled: "Booking cancelled"
+      booking_waiver_title: "By booking this class, you confirm that you are in good health, and you agree to our “Informed Consent Form”."
+      booking_waiver_cancel: "Form"
+      booking_waiver_confirm: "Agree"
+      check_other_dates: "Check other dates"
+      book_now: "Book Now"
+      confirm_date: "Confirm Date"
+      hrm_checkin: "Register at reception 10 min before class to collect the HRM"
+    booking:
+      access_options: "Access Options"
+      join_for_free: "Join for free"
+      free: "FREE"
+      drop_in: "Drop in"
+      currency: "RMB"
+      voucher: "Voucher"
+      valid_till: "valid till"
+      classes_left: "classes left"
+      classes_left_today: "booking left for this day"
+      use_voucher: "Use Voucher"
+      book_class: "Book Class"
+      pay: "Pay"
+      total_price: "Total: "
+      apply: "Apply"
+      promo_code_placeholder: "Enter Promo Code"
+      min: " min"
+      kcal: " kCal"
+      coach: "Coach "
+      bio: "Bio:"
+      cancellation_1: "Free cancelation "
+      cancellation_2: " hours in advance."
+      date: "Date: "
+      price: "Price: "
+      time: "Time: "
+    booking-confirmation:
+      class_booked: "Class Booked!"
+      come_in_advance: "Please come 15 min in advance!"
+      follow_account: "Follow the official account to receive class notifications for bookings."
+      scan: "(Press and hold to follow the official account)"
+      go_to_my_classes: "Go to my classes"
+      min: " min"
+      kcal: " kCal"
+      coach: "Coach "
+      bio: "Bio:"
+      cancellation_1: "Free cancelation "
+      cancellation_2: " hours in advance."
+      date: "Date: "
+      price: "Price: "
+      time: "Time: "
+      address: "Address: "
+      xq_address: "425 Yanping Road, 1st floor. Few minutes walk from Line 7 Changping Rd. Exit 5"
+    my-classes:
+      upcoming: "Upcoming"
+      history: "History"
+      no_classes: "What are you waiting for..."
+      book_now: "BOOK NOW"
+      min: " min"
+    instructor-classes:
+      upcoming: "Upcoming"
+      history: "History"
+      no_classes: "You have no classes...yet."
+      book_now: "BOOK NOW"
+      min: " min"
+    class-attandence:
+      capacity_less_than_zero: "Cannot have capacity less than zero"
+      bookings_more_than_capacity: "Cannot have capacity less than current bookings"
+      close: "Close"
+      update: "UPDATE"
+      cancel_session: "CANCEL SESSION"
+      cancel_session_reason_popup_title: "Cancel Reason"
+      confirm: "Submit"
+      cancel: "Close"
+      cancel_training_session_title: "Are you sure you want to cancel this training session?"
+      cancel_training_cancel: "No"
+      cancel_training_confirm: "Yes"
+    booking-info:
+      min: " min"
+      kcal: " kCal"
+      coach: "Coach "
+      bio: "Bio:"
+      cancellation_1: "Free cancelation "
+      cancellation_2: " hours in advance."
+      date: "Date: "
+      price: "Price: "
+      time: "Time: "
+      address: "Address: "
+      cancel_class: "CANCEL CLASS"
+      currency: " RMB"
+      hrm_checkin: "Register at reception 10 min before class to collect the HRM"
+      hrm_data: "DATA"
+    profile:
+      customer_service: "Contact Us!"
+      welcome: "Welcome to eXequte"
+      personal_info: "My Personal Information"
+      sign_up: "Sign Up"
+      classes: "Classes"
+      since_joining: "Since joining"
+      average: "4 weeks avg."
+      body_stats: "Body Stats"
+      kg: "kg"
+      weight: "Weight"
+      fat: "Fat"
+      my_classes: "My Classes"
+      instructor_classes: "My Classes as Instructor"
+      all_classes: "All Classes"
+      voucher_available: "Voucher Available!"
+      voucher_desc: "Each voucher is equal to one class."
+      slogan: "Mind! Nutrition! Move!"
+      classes_left: "classes left"
+      classes_left_today: "booking left for this day"
+      active_until: "Active until"
+    profile-update:
+      waiver_title: "Informed Consent Form"
+      waiver_form: "I, the participant named below, have agreed to participate in the ExeQute workouts,\
+    exercise and training programs (“Workouts”).\
+    I acknowledge and agree that the Workouts:\
+    • are a recreational sport activity; and\
+    • may involve strenuous physical activity including, but not limited to, muscle\
+    strength and endurance training, cardiovascular conditioning and training, and \
+    other various fitness activities.\
+    I hereby affirm, and I affirm each time I participate in a Workout, that:\
+    • I am in good physical condition and do not suffer from any known disability or\
+    condition which would prevent or limit my participation in this exercise\
+    program; and\
+    • I am participating in the Workouts voluntarily and at my own risk.\
+    I hereby release ExeQute and their officers,\
+    agents and employees (the “Released Parties”) from any claims, demands, and\
+    causes of action as a result of my voluntary participation in the Workouts, to the\
+    extent permitted by law.\
+    I fully understand that I may injure myself as a result of my participation in the\
+    workouts and I hereby release the Released Parties from any liability now or in the\
+    future for conditions that I may obtain directly or indirectly from participating in the\
+    Workouts, to the fullest extent permitted by law. These conditions may include, but\
+    are not limited to, heart attacks, muscle strains, muscle pulls, muscle tears, broken\
+    bones, shin splints, heat prostration, injuries to knees, injuries to back, injuries to\
+    foot, or any other illness or soreness that I may incur, including death."
+      waiver_confirm: "I HEREBY AFFIRM THAT I HAVE READ AND FULLY UNDERSTAND THE ABOVE STATEMENTS."
+      personal_info: "Personal Information"
+      my_personal_info: "My Personal Information"
+      my_body: "My Body Now"
+      targets: "My Body Targets"
+      avatar: "Avatar"
+      save1: "By saving this form you agree with the"
+      save2: "terms and conditions"
+      save3: "of eXequte."
+      save: "SAVE"
+      height: "Height"
+      weight: "Current Weight"
+      fat: "Current Body Fat "
+      goal: "Weight Goal"
+      t_weight: "Target Weight "
+      t_fat: "Target Body Fat "
+      first_name: "First Name "
+      last_name: "Last Name "
+      nick: "Workout Nickname"
+      phone: "Phone"
+      email: "Email"
+      emergency: "Emergency Contact Name"
+      emergency_number: "Emergency Contact Number"
+      birthday: "Birthday"
+      gender: "Gender"
+      nationality: "Nationality"
+      profession: "Profession"
+      activity: "Activity Level"
+      song: "Favorite Song"
+      music_style: "Favorite Music Styles"
+      sports: "Sports"
+      foods: "Favorite foods"
+    customer-service:
+      scan: "Press and hold to add our customer service"
+      back: "Back"
+    hrm-data:
+      chart: "chart"
+      refresh: "Refresh"

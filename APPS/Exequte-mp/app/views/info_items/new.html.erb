@@ -1,0 +1,26 @@
+<div class="container" >
+  <%= simple_form_for(@info_item) do |f| %>
+    <%= f.association :info , label_method: :full_name %>
+    <% unless InfoItemPattern.count.zero? %>
+      <%= f.association :info_item_pattern, label_method: :full_name %>
+    <% end %>
+    <%= f.input :item_text %>
+    <%= f.input :cn_item_text %>
+    <%= f.input :title , as: :radio_buttons %>
+    <%= f.input :margin_top %>
+    <%= f.input :margin_left %>
+    <%= f.input :margin_bottom %>
+    <%= f.input :font_size %>
+    <%= f.input :text_align, collection: InfoItem::ALIGNS %>
+    <%= f.input :text_transform, collection: InfoItem::TRANSFORMS %>
+    <%= f.input :italic , as: :radio_buttons %>
+    <%= f.input :placement, collection: InfoItem::PLACEMENTS %>
+    <%= f.input :position %>
+    <%= f.input :note %>
+    <!-- <div>
+      <label for="weeks"> Create this training session for weeks</label>
+      <input type="number" name="weeks">
+    </div> -->
+    <%= f.button :submit, style: 'background-color: #5C0C17; color: #FFF' %>
+  <% end %>
+</div>

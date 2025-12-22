@@ -1,0 +1,2 @@
+class HrmsController < ApplicationController
+end

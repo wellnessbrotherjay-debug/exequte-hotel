@@ -1,0 +1,85 @@
+<script>
+    function showWorkoutDetails(workoutId, hideCanvas) {
+        console.log('about to fetch workout with id : ' + workoutId)
+        // Make a GET request to fetch the specific workout details
+        fetch(`/api/v1/workouts/${workoutId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.data) {
+                    // Render the workout details
+                    initializeAndDrawCanvas(data.data, hideCanvas);
+                }
+            })
+            .catch(error => console.log(error));
+    }
+
+    function showWorkoutTemplate(element){
+        let workoutId = element.dataset.workoutId;
+        let workoutName = element.dataset.workoutName;
+        // Get the canvas element
+        var canvas = document.getElementById('myCanvas');
+        if (canvas.style.display == "none") {
+            console.log('picture not generated yet, generate it now');
+            showWorkoutDetails(workoutId, false);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            var loadPicBtn = document.getElementById("load-picture");
+            loadPicBtn.addEventListener('click', function () {
+                setTimeout(function () {
+                    console.log('attaching event');
+                    let workoutId = document.querySelectorAll(".row-id")[0].querySelectorAll("td")[0].innerHTML;
+                    showWorkoutDetails(workoutId, false);
+                }, 500);
+            });
+            var downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', function() {
+                // Get the canvas element
+                var canvas = document.getElementById('myCanvas');
+                if (canvas.style.display == "none"){
+                    console.log('picture not generated yet, generate it now');
+                    let workoutId = document.querySelectorAll(".row-id")[0].querySelectorAll("td")[0].innerHTML;
+                    showWorkoutDetails(workoutId, true);
+                }
+                setTimeout(function() {
+                    // Convert the canvas to a data URL
+                    console.log('downloading');
+                    var dataURL = canvas.toDataURL('image/png');
+                    // Create a link element
+                    var link = document.createElement('a');
+                    link.href = dataURL;
+                    let fileName = "workout-template.png";
+                    try {
+                        let workoutName = document.querySelectorAll(".row-name")[0].querySelectorAll("td")[0].innerHTML;
+                        fileName = workoutName + ".png";
+                    } catch(e){
+                        console.log('error getting workout name, using default;');
+                        console.log(e);
+                    }
+                    link.download = fileName;
+                    // Programmatically click the link to trigger the download
+                    link.click();
+                }, 2000);
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    });
+</script>
+<style>
+  .act-btn {
+      background-color: #5E6469;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      display: inline-block;
+      transition: border 0.2s linear, color 0.2s linear, width 0.2s linear, background-color 0.2s linear;
+      cursor: pointer;
+      padding: 5px 8px;
+  }
+</style>
+<span class="action_item"><a class="act-btn" id="load-picture">Show Workout Template</a></span>
+<span class="action_item"><a class="act-btn" id="download-btn">Download Workout Template</a></span>
+<canvas id="myCanvas" width="1342" height="954" style="display:none;"></canvas>

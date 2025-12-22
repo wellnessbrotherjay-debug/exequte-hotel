@@ -1,0 +1,236 @@
+zh-CN:
+  title: "This is Chinese title"
+  dog: "This is Chinese dog"
+  focus: "This is Chinese focus"
+  errors:
+    failure:
+      unauthenticated: "User unauthenticated!"
+      invalid_api_key: "Invalid Api Key!"
+    wechat:
+      js_code_missing: "JS code missing"
+      wx_app_error: "Wechat MP APP key or secret missing"
+      tencent_error: "Tencent error or JS code expired"
+  miniprogram:
+    home:
+      sign_up: '注册'
+      #coming-up component
+      coming_up: "COMING UP"
+      no_sessions_today: "No sessions today"
+      min: " min"
+      kcal: " kCal"
+      booked: "BOOKED"
+      commit: "COMMIT"
+      in_queue: "IN QUEUE"
+      queue_up: "QUEUE UP"
+    wallet:
+      sign_up: '注册'
+    about:
+      coach: "教练 "
+      address: "地址: "
+      address1: "延平路425号一楼"
+      address2: "地铁: "
+      address3: "昌平路7号线，5号出口"
+      address4: "滴滴: "
+      address5: "exeQute"
+    index:
+      no_sessions_today: "今天没有课"
+      min: " 分钟"
+      kcal: " 卡路里"
+      booked: "预约了"
+      commit: "预约"
+      in_queue: "在排队"
+      queue_up: "排队"
+      sign_up: '注册'
+    class-info:
+      min: " 分钟"
+      kcal: " 卡路里"
+      coach: "教练 "
+      cancellation_1: "免费取消"
+      cancellation_2: "小时之内"
+      date: "日期: "
+      price: "费用: "
+      time: "时间: "
+      booked: "预约了"
+      commit: "预约"
+      in_queue: "在排队"
+      queue_up: "排队"
+      sign_up: '注册'
+      cancel_class: "取消预约"
+      cancel_booking_normal_title: "确定取消吗？"
+      cancel_booking_cancel: "不确定"
+      cancel_booking_confirm: "确定"
+      cancel_booking_late_title: "请注意，这算作延迟取消，不提供代金券退款/从您当前的会员资格中减去一天。您确定吗？"
+      payment_cancelled: "付款取消"
+      booking_cancelled: "预约取消了"
+      booking_waiver_title: "通过预订该课程，您确认您身体健康，并同意我们的“知情同意书”。"
+      booking_waiver_cancel: "意书"
+      booking_waiver_confirm: "同意"
+      check_other_dates: "查询其他日期"
+      book_now: "预约"
+      confirm_date: "确认日期"
+      hrm_checkin: "为了收HRM，请上课10分钟前在前台登记"
+      hrm_data: "心脏数据"
+    booking:
+      access_options: "预约方式"
+      join_for_free: "免费参加"
+      free: "免费"
+      drop_in: "单次"
+      currency: "元"
+      voucher: "代金券"
+      valid_till: "有效到"
+      classes_left: "剩预约"
+      classes_left_today: "当天剩预约"
+      use_voucher: "使用代金券"
+      book_class: "预约"
+      pay: "付款"
+      total_price: "总数:"
+      apply: "使用"
+      promo_code_placeholder: "输入优惠码"
+      min: " 分钟"
+      kcal: " 卡路里"
+      coach: "教练 "
+      bio: "小传"
+      cancellation_1: "免费取消"
+      cancellation_2: "小时之内"
+      date: "日期: "
+      price: "费用: "
+      time: "时间: "
+    booking-confirmation:
+      class_booked: "预约了！"
+      come_in_advance: "请提前 15 分钟来！"
+      follow_account: "长按添关注公众号，接收预约上课通知。"
+      scan: "(长按添关注公众号)"
+      go_to_my_classes: "打开我的预约"
+      min: " 分钟"
+      kcal: " 卡路里"
+      coach: "教练 "
+      bio: "小传"
+      cancellation_1: "免费取消"
+      cancellation_2: "小时之内"
+      date: "日期: "
+      price: "费用: "
+      time: "时间: "
+      address: "地址: "
+      xq_address: "延平路425号一楼（昌平路7号线，5号出口）"
+    my-classes:
+      upcoming: "即将"
+      history: "过去"
+      no_classes: "你在等什么呢..."
+      book_now: "现在预约"
+      min: " 分钟"
+    instructor-classes:
+      upcoming: "即将"
+      history: "过去"
+      no_classes: "你还没有课"
+      book_now: "现在预约"
+      min: " 分钟"
+    class-attandence:
+      capacity_less_than_zero: "不能下0"
+      bookings_more_than_capacity: "不能比已经预约的低"
+      close: "取消"
+      update: "更新"
+      cancel_session: "取消课"
+      cancel_session_reason_popup_title: "取消说明"
+      confirm: "提交"
+      cancel: "取消"
+      cancel_training_session_title: "你确定要取消这个课?"
+      cancel_training_cancel: "不确定"
+      cancel_training_confirm: "确定"
+    booking-info:
+      min: " 分钟"
+      kcal: " 卡路里"
+      coach: "教练 "
+      bio: "小传"
+      cancellation_1: "免费取消"
+      cancellation_2: "小时之内"
+      date: "日期: "
+      price: "费用: "
+      time: "时间: "
+      cancel_class: "取消预约"
+      currency: "元"
+      hrm_checkin: "为了收HRM，请上课10分钟前在前台登记"
+    profile:
+      customer_service: "联系我们!"
+      welcome: "Welcome to eXequte"
+      personal_info: "我的信息"
+      sign_up: "注册"
+      classes: "课"
+      since_joining: "加入时间"
+      average: "四个星期平均"
+      body_stats: "身体统计"
+      kg: "千克"
+      weight: "体重"
+      fat: "脂肪"
+      my_classes: "我的预约"
+      instructor_classes: "我教的课"
+      all_classes: "所有预约"
+      voucher_available: "可以使用的代金券"
+      voucher_desc: "代金券代一次课."
+      slogan: "脑子! 营养! 动!"
+      classes_left: "剩预约"
+      classes_left_today: "当天剩预约"
+      active_until: "有效到"
+    profile-update:
+      waiver_title: "知情同意书"
+      waiver_form: "我，下面提到的参与者，已经同意参加 ExeQute 训练，\
+      锻炼和训练计划（“锻炼”）。\
+      我承认并同意锻炼：\
+      • 是一项休闲体育活动； 和\
+      • 可能涉及剧烈的身体活动，包括但不限于肌肉\
+      力量和耐力训练、心血管调理和训练，以及\
+      其他各种健身活动。\
+      我特此确认，并且我每次参加锻炼时都确认：\
+      • 我身体状况良好，没有任何已知的残疾或\
+      会阻止或限制我参与此练习的条件\
+      程序; 和\
+      • 我自愿参加锻炼，并自行承担风险。\
+      我特此释放 ExeQute 和他们的官员，\
+      任何索赔、要求和\
+      由于我自愿参加锻炼而导致的诉讼原因，\
+      法律允许的范围。\
+      我完全理解，我可能会因为参与\
+      锻炼，我特此免除被免责方现在或以后的任何责任
+      未来我可能直接或间接从参与中获得的条件\
+      在法律允许的最大范围内锻炼。 这些条件可能包括，但\
+      不限于心脏病发作、肌肉拉伤、肌肉拉伤、肌肉撕裂、骨折\
+      骨头，胫骨夹板，热衰竭，膝盖受伤，背部受伤，受伤\
+      脚，或我可能招致的任何其他疾病或酸痛，包括死亡。"
+      waiver_confirm: "本人特此确认，本人已阅读并完全理解上述声明。"
+      personal_info: "用户信息"
+      my_personal_info: "我的信息"
+      my_body: "我的身体"
+      targets: "我的目的"
+      avatar: "头像"
+      save1: "保存此表格即表示您同意eXequte的"
+      save2: "执行的条款和条件"
+      save3: ""
+      save: "保存"
+      height: "身高"
+      weight: "当前重量"
+      fat: "当前体脂 "
+      goal: "体重目标"
+      t_weight: "体重目标 "
+      t_fat: "体重体脂 "
+      first_name: "名字 "
+      last_name: "姓氏 "
+      nick: "锻炼昵称"
+      phone: "电话"
+      email: "电子邮件"
+      emergency: "紧急联系人姓名"
+      emergency_number: "紧急联系电话"
+      birthday: "生日"
+      gender: "性别"
+      nationality: "国籍"
+      profession: "职业"
+      activity: "活动级别"
+      song: "最喜欢的歌"
+      music_style: "最喜欢的音乐风格"
+      sports: "运动"
+      foods: "最喜欢的食物"
+    customer-service:
+      scan: "长按添加客服"
+      back: "返回"
+    hrm-data:
+      chart: "表"
+      refresh: "刷新"
+
